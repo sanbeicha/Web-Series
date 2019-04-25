@@ -33,7 +33,7 @@ alias chromium="/Applications/Chromium.app/Contents/MacOS/Chromium"
 # https://askubuntu.com/questions/79280/how-to-install-chrome-browser-properly-via-command-line
 sudo apt-get install libxss1 libappindicator1 libindicator7
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome*.deb  # Might show "errors", fixed by next line
+sudo dpkg -i google-chrome*.deb# Might show "errors", fixed by next line
 sudo apt-get install -f
 ```
 

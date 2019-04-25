@@ -60,14 +60,14 @@ test('adds 1 + 2 to equal 3', () => {
 测试代码编写完毕之后，我们使用 `jest test/util/sum.test.js` 命令来运行测试用例，可以在命令行中得到如下的反馈：
 
 ```
- PASS  test/util/sum.test.js
+ PASStest/util/sum.test.js
   ✓ adds 1 + 2 to equal 3 (2ms)
 
 
 Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
-Snapshots:   0 total
-Time:        0.565s, estimated 1s
+Tests: 1 passed, 1 total
+Snapshots: 0 total
+Time:0.565s, estimated 1s
 Ran all test suites matching "test/util/sum.test.js".
 ```
 
@@ -77,10 +77,10 @@ Ran all test suites matching "test/util/sum.test.js".
 // package.json
 {
   "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(scss|css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    }
+  "moduleNameMapper": {
+  "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+  "\\.(scss|css|less)$": "<rootDir>/__mocks__/styleMock.js"
+  }
   }
 }
 ```

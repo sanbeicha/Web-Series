@@ -17,11 +17,11 @@ updateState({target}) {
 
 ```js
 updateState({target}) {
-   this.setState(prevState => {
-     const updatedUser = {...prevState.user, [target.name]: target.value}; // use previous value in state to build new state...
-     doSomething(updatedUser); // Now I can safely utilize the new state I've created to call other funcs...
-     return { user: updatedUser }; // And what I return here will be set as the new state
-   });
+ this.setState(prevState => {
+ const updatedUser = {...prevState.user, [target.name]: target.value}; // use previous value in state to build new state...
+ doSomething(updatedUser); // Now I can safely utilize the new state I've created to call other funcs...
+ return { user: updatedUser }; // And what I return here will be set as the new state
+ });
  }
 ```
 

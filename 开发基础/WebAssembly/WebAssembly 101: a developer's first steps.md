@@ -17,7 +17,7 @@ $ ./emsdk install latest
 
 ```
 $ ./emsdk activate latest
-$ source ./emsdk_env.sh  # you can add this line to your .bashrc
+$ source ./emsdk_env.sh# you can add this line to your .bashrc
 ```
 
 笔者在本地执行上述搭建步骤时一直失败，因此改用了 Docker 预先配置好的镜像进行处理：
@@ -71,8 +71,8 @@ int counter = 100;
 
 
 int count() {
-    counter += 1;
-    return counter;
+  counter += 1;
+  return counter;
 }
 ```
 
@@ -128,13 +128,13 @@ function loadWebAssembly(filename, imports) {
 我们可以使用上述工具函数加载 wasm 文件：
 
 ```
-    loadWebAssembly('counter.wasm')
-      .then(instance => {
-        var exports = instance.exports; // the exports of that instance
-        var count = exports. _count; // the "_count" function (note "_" prefix)
-        // 下面即可以调用 count 函数
-      }
-    );
+  loadWebAssembly('counter.wasm')
+  .then(instance => {
+  var exports = instance.exports; // the exports of that instance
+  var count = exports. _count; // the "_count" function (note "_" prefix)
+  // 下面即可以调用 count 函数
+  }
+  );
 ```
 
 而在笔者的[脚手架](https://github.com/wx-chevalier/create-react-boilerplate)中，使用了 wasm-loader 进行加载，这样可以将 wasm 直接打包在 Bundle 中，然后通过 `import` 导入：
@@ -176,14 +176,14 @@ export default class Counter extends PureComponent {
     const isWASMSupport = 'WebAssembly' in window;
 
     if (!isWASMSupport) {
-      return <div>          浏览器不支持 WASM         </div>;
+      return <div>  浏览器不支持 WASM </div>;
     }
 
     return (
       <div className="Counter__container">
-                <span>          简单计数器示例:         </span>
-                <span>{this.state.count}</span>
-               
+        <span>  简单计数器示例: </span>
+        <span>{this.state.count}</span>
+
         <Button
           type="primary"
           onClick={() => {
@@ -192,9 +192,8 @@ export default class Counter extends PureComponent {
             });
           }}
         >
-                    点击自增        
+          点击自增
         </Button>
-             
       </div>
     );
   }
@@ -224,34 +223,34 @@ void computeNextState()
   int width_limit = width - 1;
   for (int i = 1; i < height_limit; i++)
   {
-    i_m1 = (i - 1) * width;
-    i_p1 = (i + 1) * width;
-    i_ = i * width;
-    for (int j = 1; j < width_limit; j++)
-    {
-      j_m1 = j - 1;
-      j_p1 = j + 1;
-      neighbors = current[i_m1 + j_m1];
-      neighbors += current[i_m1 + j];
-      neighbors += current[i_m1 + j_p1];
-      neighbors += current[i_ + j_m1];
-      neighbors += current[i_ + j_p1];
-      neighbors += current[i_p1 + j_m1];
-      neighbors += current[i_p1 + j];
-      neighbors += current[i_p1 + j_p1];
-      if (neighbors == 3)
-      {
-        next[i_ + j] = 1;
-      }
-      else if (neighbors == 2)
-      {
-        next[i_ + j] = current[i_ + j];
-      }
-      else
-      {
-        next[i_ + j] = 0;
-      }
-    }
+  i_m1 = (i - 1) * width;
+  i_p1 = (i + 1) * width;
+  i_ = i * width;
+  for (int j = 1; j < width_limit; j++)
+  {
+  j_m1 = j - 1;
+  j_p1 = j + 1;
+  neighbors = current[i_m1 + j_m1];
+  neighbors += current[i_m1 + j];
+  neighbors += current[i_m1 + j_p1];
+  neighbors += current[i_ + j_m1];
+  neighbors += current[i_ + j_p1];
+  neighbors += current[i_p1 + j_m1];
+  neighbors += current[i_p1 + j];
+  neighbors += current[i_p1 + j_p1];
+  if (neighbors == 3)
+  {
+  next[i_ + j] = 1;
+  }
+  else if (neighbors == 2)
+  {
+  next[i_ + j] = current[i_ + j];
+  }
+  else
+  {
+  next[i_ + j] = 0;
+  }
+  }
   }
   memcpy(current, next, width * height);
 }

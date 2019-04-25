@@ -2,7 +2,7 @@
 
 [Puppeteer](https://github.com/GoogleChrome/puppeteer) 是 Google
 
-通过  headless 参数来指定是否启用 Headless 模式，默认情况下是启用的。此外，在我们使用 npm 安装 Puppeteer 的时候其会自动下载指定版本的  Chromium 从而保证接口的开箱即用性，也可以通过  executablePath 参数指定启动版本：
+通过 headless 参数来指定是否启用 Headless 模式，默认情况下是启用的。此外，在我们使用 npm 安装 Puppeteer 的时候其会自动下载指定版本的 Chromium 从而保证接口的开箱即用性，也可以通过 executablePath 参数指定启动版本：
 
 ```js
 const browser = await puppeteer.launch({ headless: false }); // default is true

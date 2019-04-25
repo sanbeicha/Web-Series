@@ -74,7 +74,7 @@ $ npm install babel-polyfill --save
 import 'babel-polyfill'
 ```
 
-#  使用  Chai  作为断言库
+#  使用 Chai  作为断言库
 
 ```
 var expect = require('chai').expect;
@@ -126,7 +126,7 @@ assert.lengthOf(beverages.tea, 3, "beverages has 3 types of tea");
 The BDD style is exposed through expect or should interfaces. In both scenarios, you chain together natural language assertions.
 
 ```
-var expect = require('chai').expect  , foo = 'bar'  , beverages = { tea: [ 'chai', 'matcha', 'oolong' ] }; expect(foo).to.be.a('string'); expect(foo).to.equal('bar'); expect(foo).to.have.length(3); expect(beverages).to.have.property('tea').with.length(3);
+var expect = require('chai').expect, foo = 'bar', beverages = { tea: [ 'chai', 'matcha', 'oolong' ] }; expect(foo).to.be.a('string'); expect(foo).to.equal('bar'); expect(foo).to.have.length(3); expect(beverages).to.have.property('tea').with.length(3);
 ```
 
 Expect also allows you to include arbitrary messages to prepend to any failed assertions that might occur.
@@ -250,7 +250,7 @@ describe("测试表单校验", () => {
 
 #  在浏览器中运行测试用例
 
-Mocha  的一大特性就是支持在浏览器中运行测试用例，我们首先需要构建一个简单的  HTML  页面作为测试驱动页。该页面会加载  Mocha  测试库与目标测试文件。我们只需要在浏览器中打开该页面即可运行测试。
+Mocha  的一大特性就是支持在浏览器中运行测试用例，我们首先需要构建一个简单的 HTML  页面作为测试驱动页。该页面会加载 Mocha  测试库与目标测试文件。我们只需要在浏览器中打开该页面即可运行测试。
 
 ```
 <!DOCTYPE html>
@@ -276,7 +276,7 @@ Mocha  的一大特性就是支持在浏览器中运行测试用例，我们首
 </html>
 ```
 
-在上述  HTML  代码中我们加载了  Mocha  的  CSS  样式代码来优化测试结果的显示，创建了  ID  为  `mocha`  的元素插入测试结果。然后利用脚本从  `node_modules`  的子目录下加载  Mocha  与  Chai  的代码，通过调用  `mocha.setup`  可以向全局插入  Mocha  的测试环境，然后加载我们的待测试代码与测试代码，最后调用  `mocha.run`  运行所有测试。这里我们测试某个将  CSS  样式类添加到元素的函数，该函数位于  js/className.js  文件中：
+在上述 HTML  代码中我们加载了 Mocha  的 CSS  样式代码来优化测试结果的显示，创建了 ID  为`mocha`  的元素插入测试结果。然后利用脚本从`node_modules`  的子目录下加载 Mocha  与 Chai  的代码，通过调用`mocha.setup`  可以向全局插入 Mocha  的测试环境，然后加载我们的待测试代码与测试代码，最后调用`mocha.run`  运行所有测试。这里我们测试某个将 CSS  样式类添加到元素的函数，该函数位于 js/className.js  文件中：
 
 ```
 function addClass(el, newClass) {
@@ -286,7 +286,7 @@ function addClass(el, newClass) {
 }
 ```
 
-该函数的功能非常简单，就是为某个元素添加不重复的元素名，即测试要点在于如果当前元素的  `className`  属性中尚不包含要添加的类名，则添加；否则不添加。我们的测试用例编写如下：
+该函数的功能非常简单，就是为某个元素添加不重复的元素名，即测试要点在于如果当前元素的`className`  属性中尚不包含要添加的类名，则添加；否则不添加。我们的测试用例编写如下：
 
 ```
 describe('addClass', function() {
@@ -310,9 +310,9 @@ it('should not add a class which already exists', function() {
 });
 ```
 
-在浏览器中运行测试代码，会得到  Mocha  的如下提示：
+在浏览器中运行测试代码，会得到 Mocha  的如下提示：
 ![](https://coding.net/u/hoteam/p/Cache/git/raw/master/2017/3/1/111111111111.png)
-我们在上文中介绍的都是如何在  Node.js  中运行测试用例，如果我们希望将上述代码转化为在  Node.js  中可以运行的代码，需要将其转化为标准的  CommonJS  模块：
+我们在上文中介绍的都是如何在 Node.js  中运行测试用例，如果我们希望将上述代码转化为在 Node.js  中可以运行的代码，需要将其转化为标准的 CommonJS  模块：
 
 ```
 // className.js

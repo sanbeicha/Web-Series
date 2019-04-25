@@ -75,7 +75,7 @@ var should = require('should');
 
 
 var user = {
-    name: 'tj'
+  name: 'tj'
   , pets: ['tobi', 'loki', 'jane', 'bandit']
 };
 
@@ -133,10 +133,10 @@ someAsyncTask(foo, function(err, result){
 ```
 function jsonOk (body) {
   var mockResponse = new window.Response(JSON.stringify(body), {
-    status: 200,
-    headers: {
-      'Content-type': 'application/json'
-    }
+  status: 200,
+  headers: {
+  'Content-type': 'application/json'
+  }
   });
 
 
@@ -146,10 +146,10 @@ function jsonOk (body) {
 
 function jsonError (status, body) {
   var mockResponse = new window.Response(JSON.stringify(body), {
-    status: status,
-    headers: {
-      'Content-type': 'application/json'
-    }
+  status: status,
+  headers: {
+  'Content-type': 'application/json'
+  }
   });
 
 
@@ -160,7 +160,7 @@ function jsonError (status, body) {
 ```
 beforeEach(() => {
   window.fetch.returns(jsonOk({
-    hello: 'world'
+  hello: 'world'
   }));
 });
 ```
@@ -202,27 +202,27 @@ describe('test duckduckgo search results', function() {
 
 
   "selenium" : {
-    "start_process" : true,
-    "server_path" : "./bin/selenium-server-standalone-3.3.1.jar",
-    "log_path" : "",
-    "port" : 4444,
-    "cli_args" : {
-      "webdriver.chrome.driver" : "./bin/chromedriver"
-    }
+  "start_process" : true,
+  "server_path" : "./bin/selenium-server-standalone-3.3.1.jar",
+  "log_path" : "",
+  "port" : 4444,
+  "cli_args" : {
+  "webdriver.chrome.driver" : "./bin/chromedriver"
+  }
   },
 
 
   "test_settings" : {
-    "default" : {
-      "launch_url" : "http://localhost",
-      "selenium_port"  : 4444,
-      "selenium_host"  : "localhost",
-      "desiredCapabilities": {
-        "browserName": "chrome",
-        "javascriptEnabled": true,
-        "acceptSslCerts": true
-      }
-    }
+  "default" : {
+  "launch_url" : "http://localhost",
+  "selenium_port": 4444,
+  "selenium_host": "localhost",
+  "desiredCapabilities": {
+  "browserName": "chrome",
+  "javascriptEnabled": true,
+  "acceptSslCerts": true
+  }
+  }
   }
 }
 ```
@@ -230,38 +230,38 @@ describe('test duckduckgo search results', function() {
 ```
 module.exports = {
   'Demo test Google' : function (client) {
-    client
-      .url('http://www.google.com')
-      .waitForElementVisible('body', 1000)
-      .assert.title('Google')
-      .assert.visible('input[type=text]')
-      .setValue('input[type=text]', 'rembrandt van rijn')
-      .waitForElementVisible('button[name=btnG]', 1000)
-      .click('button[name=btnG]')
-      .pause(1000)
-      .assert.containsText('ol#rso li:first-child',
-        'Rembrandt - Wikipedia')
-      .end()
+  client
+  .url('http://www.google.com')
+  .waitForElementVisible('body', 1000)
+  .assert.title('Google')
+  .assert.visible('input[type=text]')
+  .setValue('input[type=text]', 'rembrandt van rijn')
+  .waitForElementVisible('button[name=btnG]', 1000)
+  .click('button[name=btnG]')
+  .pause(1000)
+  .assert.containsText('ol#rso li:first-child',
+  'Rembrandt - Wikipedia')
+  .end()
   }
 }
 ```
 
 ```
 fixture `Example page`
-    .page `https://devexpress.github.io/testcafe/example`;
+  .page `https://devexpress.github.io/testcafe/example`;
 
 
 test('Emulate user actions and perform a verification', async t => {
-    await t
-        .setNativeDialogHandler(() => true)
-        .click('#populate')
-        .click('#submit-button');
+  await t
+  .setNativeDialogHandler(() => true)
+  .click('#populate')
+  .click('#submit-button');
 
 
-    const location = await t.eval(() => window.location);
+  const location = await t.eval(() => window.location);
 
 
-    await t.expect(location.pathname).eql('/testcafe/example/thank-you.html');
+  await t.expect(location.pathname).eql('/testcafe/example/thank-you.html');
 });
 ```
 

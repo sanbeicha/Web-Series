@@ -111,9 +111,9 @@ JSX 的官方定义是类 XML 语法的 ECMAscript 扩展，完美地利用了 J
 ```
 render() {
   return (
-    <div>
-      <!-- This doesn't work! -->
-    </div>
+  <div>
+  <!-- This doesn't work! -->
+  </div>
   )
 }
 ```
@@ -141,12 +141,12 @@ JSX 允许使用任意的变量，因此如果我们需要使用数组进行循�
 function NumberList(props) {
   const numbers = props.numbers;
   return (
-    <ul>
-      {numbers.map((number) =>
-        <ListItem key={number.toString()}
-                  value={number} />
-      )}
-    </ul>
+  <ul>
+  {numbers.map((number) =>
+  <ListItem key={number.toString()}
+  value={number} />
+  )}
+  </ul>
   );
 }
 ```
@@ -179,11 +179,7 @@ function NumberList(props) {
 
 ```js
 {
-  condition ? (
-    <span>   为假时进行渲染   </span>
-  ) : (
-    <span>   为假时进行渲染   </span>
-  );
+  condition ? <span>   为假时进行渲染 </span> : <span>   为假时进行渲染 </span>;
 }
 ```
 
@@ -294,8 +290,8 @@ JSX 表达式中允许在一对开放标签或者闭合标签之间包含内容�
 <div>
   Here is a list:
   <ul>
-    <li>Item 1</li>
-    <li>Item 2</li>
+  <li>Item 1</li>
+  <li>Item 2</li>
   </ul>
 </div>
 ```
@@ -322,9 +318,9 @@ function Item(props) {
 function TodoList() {
   const todos = ['finish doc', 'submit pr', 'nag dan to review'];
   return (
-    <ul>
-      {todos.map((message) => <Item key={message} message={message} />)}
-    </ul>
+  <ul>
+  {todos.map((message) => <Item key={message} message={message} />)}
+  </ul>
   );
 }
 ```
@@ -336,7 +332,7 @@ function TodoList() {
 function Repeat(props) {
   let items = [];
   for (let i = 0; i < props.numTimes; i++) {
-    items.push(props.children(i));
+  items.push(props.children(i));
   }
   return <div>{items}</div>;
 }
@@ -344,9 +340,9 @@ function Repeat(props) {
 
 function ListOfTenThings() {
   return (
-    <Repeat numTimes={10}>
-      {(index) => <div key={index}>This is item {index} in the list</div>}
-    </Repeat>
+  <Repeat numTimes={10}>
+  {(index) => <div key={index}>This is item {index} in the list</div>}
+  </Repeat>
   );
 }
 ```

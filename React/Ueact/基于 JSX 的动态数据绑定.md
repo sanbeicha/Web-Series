@@ -2,23 +2,23 @@
 
 # 基于 JSX 的动态数据绑定
 
-笔者在 [2016-我的前端之路: 工具化与工程化](https://zhuanlan.zhihu.com/p/24575395)一文中提及，前端社区用了  15 年的时间来分割 HTML、JavaScript 与 CSS，但是随着 JSX 的出现仿佛事物一夕回到解放前。在 Angular、Vue.js 等 MVVM 前端框架中都是采用了指令的方式来描述业务逻辑，而 JSX 本质上还是 JavaScript，即用 JavaScript 来描述业务逻辑。虽然 JSX 被有些开发者评论为丑陋的语法，但是笔者还是秉持 JavaScript First 原则，尽可能地用 JavaScript 去编写业务代码。在前文 [React 初窥：JSX 详解](https://parg.co/bWj)中我们探讨了  JSX 的前世今生与基本用法，而本部分我们着手编写简单的面向 DOM 的 JSX 解析与动态数据绑定库；本部分所涉及的代码归纳于 [Ueact](https://github.com/wx-chevalier/Ueact) 库。
+笔者在 [2016-我的前端之路: 工具化与工程化](https://zhuanlan.zhihu.com/p/24575395)一文中提及，前端社区用了 15 年的时间来分割 HTML、JavaScript 与 CSS，但是随着 JSX 的出现仿佛事物一夕回到解放前。在 Angular、Vue.js 等 MVVM 前端框架中都是采用了指令的方式来描述业务逻辑，而 JSX 本质上还是 JavaScript，即用 JavaScript 来描述业务逻辑。虽然 JSX 被有些开发者评论为丑陋的语法，但是笔者还是秉持 JavaScript First 原则，尽可能地用 JavaScript 去编写业务代码。在前文 [React 初窥：JSX 详解](https://parg.co/bWj)中我们探讨了 JSX 的前世今生与基本用法，而本部分我们着手编写简单的面向 DOM 的 JSX 解析与动态数据绑定库；本部分所涉及的代码归纳于 [Ueact](https://github.com/wx-chevalier/Ueact) 库。
 
 # JSX 解析与 DOM 元素构建
 
 ## 元素构建
 
-笔者在  [JavaScript 语法树与代码转化实践](https://zhuanlan.zhihu.com/p/28054817)  一文中介绍过 Babel 的原理与用法，这里我们仍然使用 Babel 作为 JSX 语法解析工具；为了将 JSX 声明转化为 `createElement` 调用，这里需要在项目的 .babelrc 文件中做如下配置：
+笔者在[JavaScript 语法树与代码转化实践](https://zhuanlan.zhihu.com/p/28054817)  一文中介绍过 Babel 的原理与用法，这里我们仍然使用 Babel 作为 JSX 语法解析工具；为了将 JSX 声明转化为 `createElement` 调用，这里需要在项目的 .babelrc 文件中做如下配置：
 
 ```json
   "plugins": [
-    "transform-decorators-legacy",
-    "async-to-promises",
-    [
-      "transform-react-jsx", {
-        "pragma": "createElement"
-      }
-    ]
+  "transform-decorators-legacy",
+  "async-to-promises",
+  [
+  "transform-react-jsx", {
+  "pragma": "createElement"
+  }
+  ]
   ],
 ```
 
@@ -43,23 +43,23 @@ export function createElement(
 ```js
 // ...
   (0, _createElement.createElement)(
-    'section',
-    null,
-    (0, _createElement.createElement)(
-      'section',
-      null,
-      (0, _createElement.createElement)(
-        'button',
-        { className: 'link', onClick: handleClick },
-        'Custom DOM JSX'
-      ),
-      (0, _createElement.createElement)('input', {
-        type: 'text',
-        onChange: function onChange(e) {
-          console.log(e);
-        }
-      })
-    )
+  'section',
+  null,
+  (0, _createElement.createElement)(
+  'section',
+  null,
+  (0, _createElement.createElement)(
+  'button',
+  { className: 'link', onClick: handleClick },
+  'Custom DOM JSX'
+  ),
+  (0, _createElement.createElement)('input', {
+  type: 'text',
+  onChange: function onChange(e) {
+  console.log(e);
+  }
+  })
+  )
   ),
 // ...
 ```
@@ -69,7 +69,7 @@ export function createElement(
 ```
 export const createElementByTag = (tagName: string) => {
   if (isSVG(tagName)) {
-    return document.createElementNS('http://www.w3.org/2000/svg', tagName);
+  return document.createElementNS('http://www.w3.org/2000/svg', tagName);
   }
   return document.createElement(tagName);
 
@@ -124,7 +124,7 @@ for (let event of events) {
 }...
 ```
 
-React 中还允许直接设置元素的内部 HTML 代码，这里我们也需要判断是否存在有  dangerouslySetInnerHTML 属性：
+React 中还允许直接设置元素的内部 HTML 代码，这里我们也需要判断是否存在有 dangerouslySetInnerHTML 属性：
 
 ```// 如果是手动设置 HTML，则添加 HTML，否则设置显示子元素
 if (setHTML && setHTML.__html) {
@@ -162,31 +162,32 @@ const handleClick = e => {
 
 export default (
   <div className="header">
-       {' '}
+    {' '}
     <section>
-           {' '}
+      {' '}
       <section>
-               {' '}
+        {' '}
         <button className="link" onClick={handleClick}>
-                    Custom DOM JSX        {' '}
+          Custom DOM JSX{' '}
         </button>
-                <input
+        <input
           type="text"
           onChange={e => {
             console.log(e);
           }}
-        />     {' '}
-      </section>
-         {' '}
+        />
+         {' '}
+      </section>{' '}
     </section>
-        <svg>
-            <circle cx="64" cy="64" r="64" style="fill: #00ccff;" />   {' '}
+    <svg>
+      <circle cx="64" cy="64" r="64" style="fill: #00ccff;" />
+       {' '}
     </svg>
-        <br />   {' '}
-    <span id="count" style={{ color: 'red' }}>
-            {state.count}   {' '}
-    </span>
+    <br />
      {' '}
+    <span id="count" style={{ color: 'red' }}>
+      {state.count} {' '}
+    </span>{' '}
   </div>
 );
 
@@ -244,7 +245,7 @@ document.querySelector('#root').appendChild(App);
 </script>
 ```
 
-这里我们调用   `Ueact.observeDOM` 函数对模板进行渲染，该函数会获取指定元素的 `outerHTML` 属性，然后通过 Babel 动态插件进行编译：
+这里我们调用  `Ueact.observeDOM` 函数对模板进行渲染，该函数会获取指定元素的 `outerHTML` 属性，然后通过 Babel 动态插件进行编译：
 
 ```js
 let input = html2JSX(ele.outerHTML);
@@ -265,8 +266,8 @@ let output = Babel.transform(input, {
 值得一提的是，因为 HTML 语法与 JSX 语法存在一定的差异，我们获取渲染之后的 DOM 对象之后，还需要对部分元素语法进行修正；主要包括了以下三个场景：
 
 - 自闭合标签处理，即 `<input > => <input />`
-- 去除输入的 HTML 中的事件监听的引号，即  `onclick="{methods.handleClick}"` => `onclick={methods.handleClick}`
-- 移除 value 值额外的引号，即  `value="{state.a}"` => `value={state.a}`
+- 去除输入的 HTML 中的事件监听的引号，即`onclick="{methods.handleClick}"` => `onclick={methods.handleClick}`
+- 移除 value 值额外的引号，即`value="{state.a}"` => `value={state.a}`
 
 到这里我们得到了经过 Babel 转化的函数调用代码，下面我们就需要去执行这部分代码并且完成数据填充。最简单的方式就是使用 `eval` 函数，不过因为该函数直接暴露在了全局作用域下，因此并不被建议使用；我们使用动态构造 Function 的方式来进行调用：
 
@@ -279,10 +280,10 @@ function renderFromStr(innerContext) {
   let func = new Function(
     'innerContext',
     `
-     let { state, methods, hooks } = innerContext;
-     let ele = ${innerContext.rawJSX}
-     return ele;
-    `
+ let { state, methods, hooks } = innerContext;
+ let ele = ${innerContext.rawJSX}
+ return ele;
+  `
   ).bind(innerContext); // 构建新节点
 
   let newEle: Element = func(innerContext); // 使用指定元素的父节点替换自身
@@ -297,7 +298,7 @@ function renderFromStr(innerContext) {
 
 # 变化监听与重渲染
 
-笔者在 [2015-我的前端之路:数据流驱动的界面](https://parg.co/bFo)中讨论了从以  DOM 为核心到数据流驱动的变化，本部分我们即讨论如何自动监听状态变化并且完成重渲染。这里我们采用监听 JavaScript 对象属性的方式进行状态变化监听，采用了笔者另一个库 [Observer-X](https://parg.co/bFA)，其基本用发如下：
+笔者在 [2015-我的前端之路:数据流驱动的界面](https://parg.co/bFo)中讨论了从以 DOM 为核心到数据流驱动的变化，本部分我们即讨论如何自动监听状态变化并且完成重渲染。这里我们采用监听 JavaScript 对象属性的方式进行状态变化监听，采用了笔者另一个库 [Observer-X](https://parg.co/bFA)，其基本用发如下：
 
 ```js
 import { observe } from '../../dist/observer-x';
@@ -343,10 +344,10 @@ setTimeout(() => {
   let state = observe(innerContext.state);
   ...
   state.listen(changes => {
-    renderFromStr(innerContext);
-    innerContext.hooks.updated && innerContext.hooks.updated();
+  renderFromStr(innerContext);
+  innerContext.hooks.updated && innerContext.hooks.updated();
   });
   ...
 ```
 
-完整的在线 Demo 可以查看  [基于 JSX 与 Observer-X 的简单计数器](http://wx-chevalier.github.io/ueact/browser/count.html)
+完整的在线 Demo 可以查看[基于 JSX 与 Observer-X 的简单计数器](http://wx-chevalier.github.io/ueact/browser/count.html)

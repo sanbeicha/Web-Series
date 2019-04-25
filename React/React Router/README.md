@@ -8,12 +8,11 @@
 
 ```js
 <Router history={appHistory}>
-     
   <Route path="/" component={withRouter(App)}>
     <IndexRoute component={withRouter(ClusterTabPane)} />
     <Route path="cluster" component={withRouter(ClusterTabPane)} />
   </Route>
-     <Route path="*" component={withRouter(ErrorPage)} />
+  <Route path="*" component={withRouter(ErrorPage)} />
 </Router>
 ```
 
@@ -65,17 +64,17 @@ const App = React.createClass({
 
     return (
       <div>
-                <h1>App</h1>       
+        <h1>App</h1> 
         <ul>
-                   
           <li>
             <a href="#/about">About</a>
           </li>
-                    <li>
+          <li>
             <a href="#/inbox">Inbox</a>
-          </li>       
+          </li> 
         </ul>
-                <Child />     
+        <Child />
+         
       </div>
     );
   }
@@ -101,23 +100,23 @@ import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
 // add some <Link> elements...
 const App = React.createClass({
   render() {
-    return (
-      <div>
-        <h1>App</h1>
-        {/* change the <a>s to <Link>s */}
-        <ul>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/inbox">Inbox</Link></li>
-        </ul>
+  return (
+  <div>
+  <h1>App</h1>
+  {/* change the <a>s to <Link>s */}
+  <ul>
+  <li><Link to="/about">About</Link></li>
+  <li><Link to="/inbox">Inbox</Link></li>
+  </ul>
 
 
-        {/*
-          next we replace `<Child>` with `this.props.children`
-          the router will figure out the children for us
-        */}
-        {this.props.children}
-      </div>
-    )
+  {/*
+  next we replace `<Child>` with `this.props.children`
+  the router will figure out the children for us
+  */}
+  {this.props.children}
+  </div>
+  )
   }
 })
 
@@ -126,11 +125,11 @@ const App = React.createClass({
 // It does all the fancy routing stuff for us.
 render((
   <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={Home} />
-      <Route path="about" component={About} />
-      <Route path="inbox" component={Inbox} />
-    </Route>
+  <Route path="/" component={App}>
+  <IndexRoute component={Home} />
+  <Route path="about" component={About} />
+  <Route path="inbox" component={Inbox} />
+  </Route>
   </Router>
 ), document.body)
 ```
@@ -143,8 +142,8 @@ const routes = {
   component: App,
   indexRoute: { component: Home },
   childRoutes: [
-    { path: 'about', component: About },
-    { path: 'inbox', component: Inbox },
+  { path: 'about', component: About },
+  { path: 'inbox', component: Inbox },
   ]
 }
 
@@ -159,16 +158,16 @@ import React from 'react'
 import { withRouter } from 'react-router'
 
 const Page = React.createClass({
-  componentDidMount() {
-    this.props.router.setRouteLeaveHook(this.props.route, () => {
-      if (this.state.unsaved)
-        return 'You have unsaved information, are you sure you want to leave this page?'
-    })
-  },
+componentDidMount() {
+this.props.router.setRouteLeaveHook(this.props.route, () => {
+if (this.state.unsaved)
+return 'You have unsaved information, are you sure you want to leave this page?'
+})
+},
 
-  render() {
-    return <div>Stuff</div>
-  }
+render() {
+return <div>Stuff</div>
+}
 })
 
 export default withRouter(Page)
@@ -181,9 +180,9 @@ router.push('/users/12')
 
 // or with a location descriptor object
 router.push({
-  pathname: '/users/12',
-  query: { modal: true },
-  state: { fromDashboard: true }
+pathname: '/users/12',
+query: { modal: true },
+state: { fromDashboard: true }
 })
 ```
 
@@ -234,7 +233,7 @@ browserHistory.push('/some/path')
 
 # 路由即组件
 
-在 React Router 3.x 中，我们只能静态地独立地声明路由配置，而不能与 React 组件混合声明。实际上 React 组件树本身就已然声明了视图的层次结构，我们在路由配置中再重复地声明这个视图的层次结构不免有所冗余。React Router 4 则着眼于所谓  Declarative Composability，即其不仅仅提供独立的路由声明，而是视作一系列导航组件集合；也就是所谓的路由即组件( Route is Component )，可以方便地集成进 React 组件树中。并且 React Router 4 提供了多种 Router，除了可以运行在浏览器环境中，还可以运行在 React Native 或者将路由信息存放在内存中从而能够运行在任意的 JavaScript 引擎中。本部分我们会介绍些 React Router V4 的基础概念，但是并不会急于详细描述 React Router V4 的配置与语法，而是着眼于抽丝剥茧地探索 React Router V4 的构建之道。React Router V4 秉持着所谓路由即组件的概念，那么我们可以想象我们期待的某个待路由的组件的声明方式应该如下这样可以混用路由与其他元素：
+在 React Router 3.x 中，我们只能静态地独立地声明路由配置，而不能与 React 组件混合声明。实际上 React 组件树本身就已然声明了视图的层次结构，我们在路由配置中再重复地声明这个视图的层次结构不免有所冗余。React Router 4 则着眼于所谓 Declarative Composability，即其不仅仅提供独立的路由声明，而是视作一系列导航组件集合；也就是所谓的路由即组件( Route is Component )，可以方便地集成进 React 组件树中。并且 React Router 4 提供了多种 Router，除了可以运行在浏览器环境中，还可以运行在 React Native 或者将路由信息存放在内存中从而能够运行在任意的 JavaScript 引擎中。本部分我们会介绍些 React Router V4 的基础概念，但是并不会急于详细描述 React Router V4 的配置与语法，而是着眼于抽丝剥茧地探索 React Router V4 的构建之道。React Router V4 秉持着所谓路由即组件的概念，那么我们可以想象我们期待的某个待路由的组件的声明方式应该如下这样可以混用路由与其他元素：
 
 ```js
 const Home = () => <h2>Home</h2>;
@@ -252,57 +251,52 @@ const Topics = ({ match }) => {
 
   return (
     <div>
-            <h2>Topics</h2>     
+      <h2>Topics</h2> 
       <ul>
-               
         {items.map(({ name, slug }) => (
           <li key={name}>
-                        <Link to={`${match.url}/${slug}`}>{name}</Link>         
+            <Link to={`${match.url}/${slug}`}>{name}</Link> 
           </li>
         ))}
-             
       </ul>
-            {items.map(({ name, slug }) => (
+      {items.map(({ name, slug }) => (
         <Route
           key={name}
           path={`${match.path}/${slug}`}
           render={() => <Topic topicId={name} />}
         />
       ))}
-           
       <Route
         exact
         path={match.url}
         render={() => <h3>Please select a topic.</h3>}
-      />   
+      />
+       
     </div>
   );
 };
 
 const App = () => (
   <div>
-       
     <ul>
-           
       <li>
         <Link to="/">Home</Link>
       </li>
-            <li>
+      <li>
         <Link to="/about">About</Link>
-      </li>      <li>
+      </li>  <li>
         <Link to="/topics">Topics</Link>
-      </li>   
+      </li> 
     </ul>
-        <hr />
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/topics" component={Topics} />
-     
+    <hr />
+    <Route exact path="/" component={Home} />
+    <Route path="/about" component={About} />
+    <Route path="/topics" component={Topics} />
   </div>
 );
 ```
 
-上述代码中  `Route` 会在当前 URL 与 `path` 属性值相符的时候渲染相关组件，而 `Link` 提供了声明式的，易使用的方式来在应用内进行跳转。换言之，`Link` 组件允许你更新当前 URL，而 `Route` 组件则是根据 URL 渲染组件。
+上述代码中`Route` 会在当前 URL 与 `path` 属性值相符的时候渲染相关组件，而 `Link` 提供了声明式的，易使用的方式来在应用内进行跳转。换言之，`Link` 组件允许你更新当前 URL，而 `Route` 组件则是根据 URL 渲染组件。
 
 ## 路由组件
 
@@ -339,35 +333,35 @@ static propTypes = {
 
 ```
 class Route extends Component {
-    ...
+  ...
 
-    // 判断路径是否匹配
+  // 判断路径是否匹配
 
-    const match = matchPath(
-      location.pathname, // 全局 DOM 变量
-      { path, exact }
-    )
-
-
-    if (!match) {
-      // 不匹配则直接返回
-      return null
-    }
+  const match = matchPath(
+  location.pathname, // 全局 DOM 变量
+  { path, exact }
+  )
 
 
-    if (component) {
-      // 如果设置了 Component 对象，则挂载该对象
-      return React.createElement(component, { match })
-    }
+  if (!match) {
+  // 不匹配则直接返回
+  return null
+  }
 
 
-    if (render) {
-      // 否则调用渲染函数
-      return render({ match })
-    }
+  if (component) {
+  // 如果设置了 Component 对象，则挂载该对象
+  return React.createElement(component, { match })
+  }
 
 
-    return null
+  if (render) {
+  // 否则调用渲染函数
+  return render({ match })
+  }
+
+
+  return null
   }
 }
 ```
@@ -376,7 +370,7 @@ class Route extends Component {
 
 ##  变化监听
 
-现在我们再回过头来考虑客户端路由中常见的跳转策略，一般来说用户只有两种方式会更新当前 URL。一种是用户点击了某个锚标签或者直接操作  `history`   对象的 `replace/push` 方法；另一种是用户点击前进/后退按钮。无论哪一种方式都要求我们的路由系统能够实时监听 URL 的变化，并且在 URL 发生变化时及时地做出响应，渲染出正确的页面。我们首先来考虑下如何处理用户点击前进/后退按钮。React Router 使用 [History](https://github.com/ReactTraining/history)  的 `.listen` 方法来监听当前 URL 的变化，其本质上还是直接监听 HTML5 的 `popstate` 事件。`popstate` 事件会在用户点击某个前进/后退按钮的时候触发；而在每次重渲染的时候，每个 `Route` 组件都会重现检测当前 URL 是否匹配其预设的路径参数。
+现在我们再回过头来考虑客户端路由中常见的跳转策略，一般来说用户只有两种方式会更新当前 URL。一种是用户点击了某个锚标签或者直接操作`history` 对象的 `replace/push` 方法；另一种是用户点击前进/后退按钮。无论哪一种方式都要求我们的路由系统能够实时监听 URL 的变化，并且在 URL 发生变化时及时地做出响应，渲染出正确的页面。我们首先来考虑下如何处理用户点击前进/后退按钮。React Router 使用 [History](https://github.com/ReactTraining/history)  的 `.listen` 方法来监听当前 URL 的变化，其本质上还是直接监听 HTML5 的 `popstate` 事件。`popstate` 事件会在用户点击某个前进/后退按钮的时候触发；而在每次重渲染的时候，每个 `Route` 组件都会重现检测当前 URL 是否匹配其预设的路径参数。
 
 ```
 class Route extends Component {
@@ -384,19 +378,19 @@ class Route extends Component {
 
 
   componentWillMount() {
-    // 监听状态变化
+  // 监听状态变化
 
-    addEventListener("popstate", this.handlePop)
+  addEventListener("popstate", this.handlePop)
   }
 
 
   componentWillUnmount() {
-    removeEventListener("popstate", this.handlePop)
+  removeEventListener("popstate", this.handlePop)
   }
 
 
   handlePop = () => {
-    this.forceUpdate()
+  this.forceUpdate()
   }
   ...
 
@@ -459,7 +453,7 @@ const matchPath = (pathname, options) => {
 | `/topics/props-v-state` | `/topics/components` | `null`                   |
 | `/topics`               | `/topics/components` | `['/topics']`            |
 
-这里大家就会看出来，我们会为每个 `<Route>`   实例创建一个 `match` 对象。在获取到 `match` 对象之后，我们需要再做如下判断是否匹配：
+这里大家就会看出来，我们会为每个 `<Route>` 实例创建一个 `match` 对象。在获取到 `match` 对象之后，我们需要再做如下判断是否匹配：
 
 ```
 const matchPath = (pathname, options) => {
@@ -468,8 +462,8 @@ const matchPath = (pathname, options) => {
 
 
   if (!match) {
-    // 不匹配则返回空
-    return null
+  // 不匹配则返回空
+  return null
   }
 
 
@@ -478,15 +472,15 @@ const matchPath = (pathname, options) => {
 
 
   if (exact && !isExact) {
-    // 判断是否需要精确匹配
-    return null
+  // 判断是否需要精确匹配
+  return null
   }
 
 
   return {
-    path,
-    url,
-    isExact,
+  path,
+  url,
+  isExact,
   }
 }
 ```
@@ -516,23 +510,23 @@ class Link extends Component {
 class Link extends Component {
   ...
   handleClick = (event) => {
-    const { replace, to } = this.props
-    event.preventDefault()
-    // route here.
+  const { replace, to } = this.props
+  event.preventDefault()
+  // route here.
   }
 
   render() {
-    const { to, children} = this.props
-    return (
-      <a href={to} onClick={this.handleClick}>
-        {children}
-      </a>
-    )
+  const { to, children} = this.props
+  return (
+  <a href={to} onClick={this.handleClick}>
+  {children}
+  </a>
+  )
   }
 }
 ```
 
-这里实际的跳转操作我们还是执行 [History](https://github.com/reacttraining/history)  中的抽象的  `push` 与 `replace` 函数，在使用 `browserHistory` 的情况下我们本质上还是使用 HTML5 中的 `pushState` 与 `replaceState` 函数。`pushState` 与 `replaceState` 函数都要求输入三个参数，首先是一个与最新的历史记录相关的对象，在 React Router 中我们并不需要该对象，因此直接传入一个空对象；第二个参数是标题参数，我们同样不需要改变该值，因此直接传入空即可；最后第三个参数则是我们需要的，用于指明新的相对地址的字符串：
+这里实际的跳转操作我们还是执行 [History](https://github.com/reacttraining/history)  中的抽象的`push` 与 `replace` 函数，在使用 `browserHistory` 的情况下我们本质上还是使用 HTML5 中的 `pushState` 与 `replaceState` 函数。`pushState` 与 `replaceState` 函数都要求输入三个参数，首先是一个与最新的历史记录相关的对象，在 React Router 中我们并不需要该对象，因此直接传入一个空对象；第二个参数是标题参数，我们同样不需要改变该值，因此直接传入空即可；最后第三个参数则是我们需要的，用于指明新的相对地址的字符串：
 
 ```
 const historyPush = (path) => {
@@ -552,11 +546,11 @@ const historyReplace = (path) => {
 class Link extends Component {
   ...
   handleClick = (event) => {
-    const { replace, to } = this.props
-    event.preventDefault()
+  const { replace, to } = this.props
+  event.preventDefault()
 
 
-    replace ? historyReplace(to) : historyPush(to)
+  replace ? historyReplace(to) : historyPush(to)
   }
   ...
 
@@ -582,14 +576,14 @@ const unregister = (comp) => instances.splice(instances.indexOf(comp), 1)
 class Route extends Component {
   ...
   componentWillMount() {
-    addEventListener("popstate", this.handlePop)
-    register(this)
+  addEventListener("popstate", this.handlePop)
+  register(this)
   }
 
 
   componentWillUnmount() {
-    unregister(this)
-    removeEventListener("popstate", this.handlePop)
+  unregister(this)
+  removeEventListener("popstate", this.handlePop)
   }
 
 

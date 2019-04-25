@@ -37,18 +37,18 @@ serve((req, res) => {
   // Note that req.url here should be the full URL path from
   // the original request, including the query string.
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-    if (error) {
-      res.status(500).send(error.message)
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    } else if (renderProps) {
-      // You can also check renderProps.components or renderProps.routes for
-      // your "not found" component or route respectively, and send a 404 as
-      // below, if you're using a catch-all route.
-      res.status(200).send(renderToString(<RouterContext {...renderProps} />))
-    } else {
-      res.status(404).send('Not found')
-    }
+  if (error) {
+  res.status(500).send(error.message)
+  } else if (redirectLocation) {
+  res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+  } else if (renderProps) {
+  // You can also check renderProps.components or renderProps.routes for
+  // your "not found" component or route respectively, and send a 404 as
+  // below, if you're using a catch-all route.
+  res.status(200).send(renderToString(<RouterContext {...renderProps} />))
+  } else {
+  res.status(404).send('Not found')
+  }
   })
 })
 ```
@@ -67,21 +67,21 @@ serve((req, res) => {
 ```
 export default (html, initialState = {}, scripts = [], styles = []) => {
   return `
-    <!doctype html>
-    <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        ${styleMapper(styles)}
-      </head>
-      <body>
-        <div id="root">${html}</div>        
-      </body>
-      ${scriptMapper(scripts)}
-      <script>
-        window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
-      </script>
-    </html>
+  <!doctype html>
+  <html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  ${styleMapper(styles)}
+  </head>
+  <body>
+  <div id="root">${html}</div>
+  </body>
+  ${scriptMapper(scripts)}
+  <script>
+  window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+  </script>
+  </html>
   `;
 };
 ```
@@ -91,8 +91,8 @@ export default (html, initialState = {}, scripts = [], styles = []) => {
 ```
 {
   user: {
-    username: "NodeSecurity",
-    bio: "as</script><script>alert('You have an XSS vulnerability!')</script>"
+  username: "NodeSecurity",
+  bio: "as</script><script>alert('You have an XSS vulnerability!')</script>"
   }
 }
 ```
