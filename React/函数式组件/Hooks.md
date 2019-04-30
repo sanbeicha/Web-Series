@@ -108,6 +108,8 @@ export default React.memo(Button); // ✅ Uses shallow comparison
 
 # useReducer
 
+示例可以参考 [react-hooks-reducer-count](https://codesandbox.io/s/6yy0933923)
+
 ## dispatch
 
 # 坑杂记
