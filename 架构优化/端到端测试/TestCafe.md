@@ -6,9 +6,6 @@
 /**
  * Testcafe browser provider plugin for the nightmare browser automation library.
  */
-import Nightmare from 'nightmare';
-import debug from 'debug';
-
 export default {
   // reference to Nightmare instance
   nightmare: null, // map with open page references

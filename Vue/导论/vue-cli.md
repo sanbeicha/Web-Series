@@ -68,30 +68,28 @@ $ npm run build
 
 进入项目根目录之后我们使用`npm intsall`命令安装所有依赖，所有的依赖被声明在`package.json`文件中。文件`index.html`中包含了如下 HTML 代码：
 
-```
+```html
 <!DOCTYPE html>
 <html>
-  <head>
-  <meta charset="utf-8">
-  <title>vueapp01</title>
-  </head>
-  <body>
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
-  </body>
+  <head>
+    <meta charset="utf-8" />
+    <title>vueapp01</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
 </html>
 ```
 
 该文件是整个应用的入口点，注意，无论你把`<div>`元素放在哪，只要保证其`id`属性为`app`即可，该元素是整个由 Vue.js 生成文件的插入点。然后我们看下 src 文件夹中的 main.js 文件，该文件是 Vue 应用初始化的地方：
 
-```
-import Vue from 'vue'
-import App from './App'
+```js
 new Vue({
-  el: '#app',
-  template: '<App/>',
-  components: { App }
-})
+  el: '#app',
+  template: '<App/>',
+  components: { App }
+});
 ```
 
 文件首部我们发现两个引入语句：
