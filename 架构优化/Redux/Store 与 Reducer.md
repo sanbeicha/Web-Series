@@ -57,8 +57,8 @@ let reducer = (state = [], action) => {
 
 在 Redux 应用中，所有的 state 都被保存在一个单一对象中。建议在写代码前先想一下这个对象的结构。注意，在 reducer 中接收的 state 参数，并不是一个完整的 state，而是以该 reducer 为键名的值。以 todo 应用为例，需要保存两个不同的内容：
 
-* 当前选中的任务过滤条件。
-* 真实的任务列表。
+- 当前选中的任务过滤条件。
+- 真实的任务列表。
 
 通常，这个 state 树还需要存放其它一些数据，例如 UI 相关的 state。这样做没问题，但尽量把这些数据与 UI 相关的 state 分开。不过笔者觉得，与 UI 相关的临时性状态，还是可以放到组件内部处理的。
 
@@ -87,8 +87,8 @@ let reducer = (state = [], action) => {
 
 之所以称作 reducer 是因为和 [`Array.prototype.reduce(reducer, ?initialValue)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) 格式很像。保持 reducer 纯净非常重要。**永远不要**在 reducer 里做这些操作：
 
-* 修改传入参数；
-* 执行有副作用的操作，如 API 请求和路由跳转。
+- 修改传入参数；
+- 执行有副作用的操作，如 API 请求和路由跳转。
 
 在[高级篇](http://camsong.github.io/redux-in-chinese/docs/advanced/index.html)里会介绍如何执行有副作用的操作。现在只需要谨记 reducer 一定要保持纯净。**只要传入参数一样，返回必须一样。没有特殊情况、没有副作用，没有 API 请求、没有修改参数，单纯执行计算。**明白了这些之后，就可以开始编写 reducer，并让它来处理之前定义过的 [actions](http://camsong.github.io/redux-in-chinese/docs/basics/Actions.html)。我们在开始时定义默认的 state。Redux 首次执行时，state 为 `undefined`，这时候会返回默认 state。
 
@@ -171,12 +171,12 @@ var newData = update(myData, {
 
 其中以`$`为前缀的键被称为命令，而可变的数据称为目标，常用的几个命令为：
 
-* `{$push: array}`: 将 `array`中的元素添加到目标尾。
-* `{$unshift: array}`:从目标数组中移除所有在`array`中的元素。
-* `{$splice: array of arrays}` for each item in `arrays` call `splice()` on the target with the parameters provided by the item.
-* `{$set: any}` : 替换整个目标
-* `{$merge: object}`:根据键值将目标与`object`合并
-* `{$apply: function}` :输入当前值，并且根据新的值进行更新
+- `{$push: array}`: 将 `array`中的元素添加到目标尾。
+- `{$unshift: array}`:从目标数组中移除所有在`array`中的元素。
+- `{$splice: array of arrays}` for each item in `arrays` call `splice()` on the target with the parameters provided by the item.
+- `{$set: any}` : 替换整个目标
+- `{$merge: object}`:根据键值将目标与`object`合并
+- `{$apply: function}` :输入当前值，并且根据新的值进行更新
 
 #### 简单的插入
 
@@ -476,10 +476,10 @@ const reducer = combineReducers(allReducers);
 
 **Store** 就是把它们联系到一起的对象。Store 有以下职责：
 
-* 维持应用的 state；
-* 提供 [`getState()`](http://camsong.github.io/redux-in-chinese/docs/api/Store.html#getState) 方法获取 state；
-* 提供 [`dispatch(action)`](http://camsong.github.io/redux-in-chinese/docs/api/Store.html#dispatch) 方法更新 state；
-* 通过 [`subscribe(listener)`](http://camsong.github.io/redux-in-chinese/docs/api/Store.html#subscribe) 注册监听器。
+- 维持应用的 state；
+- 提供 [`getState()`](http://camsong.github.io/redux-in-chinese/docs/api/Store.html#getState) 方法获取 state；
+- 提供 [`dispatch(action)`](http://camsong.github.io/redux-in-chinese/docs/api/Store.html#dispatch) 方法更新 state；
+- 通过 [`subscribe(listener)`](http://camsong.github.io/redux-in-chinese/docs/api/Store.html#subscribe) 注册监听器。
 
 再次强调一下 **Redux 应用只有一个单一的 store**。当需要拆分处理数据的逻辑时，使用 [reducer 组合](http://camsong.github.io/redux-in-chinese/docs/basics/Reducers.html#splitting-reducers) 而不是创建多个 store。
 
