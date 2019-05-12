@@ -10,7 +10,7 @@
 
 Thunk 这个单词有点拗口，其代指那些包含了可以延时求值的表达式的函数，譬如下面的代码对比：
 
-```
+```js
 // 计算 1 + 2 的过程是立即发生的
 // x === 3
 let x = 1 + 2;
@@ -299,7 +299,7 @@ function middleware3(store) {
 
 function reducer(state, action) {
   if (action.type === 'MIDDLEWARE_TEST') {
-    console.log('======= G =======');  
+    console.log('======= G =======');
   }
   return {};
 }
@@ -356,7 +356,7 @@ nextState <————————————— |     G     |  |    |    |
 
 # Saga
 
-* [Redux Saga 实践](http://yanqiw.github.io/react/2017/03/05/redux-saga.html)
+- [Redux Saga 实践](http://yanqiw.github.io/react/2017/03/05/redux-saga.html)
 
 > [advanced-redux-action-types](https://medium.com/@zackargyle/advanced-redux-action-types-d5a71ed44e16#.hngz4r406)
 
@@ -453,7 +453,7 @@ boundCompleteTodo(index);
 
 store 里能直接通过 [`store.dispatch()`](http://camsong.github.io/redux-in-chinese/docs/api/Store.html#dispatch) 调用 `dispatch()` 方法，但是多数情况下你会使用 [react-redux](http://github.com/gaearon/react-redux) 提供的 `connect()` 帮助器来调用。[`bindActionCreators()`](http://camsong.github.io/redux-in-chinese/docs/api/bindActionCreators.html) 可以自动把多个 action 创建函数 绑定到 `dispatch()` 方法上。
 
-* Example
+- Example
 
 ```javascript
 /*
@@ -497,16 +497,16 @@ export function setVisibilityFilter(filter) {
 
 把 action creators 转成拥有同名 keys 的对象，但使用 dispatch 把每个 action creator 包围起来，这样可以直接调用它们。一般情况下你可以直接在 Store 实例上调用 dispatch。如果你在 React 中使用 Redux，react-redux 会提供 dispatch 。惟一使用 bindActionCreators 的场景是当你需要把 action creator 往下传到一个组件上，却不想让这个组件觉察到 Redux 的存在，而且不希望把 Redux store 或 dispatch 传给它。为方便起见，你可以传入一个函数作为第一个参数，它会返回一个函数。参数：
 
-* actionCreators (Function or Object): 一个 action creator，或者键值是 action creators 的对象。
-* dispatch (Function): 一个 dispatch 函数，由 Store 实例提供。# State
+- actionCreators (Function or Object): 一个 action creator，或者键值是 action creators 的对象。
+- dispatch (Function): 一个 dispatch 函数，由 Store 实例提供。# State
 
 返回值：
 
-* (Function or Object): 一个与原对象类似的对象，只不过这个对象中的的每个函数值都可以直接 dispatch action。如果传入的是一个函数，返回的也是一个函数。
+- (Function or Object): 一个与原对象类似的对象，只不过这个对象中的的每个函数值都可以直接 dispatch action。如果传入的是一个函数，返回的也是一个函数。
 
 为什么不直接把 action creators 绑定到 store 实例上，就像传统 Flux 那样？问题是这样做的话如果开发同构应用，在服务端渲染时就不行了。多数情况下，你 每个请求都需要一个独立的 store 实例，这样你可以为它们提供不同的数据，但是在定义的时候绑定 action creators，你就可以使用一个唯一的 store 实例来对应所有请求了。
 
-* TodoActionCreators.js
+- TodoActionCreators.js
 
 ```
 export function addTodo(text) {
@@ -524,7 +524,7 @@ export function removeTodo(id) {
 }
 ```
 
-* SomeComponent.js
+- SomeComponent.js
 
 ```
 import { Component } from 'react';
@@ -590,11 +590,11 @@ export default connect(
 Given that “Redux can be written in a few lines of Rx using the scan operator”, why use Redux at all?
 The answer to this is pretty simple: Redux has a well defined existing pattern and guidance for use within React. More importantly, Redux has a lot of nice community-driven tooling that we wanted to be able to take advantage of. At the end of the day, it doesn’t matter if the reducers are run via an Rx `scan` or Redux. What matters is the productivity and performance and Redux and Redux’s tooling provides those two things well
 
-* [can-i-dispatch-multiple-actions-from-redux-action-creators](http://jamesknelson.com/can-i-dispatch-multiple-actions-from-redux-action-creators/)
+- [can-i-dispatch-multiple-actions-from-redux-action-creators](http://jamesknelson.com/can-i-dispatch-multiple-actions-from-redux-action-creators/)
 
 ## MiddleWare Listener Pattern
 
-* [the-middleware-listener-pattern-better-asynchronous-actions-in-redux](https://medium.com/@alexandereardon/the-middleware-listener-pattern-better-asynchronous-actions-in-redux-16164fb6186f#.wy16tsyck)
+- [the-middleware-listener-pattern-better-asynchronous-actions-in-redux](https://medium.com/@alexandereardon/the-middleware-listener-pattern-better-asynchronous-actions-in-redux-16164fb6186f#.wy16tsyck)
 
 # Action Utils:Action 的一些辅助工具
 
@@ -753,11 +753,11 @@ export default reqActionAndReducerCreator;
 
 [Thunk middleware](https://github.com/gaearon/redux-thunk) 并不是 Redux 处理异步 action 的唯一方式。你也可以使用 [redux-promise](https://github.com/acdlite/redux-promise) 或者 [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) 来 dispatch Promise 替代函数。你也可以使用 [redux-rx](https://github.com/acdlite/redux-rx) dispatch Observable。你甚至可以写一个自定义的 middleware 来描述 API 请求，就像这个[真实场景的案例](http://camsong.github.io/redux-in-chinese/docs/introduction/Examples.html#real-world)中的做法一样。你也可以先尝试一些不同做法，选择喜欢的，并使用下去，不论有没有使用到 middleware 都行。　当调用异步 API 时，有两个非常关键的时刻：发起请求的时刻，和接收到响应的时刻 (也可能是超时)。这两个时刻都可能会更改应用的 state；为此，你需要 dispatch 普通的同步 action。一般情况下，每个 API 请求都至少需要 dispatch 三个不同的 action：
 
-* **一个通知 reducer 请求开始的 action。**
+- **一个通知 reducer 请求开始的 action。**
   　对于这种 action，reducer 可能会切换一下 state 中的 `isFetching` 标记。以此来告诉 UI 来显示进度条。
-* **一个通知 reducer 请求成功结束的 action。**
+- **一个通知 reducer 请求成功结束的 action。**
   　对于这种 action，reducer 可能会把接收到的新数据合并到 state 中，并重置 `isFetching`。UI 则会隐藏进度条，并显示接收到的数据。
-* **一个通知 reducer 请求失败的 action。**
+- **一个通知 reducer 请求失败的 action。**
   　对于这种 action，reducer 可能会重置 `isFetching`。或者，有些 reducer 会保存这些失败信息，并在 UI 里显示出来。
 
 为了区分这三种 action，可能在 action 里添加一个专门的 `status` 字段作为标记位：
