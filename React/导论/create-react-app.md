@@ -1,4 +1,4 @@
-[![返回目录](https://parg.co/UY3)](https://parg.co/U0I)
+[![返回目录](https://parg.co/UY3)](https://github.com/wx-chevalier/Web-Series)
 
 # 基于 create-react-app 的快速开发与应用调试
 
@@ -610,8 +610,7 @@ class TodoItem extends Component {
           <label onDoubleClick={this.handleDoubleClick.bind(this)}>
             {todo.text} 
           </label>{' '}
-          <button className="destroy" onClick={() => deleteTodo(todo.id)} />
-           
+          <button className="destroy" onClick={() => deleteTodo(todo.id)} /> 
         </div>
       );
     }

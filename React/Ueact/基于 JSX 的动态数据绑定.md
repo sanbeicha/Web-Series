@@ -1,4 +1,4 @@
-[![返回目录](https://parg.co/UY3)](https://parg.co/U0I)
+[![返回目录](https://parg.co/UY3)](https://github.com/wx-chevalier/Web-Series)
 
 # 基于 JSX 的动态数据绑定
 
@@ -180,12 +180,9 @@ export default (
       </section>{' '}
     </section>
     <svg>
-      <circle cx="64" cy="64" r="64" style="fill: #00ccff;" />
-       {' '}
+      <circle cx="64" cy="64" r="64" style="fill: #00ccff;" /> {' '}
     </svg>
-    <br />
-     {' '}
-    <span id="count" style={{ color: 'red' }}>
+    <br />  <span id="count" style={{ color: 'red' }}>
       {state.count} {' '}
     </span>{' '}
   </div>
