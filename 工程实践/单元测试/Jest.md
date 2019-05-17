@@ -1,4 +1,4 @@
-[![返回目录](https://parg.co/UYp)](https://github.com/wx-chevalier/Web-Series/)
+[![返回目录](https://i.postimg.cc/50XLzC7C/image.png)](https://github.com/wx-chevalier/Web-Series/)
 
 # 基于 Jest 的单元测试
 

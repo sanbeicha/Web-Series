@@ -1,4 +1,4 @@
-[![返回目录](https://parg.co/UY3)](https://github.com/wx-chevalier/Web-Series)
+[![返回目录](https://i.postimg.cc/50XLzC7C/image.png)](https://github.com/wx-chevalier/Web-Series)
 
 将整个更新划分为多个原子性的任务，这就保证了原本完整的组件的更新流程可以被中断与恢复。在浏览器的空闲期执行这些任务并且区别高优先级与低优先级的任务
 

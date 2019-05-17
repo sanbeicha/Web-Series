@@ -1,6 +1,6 @@
 ![封面](https://parg.co/UdD)
 
-# [现代 Web 开发--基础篇](https://parg.co/UHU)
+# [现代 Web 开发--基础篇](https://github.com/wx-chevalier/Web-Series)
 
 `Copyright © 2017 王下邀月熊`
 
