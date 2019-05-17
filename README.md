@@ -2,7 +2,7 @@
 
 [中文版本](./README.md) | [English Version](./README-en.md)
 
-# [现代 Web 开发基础与工程实践](https://parg.co/b4n)
+# 现代 Web 开发基础与工程实践
 
 `Copyright © 2018 王下邀月熊`
 
