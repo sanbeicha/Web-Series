@@ -56,10 +56,6 @@ Web 前端开发可以追溯于 1991 年蒂姆·伯纳斯-李公开提及 HTML �
 
 着眼全栈，经过多年的发展，Node.js 已经完全具备了支撑企业级应用的能力，在 Lowe、Netflix、阿里等国内外诸多的公司中有着海量的实践；并且 Node.js 天然地语言亲和性，使开发人员更易承担全栈的职责。随着微服务架构以及云原生，Serverless 等概念的兴起，后端的接口渐渐变得原子性，微服务的接口也不再直接面向页面，前端的调用变得复杂了。于是以 GraphQL 为代表的 BFF（Backend For Frontend）理念应运而生，在微服务和前端中间，加了一个 BFF 层，由 BFF 对接口进行聚合、裁剪后，再输出给前端。
 
-[![](https://github.com/wx-chevalier/OSS/blob/master/ProcessOn/IT%E6%9E%B6%E6%9E%84.png?raw=true)](https://www.processon.com/view/link/59c200c0e4b0cfa0d53bae4a)
-
-[![](https://github.com/wx-chevalier/OSS/blob/master/ProcessOn/%E7%8E%B0%E4%BB%A3Web%E5%BC%80%E5%8F%91.png?raw=true)](https://www.processon.com/view/link/59c20128e4b0cfa0d53bae9a)
-
 BFF 在解决接口协调与聚合问题的同时，也承载了原本后端的并发压力，这也给前端工程师带来了很多的开发与运维压力。Serverless 则是能够缓解这种问题，我们可以使用函数来实现接口的聚合裁剪；前端对于 BFF 的请求被转化为对 FaaS 的 HTTP 触发器的触发，这个函数中来实现针对该请求的业务逻辑，比如调用多个微服务获取数据，然后再将处理结果返回给前端。这样运维的压力，就由以往的 BFF Server 转向了 FaaS 服务，前端再也不用关心服务器了。Serverless 同样也能够应用到服务端渲染中，将以往的每个路由，都拆分为一个个函数，再在 FaaS 上部署对应的函数。这样用户请求的 path，对应的就是每个单独的函数。通过这种方式，就将运维操作转移到了 FaaS 平台，前端做服务端渲染，就不用再关心服务端程序的运维部署了。此外，像微信、支付宝等小程序也提供了符合 Serverless 理念的云开发平台，赋能业务前端迅速迭代。
 
 # 版权
