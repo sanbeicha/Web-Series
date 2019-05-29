@@ -8,33 +8,36 @@
 
 ## 元素构建
 
-笔者在[JavaScript 语法树与代码转化实践](https://zhuanlan.zhihu.com/p/28054817)  一文中介绍过 Babel 的原理与用法，这里我们仍然使用 Babel 作为 JSX 语法解析工具；为了将 JSX 声明转化为 `createElement` 调用，这里需要在项目的 .babelrc 文件中做如下配置：
+笔者在 [JavaScript 语法树与代码转化实践](https://zhuanlan.zhihu.com/p/28054817)一文中介绍过 Babel 的原理与用法，这里我们仍然使用 Babel 作为 JSX 语法解析工具；为了将 JSX 声明转化为 `createElement` 调用，这里需要在项目的 .babelrc 文件中做如下配置：
 
 ```json
-  "plugins": [
-  "transform-decorators-legacy",
-  "async-to-promises",
-  [
-  "transform-react-jsx", {
-  "pragma": "createElement"
-  }
-  ]
-  ],
+{
+  "plugins": [
+    "transform-decorators-legacy",
+    "async-to-promises",
+    [
+      "transform-react-jsx",
+      {
+        "pragma": "createElement"
+      }
+    ]
+  ]
+}
 ```
 
 这里的 [createElement 函数](https://github.com/wx-chevalier/Ueact/tree/master/src/platform/dom)声明如下：
 
-```
+```js
 /**
- * Description 从 JSX 中构建虚拟 DOM
- * @param tagName 标签名
- * @param props 属性
- * @param childrenArgs 子元素列表
- */
+ * Description 从 JSX 中构建虚拟 DOM
+ * @param tagName 标签名
+ * @param props 属性
+ * @param childrenArgs 子元素列表
+ */
 export function createElement(
-  tagName: string,
-  props: propsType,
-  ...childrenArgs: [any]
+  tagName: string,
+  props: propsType,
+  ...childrenArgs: [any]
 ) {}
 ```
 
@@ -336,15 +339,13 @@ setTimeout(() => {
 核心即是当某个对象的属性发生变化(增删赋值)时，触发注册的回调事件；即：
 
 ```js
-  ...
-  // 将内部状态转化为可观测变量
-  let state = observe(innerContext.state);
-  ...
-  state.listen(changes => {
-  renderFromStr(innerContext);
-  innerContext.hooks.updated && innerContext.hooks.updated();
-  });
-  ...
+// ...
+// 将内部状态转化为可观测变量
+let state = observe(innerContext.state); // ...
+state.listen(changes => {
+  renderFromStr(innerContext);
+  innerContext.hooks.updated && innerContext.hooks.updated();
+}); // ...
 ```
 
 完整的在线 Demo 可以查看[基于 JSX 与 Observer-X 的简单计数器](http://wx-chevalier.github.io/ueact/browser/count.html)
