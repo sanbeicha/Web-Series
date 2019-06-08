@@ -65,32 +65,6 @@ instance.expensive(1000).then(count => {
 
 You cannot use Local Storage in service workers. It was decided that service workers should not have access to any synchronous APIs. You can use IndexedDB instead, or communicate with the controlled page using postMessage().
 
-# 消息传递
-
-创建完毕之后，我们主要依靠 postMessage 与 onmessage 回调来在 Worker 线程与 UI 线程之间进行消息传递：
-
-```js
-// worker.js
-// 向主线程发送消息
-postMessage('event from worker');
-// 接收来自主线程的消息
-onmessage = function(event) {};
-
-// UI
-worker.onmessage = function(event) {};
-worker.postMessage('event from ui');
-
-// 关闭当前 worker
-worker.terminate();
-```
-
-主线程与 Web Workers 之间的通信，并不是对象引用的传递，而是序列化/反序列化的过程，当对象非常庞大时，序列化和反序列化都会消耗大量计算资源，降低运行速度。对象转移使用方式很简单，给 postMessage 增加一个参数，把对象引用传过去即可：
-
-```js
-var ab = new ArrayBuffer(1);
-worker.postMessage(ab, [ab]);
-```
-
 # 网络请求
 
 By default, cookies are not included with fetch requests, but you can include them as follows: fetch(url, {credentials: 'include'}).
