@@ -60,32 +60,6 @@ const puppeteer = require('puppeteer');
 })();
 ```
 
-## 脚本执行
-
-```js
-const puppeteer = require('puppeteer');
-
-(async () => {
-  const browser = await puppeteer.launch();
-
-  const page = await browser.newPage();
-
-  await page.goto('https://example.com'); // Get the "viewport" of the page, as reported by the page.
-
-  const dimensions = await page.evaluate(() => {
-    return {
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
-      deviceScaleFactor: window.devicePixelRatio
-    };
-  });
-
-  console.log('Dimensions:', dimensions);
-
-  await browser.close();
-})();
-```
-
 # 页面操作
 
 ## 脚本执行
@@ -115,6 +89,17 @@ const puppeteer = require('puppeteer');
   await browser.close();
 })();
 ```
+
+如果需要传递参数，则在 evaluate 的后续参数传入需要传入的参数：
+
+```js
+const links = await page.evaluate(evalVar => {
+  console.log(evalVar); // should be defined now
+  // ...
+}, evalVar);
+```
+
+在 Puppeteer 中我们还可以添加外部的脚本执行操作：
 
 ```js
 const puppeteer = require('puppeteer');
