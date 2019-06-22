@@ -1,4 +1,4 @@
-[![返回目录](https://parg.co/US3)](https://parg.co/UGZ) 
+[![返回目录](https://i.postimg.cc/50XLzC7C/image.png)](https://parg.co/UGZ) 
  
 This is still fairly simple yet, if we need to move data from the App component down to CommentItem component, we have to send down to CommentList first before CommentItem. It's even more tedious when raising events from CommentItem to be handled by the App component.
 
