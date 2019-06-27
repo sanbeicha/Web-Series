@@ -22,14 +22,6 @@ const store = createStore(rootReducer);
 [Action](http://camsong.github.io/redux-in-chinese/docs/basics/Actions.html) 只是描述了**有事情发生了**这一事实，并没有指明应用如何更新 state。而这正是 reducer 要做的事情。一个基本的 Reducer 如下所示：
 
 ```js
-/**
- * Reducer
- *
- * @param State
- * @param Action
- *
- * @return new State
- */
 let reducer = (state = [], action) => {
   switch (action.type) {
     case ADD_ITEM:
