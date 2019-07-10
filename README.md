@@ -4,7 +4,7 @@
 
 # 现代 Web 开发基础与工程实践
 
-`Copyright © 2018 王下邀月熊`
+`Copyright © 2019 王下邀月熊`
 
 Web 开发，入门易，深度难，分为初窥门径、登堂入室、融会贯通等阶段，如果您是首次阅读笔者的系列文章，建议前往[某熊的技术之路指北 ☯](https://github.com/wx-chevalier/Developer-Zero-To-Mastery)以做整体了解。
 
