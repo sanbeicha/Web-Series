@@ -1,8 +1,0 @@
-# 前端演化
-
-[![&#x8FD4;&#x56DE;&#x76EE;&#x5F55;](https://i.postimg.cc/50XLzC7C/image.png)](https://parg.co/UGZ)
-
-* [支付宝前端应用架构的发展和选择](https://github.com/sorrycc/blog/issues/6)
-
-![](https://coding.net/u/hoteam/p/Cache/git/raw/master/2016/10/2/1-Pn3YSLyTna0fPVF4rH1nZA.jpeg)
-
