@@ -1,0 +1,44 @@
+# 元素操作
+
+[![&#x8FD4;&#x56DE;&#x76EE;&#x5F55;](https://i.postimg.cc/50XLzC7C/image.png)](https://github.com/wx-chevalier/Web-Series)
+
+## 元素操作
+
+## 元素选择
+
+```javascript
+$('div span:last-child')
+  .css({ color: 'red', fontSize: '80%' })
+  .hover(
+    function() {
+      $(this).addClass('solast');
+    },
+    function() {
+      $(this).removeClass('solast');
+    }
+  );
+```
+
+```javascript
+$('li').each(function(index) {
+  // this 指向的还是 DOM 对象
+  console.log(index + ': ' + $(this).text());
+});
+```
+
+## 元素选择
+
+## 属性操作
+
+### 样式类
+
+```javascript
+// 删除全部样式类
+$('p:odd').removeClass();
+
+// 删除指定样式类
+$('p:odd').removeClass('blue under');
+```
+
+## 元素动画
+

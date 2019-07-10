@@ -1,40 +1,42 @@
+# Introduction
+
 ![image](https://user-images.githubusercontent.com/5803001/43637212-f62daf14-9746-11e8-84e0-78247690b3c6.png)
 
-[中文版本](./README.md) | [English Version](./README-en.md)
+[中文版本](./) \| [English Version](https://github.com/wx-chevalier/Web-Series/tree/c711c90bb9ca3cdaba747ee0df9db75aa425a1d5/README-en.md)
 
-# 现代 Web 开发基础与工程实践
+## 现代 Web 开发基础与工程实践
 
 `Copyright © 2018 王下邀月熊`
 
 Web 开发，入门易，深度难，分为初窥门径、登堂入室、融会贯通等阶段，如果您是首次阅读笔者的系列文章，建议前往[某熊的技术之路指北 ☯](https://github.com/wx-chevalier/Developer-Zero-To-Mastery)以做整体了解。
 
-# Nav | 导航
+## Nav \| 导航
 
 如果您对于 JavaScript 基础语法尚不完全了解，那么建议您首先浏览[现代 JavaScript 语法基础与工程实践](https://parg.co/UIj)或者 [JavaScript-CheatSheet](https://github.com/wx-chevalier/Awesome-CheatSheets/blob/master/ProgrammingLanguage/JavaScript/JavaScript-CheatSheet.md) 以了解基础的 JavaScript 语法及实践应用。
 
 您可以通过以下任一方式阅读笔者的系列文章，涵盖了技术资料归纳、编程语言与理论、Web 与大前端、服务端开发与基础架构、云计算与大数据、数据科学与人工智能、产品设计等多个领域：
 
-- 在 Gitbook 中在线浏览，每个系列对应各自的 Gitbook 仓库。
+* 在 Gitbook 中在线浏览，每个系列对应各自的 Gitbook 仓库。
 
 | [Awesome Lists](https://ngte-al.gitbook.io/i/) | [Awesome CheatSheets](https://ngte-ac.gitbook.io/i/) | [Awesome Interviews](https://github.com/wx-chevalier/Developer-Zero-To-Mastery/tree/master/Interview) | [Awesome RoadMaps](https://github.com/wx-chevalier/Developer-Zero-To-Mastery/tree/master/RoadMap) | [Awesome-CS-Books-Warehouse](https://github.com/wx-chevalier/Awesome-CS-Books-Warehouse) |
-| ---------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| :--- | :--- | :--- | :--- | :--- |
 
 
 | [编程语言理论与实践](https://ngte-pl.gitbook.io/i/) | [软件工程、数据结构与算法、设计模式、软件架构](https://ngte-se.gitbook.io/i/) | [现代 Web 开发基础与工程实践](https://ngte-web.gitbook.io/i/) | [大前端混合开发与数据可视化](https://ngte-fe.gitbook.io/i/) | [服务端开发实践与工程架构](https://ngte-be.gitbook.io/i/) | [分布式基础架构](https://ngte-infras.gitbook.io/i/) | [数据科学，人工智能与深度学习](https://ngte-aidl.gitbook.io/i/) | [产品设计与用户体验](https://ngte-pd.gitbook.io/i/) |
-| --------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------- |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 
 
-- 前往 [xCompass https://wx-chevalier.github.io](https://wx-chevalier.github.io/home/#/search) 交互式地检索、查找需要的文章/链接/书籍/课程，或者关注微信公众号：某熊的技术之路。
+* 前往 [xCompass https://wx-chevalier.github.io](https://wx-chevalier.github.io/home/#/search) 交互式地检索、查找需要的文章/链接/书籍/课程。
 
 ![](https://i.postimg.cc/3RVYtbsv/image.png)
 
-- 在下文的 [MATRIX 文章与代码矩阵 https://github.com/wx-chevalier/Developer-Zero-To-Mastery](https://github.com/wx-chevalier/Developer-Zero-To-Mastery) 中查看文章与项目的源代码。
+* 在下文的 [MATRIX 文章与代码矩阵 https://github.com/wx-chevalier/Developer-Zero-To-Mastery](https://github.com/wx-chevalier/Developer-Zero-To-Mastery) 中查看文章与项目的源代码。
 
-| [基础篇](./基础) | [工程实践篇](./工程实践) | [架构优化篇](./架构优化篇) | [React 篇](./React) | [Vue 篇](./Vue) |
-| ---------------- | ------------------------ | -------------------------- | ------------------- | --------------- |
+| [基础篇](https://github.com/wx-chevalier/Web-Series/tree/c711c90bb9ca3cdaba747ee0df9db75aa425a1d5/基础/README.md) | [工程实践篇](https://github.com/wx-chevalier/Web-Series/tree/c711c90bb9ca3cdaba747ee0df9db75aa425a1d5/工程实践/README.md) | [架构优化篇](https://github.com/wx-chevalier/Web-Series/tree/c711c90bb9ca3cdaba747ee0df9db75aa425a1d5/架构优化篇/README.md) | [React 篇](https://github.com/wx-chevalier/Web-Series/tree/c711c90bb9ca3cdaba747ee0df9db75aa425a1d5/React/README.md) | [Vue 篇](https://github.com/wx-chevalier/Web-Series/tree/c711c90bb9ca3cdaba747ee0df9db75aa425a1d5/Vue/README.md) |
+| :--- | :--- | :--- | :--- | :--- |
 
 
-# Preface | 前言
+## Preface \| 前言
 
 回顾数十年间 Web 技术与生态的灿烂变迁，我们亲身经历着激动人心的变革，也往往会陷入选择的迷茫。随着浏览器版本的革新与硬件性能的提升，Web 前端开发进入了高歌猛进，日新月异的时代，无数的前端开发框架、技术体系争妍斗艳，让开发者们陷入困惑，乃至于无所适从。特别是随着现代 Web 前端框架（Angular、React、Vue.js）的出现，JavaScript、CSS、HTML 等语言特性的提升，工程化、跨平台、微前端、大前端、BFF 等理论概念的提出，Web 前端开发的技术栈、社区也是不断丰富完善。
 
@@ -44,7 +46,7 @@ Web 开发，入门易，深度难，分为初窥门径、登堂入室、融会�
 
 ![](https://i.postimg.cc/MK0jWxhL/image.png)
 
-## 模板渲染、前后端分离与单页应用
+### 模板渲染、前后端分离与单页应用
 
 Web 前端开发可以追溯于 1991 年蒂姆·伯纳斯-李公开提及 HTML 描述，而后 1999 年 W3C 发布 HTML4 标准，这个阶段主要是 B/S 架构，没有所谓的前端开发概念，此时多是基于模板渲染的静态页面。主要就是通过 JSP、PHP 等技术写一些动态模板，然后通过 Web Server 将模板解析成一个个 HTML 文件，浏览器只负责渲染这些 HTML 文件。这个阶段还没有前后端的分工，通常是后端工程师顺便写了前端页面。
 
@@ -52,9 +54,7 @@ Web 前端开发可以追溯于 1991 年蒂姆·伯纳斯-李公开提及 HTML �
 
 2009 年以来，智能手机开发普及，移动端大浪潮势不可挡，SPA 单页应用的设计理念也大行其道，相关联的前端模块化、组件化、响应式开发、混合式开发等等技术需求甚为迫切。特别是 2009 年 Node.js 的出现，还有伴生的 CommonJS 规范和 npm 包管理机制，催生了 Angular 1、Ionic 等一系列优秀的框架以及 AMD、CMD、UMD 与 RequireJS、SeaJS 等模块标准与 Grunt, Gulp 这样的工具，前端工程师也成为了专门的开发领域，拥有独立于后端的技术体系与架构模式。
 
-## 工程化与微前端
-
-以前我们只需要简单的 HTML 和 JS 就够了，现在我们得用 包管理器 自动下载第三方包，用 模块管理器（module bundler） 创建单个脚本文件，用 翻译编译器（transpiler） 应用新的 JavaScript 功能，还要用 任务运行器（task runner） 自动执行各个构建步骤。
+### 工程化与微前端
 
 近两年间随着 Web 应用复杂度的提升、团队人员的扩充、用户对于页面交互友好与性能优化的需求，我们需要更加优秀灵活的开发框架来协助我们更好的完成前端开发。这个阶段涌现出了很多关注点相对集中、设计理念更为优秀的框架，譬如 React、Vue.js、Angular 2 等组件框架允许我们以声明式编程来替代以 DOM 操作为核心的命令式编程，加快了组件的开发速度，并且增强了组件的可复用性与可组合性。而遵循函数式编程的 Redux 与借鉴了响应式编程理念的 MobX 都是非常不错的状态管理辅助框架，辅助开发者将业务逻辑与视图渲染剥离，更为合理地划分项目结构，更好地贯彻单一职责原则与提升代码的可维护性。在项目构建工具上，以 Grunt、Gulp 为代表的任务运行管理与以 Webpack、Rollup、JSPM 为代表的项目打包工具各领风骚，帮助开发者更好的搭建前端构建流程，自动化地进行预处理、异步加载、Polyfill、压缩等操作。
 
@@ -62,16 +62,17 @@ Web 前端开发可以追溯于 1991 年蒂姆·伯纳斯-李公开提及 HTML �
 
 应用自身的逻辑复杂度以及工程化的加载、组合复杂度的提升，为前端的性能也带来了一定的挑战。譬如 React 等组件框架在页面初始化的时候会有白屏时间，对于 SEO 也并不友好；前端开始尝试以服务端渲染解决这个问题，基于 React、Vue 等实现的同构应用来替代过去的 JSP、PHP 等服务端语言的模板，还是以完整的 HTML 文档的形式返回给浏览器。
 
-## 大前端、BFF 与 Serverless
+### 大前端、BFF 与 Serverless
 
 着眼全栈，经过多年的发展，Node.js 已经完全具备了支撑企业级应用的能力，在 Lowe、Netflix、阿里等国内外诸多的公司中有着海量的实践；并且 Node.js 天然地语言亲和性，使开发人员更易承担全栈的职责。随着微服务架构以及云原生，Serverless 等概念的兴起，后端的接口渐渐变得原子性，微服务的接口也不再直接面向页面，前端的调用变得复杂了。于是以 GraphQL 为代表的 BFF（Backend For Frontend）理念应运而生，在微服务和前端中间，加了一个 BFF 层，由 BFF 对接口进行聚合、裁剪后，再输出给前端。
 
 BFF 在解决接口协调与聚合问题的同时，也承载了原本后端的并发压力，这也给前端工程师带来了很多的开发与运维压力。Serverless 则是能够缓解这种问题，我们可以使用函数来实现接口的聚合裁剪；前端对于 BFF 的请求被转化为对 FaaS 的 HTTP 触发器的触发，这个函数中来实现针对该请求的业务逻辑，比如调用多个微服务获取数据，然后再将处理结果返回给前端。这样运维的压力，就由以往的 BFF Server 转向了 FaaS 服务，前端再也不用关心服务器了。Serverless 同样也能够应用到服务端渲染中，将以往的每个路由，都拆分为一个个函数，再在 FaaS 上部署对应的函数。这样用户请求的 path，对应的就是每个单独的函数。通过这种方式，就将运维操作转移到了 FaaS 平台，前端做服务端渲染，就不用再关心服务端程序的运维部署了。此外，像微信、支付宝等小程序也提供了符合 Serverless 理念的云开发平台，赋能业务前端迅速迭代。
 
-# 版权
+## 版权
 
 ![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg) ![](https://parg.co/bDm)
 
-笔者所有文章遵循[知识共享 署名 - 非商业性使用 - 禁止演绎 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh)，欢迎转载，尊重版权。如果觉得本系列对你有所帮助，欢迎给我家布丁买点狗粮(支付宝扫码)~
+笔者所有文章遵循[知识共享 署名 - 非商业性使用 - 禁止演绎 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh)，欢迎转载，尊重版权。如果觉得本系列对你有所帮助，欢迎给我家布丁买点狗粮\(支付宝扫码\)~
 
 ![default](https://i.postimg.cc/y1QXgJ6f/image.png)
+

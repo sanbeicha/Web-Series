@@ -1,0 +1,8 @@
+# 状态管理
+
+[![&#x8FD4;&#x56DE;&#x76EE;&#x5F55;](https://i.postimg.cc/50XLzC7C/image.png)](https://github.com/wx-chevalier/Web-Series)
+
+## 状态管理
+
+在类组件或者函数式组件中，我们都可以利用类 setState 的方式来进行局部状态管理。本章主要讨论利用 MobX、Redux 等常用的状态管理库来优化 React 的状态管理及代码结构。
+
