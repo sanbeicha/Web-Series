@@ -4,7 +4,7 @@
 
 而当我们希望在数据更新之后执行某些 DOM 操作，就需要使用 `nextTick` 函数来添加回调：
 
-```javascript
+```js
 // HTML
 <div id="example">{{ message }}</div>;
 

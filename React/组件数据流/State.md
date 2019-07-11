@@ -232,7 +232,7 @@ class Counter extends React.Component{
 
 React 开发中的一大痛点就是对于状态的处理与更新，譬如在我们需要创建编辑用户信息的表单时，往往我们会创建单一的响应处理函数来处理表单数据的变更，其形式可能如下：
 
-```javascript
+```js
 updateState(event) {
  const {name, value} = event.target;
  let user = this.state.user;

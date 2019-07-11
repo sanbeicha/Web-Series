@@ -117,7 +117,7 @@ a {
 
 笔者所使用的 Webpack 的配置文件为：
 
-```javascript
+```js
 var path = require('path');
 var autoprefixer = require('autoprefixer');
 

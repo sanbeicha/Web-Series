@@ -26,7 +26,7 @@ React，或者说 React+Redux+Webpack 形成的一套完整的开发体系与项
 
 React 独创了一种 JS、CSS 和 HTML 混写的 JSX 格式，可以通过在页面中引入 JSXTransformer 这个文件进行客户端的编译，不过还是推荐在 服务端编译。
 
-```javascript
+```js
 var HelloMessage = React.createClass({
   render: function() {
     return <div>Hello {this.props.name}</div>;
@@ -40,7 +40,7 @@ React.render(
 
 React.render  是 React  的最基本方法，用于将模板转为 HTML  语言，并插入指定的 DOM  节点。要注意的是，React 的渲染函数并不是简单地把 HTML 元素复制到页面上，而是维护了一张 Virtual Dom 映射表。
 
-```javascript
+```js
 class ExampleComponent extends React.Component {
   constructor() {
     super();
@@ -321,7 +321,7 @@ ES6 是一门非常让人兴奋的语法规范，而 React 自身的譬如 JSX �
 
 - Before
 
-```javascript
+```js
 var ExampleComponent = React.createClass({
   render: function() {
     return <div onClick={this._handleClick}>Hello, world.</div>;
@@ -334,7 +334,7 @@ var ExampleComponent = React.createClass({
 
 - After，这里要注意将类的方法绑定到当前对象，避免在方法内部 this 指针被覆盖
 
-```javascript
+```js
 class ExampleComponent extends React.Component {
   constructor() {
     super();
@@ -355,7 +355,7 @@ class ExampleComponent extends React.Component {
 
 - Before
 
-```javascript
+```js
 class ExampleComponent extends React.Component {
   getInitialState() {
     return Store.getState();
@@ -369,7 +369,7 @@ class ExampleComponent extends React.Component {
 
 - After
 
-```javascript
+```js
 class ExampleComponent extends React.Component {
   constructor() {
     super();

@@ -4,7 +4,7 @@
 
 通过使用 jQuery 中的`animate` 与 `scrollTop` 方法可以创建一个非常简易的带有平滑滚动的回到顶部的按钮：
 
-```javascript
+```js
 // Back to top
 $('a.top').click(function (e) {
   e.preventDefault();

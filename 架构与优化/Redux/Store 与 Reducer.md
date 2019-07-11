@@ -54,7 +54,7 @@ let reducer = (state = [], action) => {
 
 通常，这个 state 树还需要存放其它一些数据，例如 UI 相关的 state。这样做没问题，但尽量把这些数据与 UI 相关的 state 分开。不过笔者觉得，与 UI 相关的临时性状态，还是可以放到组件内部处理的。
 
-```javascript
+```js
 {
   visibilityFilter: 'SHOW_ALL',
   todos: [{
@@ -84,7 +84,7 @@ let reducer = (state = [], action) => {
 
 在[高级篇](http://camsong.github.io/redux-in-chinese/docs/advanced/index.html)里会介绍如何执行有副作用的操作。现在只需要谨记 reducer 一定要保持纯净。**只要传入参数一样，返回必须一样。没有特殊情况、没有副作用，没有 API 请求、没有修改参数，单纯执行计算。**明白了这些之后，就可以开始编写 reducer，并让它来处理之前定义过的 [actions](http://camsong.github.io/redux-in-chinese/docs/basics/Actions.html)。我们在开始时定义默认的 state。Redux 首次执行时，state 为 `undefined`，这时候会返回默认 state。
 
-```javascript
+```js
 import { VisibilityFilters } from './actions';
 
 const initialState = {
@@ -105,7 +105,7 @@ function todoApp(state, action) {
 
 这里一个技巧是使用 [ES6 参数默认值语法](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/default_parameters) 来精简代码。
 
-```javascript
+```js
 function todoApp(state = initialState, action) {
   // 这里暂不处理任何 action，
   // 仅返回传入的 state。
@@ -121,7 +121,7 @@ function todoApp(state = initialState, action) {
 
 处理 `SET_VISIBILITY_FILTER`。需要做的只是改变 state 中的 `visibilityFilter`。
 
-```javascript
+```js
 function todoApp(state = initialState, action) {
   switch (action.type) {
     case SET_VISIBILITY_FILTER:

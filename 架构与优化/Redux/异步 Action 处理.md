@@ -379,7 +379,7 @@ const ADD_TODO = 'ADD_TODO';
 
 Action 本质上是 JavaScript 普通对象。我们约定，action 内使用一个字符串类型的 `type` 字段来表示将要执行的动作。多数情况下，`type` 会被定义成字符串常量。当应用规模越来越大时，建议使用单独的模块或文件来存放 action。
 
-```javascript
+```js
 import { ADD_TODO, REMOVE_TODO } from '../actionTypes';
 ```
 
@@ -409,7 +409,7 @@ import { ADD_TODO, REMOVE_TODO } from '../actionTypes';
 
 **Action 创建函数** 就是生成 action 的方法。“action” 和 “action 创建函数” 这两个概念很容易混在一起，使用时最好注意区分。在 [传统的 Flux](http://facebook.github.io/flux) 实现中，当调用 action 创建函数时，一般会触发一个 dispatch，像这样：
 
-```javascript
+```js
 function addTodoWithDispatch(text) {
   const action = {
     type: ADD_TODO,
@@ -421,7 +421,7 @@ function addTodoWithDispatch(text) {
 
 不同的是，Redux 中的 action 创建函数是 **纯函数**，它没有任何副作用，只是返回 action 对象而已。
 
-```javascript
+```js
 function addTodo(text) {
   return {
     type: ADD_TODO,
@@ -432,21 +432,21 @@ function addTodo(text) {
 
 这让代码更易于测试和移植。只需把 action 创建函数的结果传给 `dispatch()` 方法即可实例化 dispatch。
 
-```javascript
+```js
 dispatch(addTodo(text));
 dispatch(completeTodo(index));
 ```
 
 或者创建一个 **被绑定的 action 创建函数** 来自动 dispatch：
 
-```javascript
+```js
 const boundAddTodo = text => dispatch(addTodo(text));
 const boundCompleteTodo = index => dispatch(CompleteTodo(index));
 ```
 
 然后直接调用它们：
 
-```javascript
+```js
 boundAddTodo(text);
 boundCompleteTodo(index);
 ```
@@ -455,7 +455,7 @@ store 里能直接通过 [`store.dispatch()`](http://camsong.github.io/redux-in-
 
 - Example
 
-```javascript
+```js
 /*
  * action 类型
  */
@@ -654,7 +654,7 @@ handleAction('FETCH_DATA', {
 
 handleActions 即等效于利用`handleAction`函数创建多个 Reducers 然后组合成一个单独的 Reducer 来处理多个 Actions。与标准的 Redux 中的 Reducer 的写法相比，其优势在于能够以扁平化的方式编写代码：
 
-```javascript
+```js
 const reducer = handleActions(
   {
     INCREMENT: (state, action) => ({
