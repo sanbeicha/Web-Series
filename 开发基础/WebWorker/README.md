@@ -8,4 +8,4 @@ Worker 会运行在独立的不同于当前 window 的全局上下文中，因�
 
 - 另一种 Shared Worker 则运行在 SharedWorkerGlobalScope 代表的上下文中，其允许多个脚本访问。
 
-实际上 ServiceWorkers 也是 Web Worker 的一种，其常被用于 Web 应用之间，或者浏览器与网络之间的代理；致力于提供更良好的离线体验，并且能够介入到网络请求中完成缓存与更新等操作。ServiceWorkers 同样能够被用于进行通知推送与后台同步接口。
+实际上 ServiceWorkers 也是 Web Worker 的一种，其常被用于 Web 应用之间，或者浏览器与网络之间的代理。ServiceWorkers 致力于提供更良好的离线体验，并且能够介入到网络请求中完成缓存与更新等操作；ServiceWorkers 同样能够被用于进行通知推送与后台同步接口。
