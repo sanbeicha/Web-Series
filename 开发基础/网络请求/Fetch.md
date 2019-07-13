@@ -63,15 +63,17 @@ var request = new Request('/users.json', {
 fetch(request).then(function() { /* handle response */ });
 ```
 
-```
+```js
 fetch('/users.json', {
-    method: 'POST',
-    mode: 'cors',
-    redirect: 'follow',
-    headers: new Headers({
-        'Content-Type': 'text/plain'
-    })
-}).then(function() { /* handle response */ });
+  method: 'POST',
+  mode: 'cors',
+  redirect: 'follow',
+  headers: new Headers({
+    'Content-Type': 'text/plain'
+  })
+}).then(function() {
+  /* handle response */
+});
 ```
 
 ## URI Encode
@@ -182,19 +184,18 @@ fetch('https://example.com:1234/users', {
 - `statusText` - status code (ex: `OK`)
 - `headers` - 响应头
 
-```
+```js
 // Create your own response for service worker testing
 // new Response(BODY, OPTIONS)
 var response = new Response('.....', {
-ok: false,
-status: 404,
-url: '/'
+  ok: false,
+  status: 404,
+  url: '/'
 });
 
 // The fetch's `then` gets a Response instance back
-fetch('/')
-.then(function(responseObj) {
-console.log('status: ', responseObj.status);
+fetch('/').then(function(responseObj) {
+  console.log('status: ', responseObj.status);
 });
 ```
 
