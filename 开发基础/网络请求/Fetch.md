@@ -1,6 +1,8 @@
 # Fetch
 
-JavaScript 通过 XMLHttpRequest(XHR)来执行异步请求，这个方式已经存在了很长一段时间。虽说它很有用，但它不是最佳 API。它在设计上不符合职责分离原则，将输入、输出和用事件来跟踪的状态混杂在一个对象里。而且，基于事件的模型与最近 JavaScript 流行的 Promise 以及基于生成器的异步编程模型不太搭。新的 Fetch API 打算修正上面提到的那些缺陷。 它向 JS 中引入和 HTTP 协议中同样的原语。具体而言，它引入一个实用的函数 fetch() 用来简洁捕捉从网络上检索一个资源的意图。Fetch 规范 的 API 明确了用户代理获取资源的语义。它结合 ServiceWorkers，尝试达到以下优化：
+JavaScript 通过 XMLHttpRequest(XHR)来执行异步请求，这个方式已经存在了很长一段时间。虽说它很有用，但它不是最佳 API。它在设计上不符合职责分离原则，将输入、输出和用事件来跟踪的状态混杂在一个对象里。而且，基于事件的模型与最近 JavaScript 流行的 Promise 以及基于生成器的异步编程模型不太搭。
+
+新的 Fetch API 打算修正上面提到的那些缺陷。它向 JS 中引入和 HTTP 协议中同样的原语。具体而言，它引入一个实用的函数 fetch() 用来简洁捕捉从网络上检索一个资源的意图。Fetch 规范 的 API 明确了用户代理获取资源的语义。它结合 ServiceWorkers，尝试达到以下优化：
 
 - 改善离线体验
 - 保持可扩展性
@@ -34,10 +36,9 @@ fetch('/some/url')
   });
 ```
 
-## Request:请求构造
+## Request
 
-Request 对象代表了一次 fetch 请求中的请求体部分，你可以自定义`Request`对象:
-A `Request` instance represents the request piece of a fetch call. By passingfetch a `Request` you can make advanced and customized requests:
+Request 对象代表了一次 fetch 请求中的请求体部分，你可以自定义 `Request` 对象:
 
 - `method` - 使用的 HTTP 动词，`GET`, `POST`, `PUT`, `DELETE`, `HEAD`
 - `url` - 请求地址，URL of the request
@@ -49,21 +50,23 @@ A `Request` instance represents the request piece of a fetch call. By passingfet
 - `integrity` - 完整性校验
 - `cache` - 缓存模式(`default`, `reload`, `no-cache`)
 
-```
-var request = new Request('/users.json', {
-    method: 'POST',
-    mode: 'cors',
-    redirect: 'follow',
-    headers: new Headers({
-        'Content-Type': 'text/plain'
-    })
+```js
+// 构建独立的请求对象
+const request = new Request('/users.json', {
+  method: 'POST',
+  mode: 'cors',
+  redirect: 'follow',
+  headers: new Headers({
+    'Content-Type': 'text/plain'
+  })
 });
 
 // Now use it!
-fetch(request).then(function() { /* handle response */ });
-```
+fetch(request).then(function() {
+  /* handle response */
+});
 
-```js
+// 直接作为参数传入到 fetch 函数中
 fetch('/users.json', {
   method: 'POST',
   mode: 'cors',
@@ -73,6 +76,22 @@ fetch('/users.json', {
   })
 }).then(function() {
   /* handle response */
+});
+```
+
+在 POST 请求中，如果我们需要传递参数，则应该将参数值进行序列化处理为字符串然后传递：
+
+```js
+fetch('/users', {
+  method: 'post',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: 'Hubot',
+    login: 'hubot'
+  })
 });
 ```
 
@@ -90,20 +109,25 @@ fetch('/users.json', {
 [GET] http://api.com?requestData={%22p%22:%22q%22}
 ```
 
-那么这样一个请求传入到 Spring MVC 中时是会引发错误的，即 URI 对象构造失败这个很恶心的错误。笔者没有看过源代码，不过猜想会不会是 Spring MVC 看到`{`这个字符没有被编码，因此默认没有进行解码，结果没想到后面的双引号被编码了，为了避免这个无厘头的错误，笔者建议是对 URI 的 Query Parameter 部分进行统一的 URI 编码：
+请求在传入某些后端服务器时可能会触发异常，建议对 URI 的 Query Parameter 部分进行统一的 URI 编码：
 
-```
-//将requestData序列化为JSON
-var requestDataString = encodeURIComponent(JSON.stringify(requestData).replace(/%22/g, "\""));
+```js
+//将 requestData 序列化为 JSON
+const requestDataString = encodeURIComponent(
+  JSON.stringify(requestData).replace(/%22/g, '"')
+);
+
 //将字符串链接
-const packagedRequestURL = `${Model.BASE_URL}${path}?requestData=${requestDataString}&action=${action}`;
+const packagedRequestURL = `${
+  Model.BASE_URL
+}${path}?requestData=${requestDataString}&action=${action}`;
 ```
 
-## Headers:自定义请求头
+## Headers | 自定义请求头
 
-```
+```js
 // Create an empty Headers instance
-var headers = new Headers();
+const headers = new Headers();
 
 // Add a few headers
 headers.append('Content-Type', 'text/plain');
@@ -118,37 +142,23 @@ headers.set('Content-Type', 'application/json');
 headers.delete('X-My-Custom-Header');
 
 // Add initial values
-var headers = new Headers({
-'Content-Type': 'text/plain',
-'X-My-Custom-Header': 'CustomValue'
+const headers = new Headers({
+  'Content-Type': 'text/plain',
+  'X-My-Custom-Header': 'CustomValue'
 });
 ```
 
 常见的请求方法有: `append`, `has`, `get`, `set`以及 `delete`
 
-```
-var request = new Request('/some-url', {
-    headers: new Headers({
-        'Content-Type': 'text/plain'
-    })
+```js
+const request = new Request('/some-url', {
+  headers: new Headers({
+    'Content-Type': 'text/plain'
+  })
 });
 
-fetch(request).then(function() { /* handle response */ });
-```
-
-## POST & body:POST 请求
-
-```js
-fetch('/users', {
-  method: 'post',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    name: 'Hubot',
-    login: 'hubot'
-  })
+fetch(request).then(function() {
+  /* handle response */
 });
 ```
 
@@ -156,21 +166,21 @@ fetch('/users', {
 
 如果需要设置 fetch 自动地发送本地的 Cookie，需要将 credentials 设置为`same-origin`:
 
-```
+```js
 fetch('/users', {
   credentials: 'same-origin'
-})
+});
 ```
 
-该选项会以类似于 XMLHttpRequest 的方式来处理 Cookie，否则，可能因为没有发送 Cookie 而导致基于 Session 的认证出错。可以将`credentials`的值设置为`include`来在 CORS 情况下发送请求。
+该选项会以类似于 XMLHttpRequest 的方式来处理 Cookie，否则，可能因为没有发送 Cookie 而导致基于 Session 的认证出错。对于跨域情况下的 Cookie 发送，可以将 `credentials` 的值设置为`include` 来在 CORS 情况下发送请求。
 
-```
+```js
 fetch('https://example.com:1234/users', {
   credentials: 'include'
-})
+});
 ```
 
-另外需要注意的是，根据[附带凭证信息的请求](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS#%E9%99%84%E5%B8%A6%E5%87%AD%E8%AF%81%E4%BF%A1%E6%81%AF%E7%9A%84%E8%AF%B7%E6%B1%82)这里描述的，当你为了配置在 CORS 请求中附带 Cookie 等信息时，来自于服务器的响应中的 Access-Control-Allow-Origin 不可以再被设置为 \* ，必须设置为某个具体的域名,则响应会失败。
+另外需要注意的是，当你为了配置在 CORS 请求中附带 Cookie 等信息时，来自于服务器的响应中的 Access-Control-Allow-Origin 不可以再被设置为 `*` ，必须设置为某个具体的域名,则响应会失败。
 
 # Response | 响应处理
 
@@ -187,7 +197,7 @@ fetch('https://example.com:1234/users', {
 ```js
 // Create your own response for service worker testing
 // new Response(BODY, OPTIONS)
-var response = new Response('.....', {
+const response = new Response('.....', {
   ok: false,
   status: 404,
   url: '/'
@@ -199,25 +209,25 @@ fetch('/').then(function(responseObj) {
 });
 ```
 
-The `Response` also provides the following methods:
+`Response` 还提供以下方法：
 
-- `clone()` - Creates a clone of a Response object.
-- `error()` - Returns a new Response object associated with a network error.
-- `redirect()` - Creates a new response with a different URL.
-- `arrayBuffer()` - Returns a promise that resolves with an ArrayBuffer.
-- `blob()` - Returns a promise that resolves with a Blob.
-- `formData()` - Returns a promise that resolves with a FormData object.
-- `json()` - Returns a promise that resolves with a JSON object.
-- `text()` - Returns a promise that resolves with a USVString (text).
+- `clone（）` - 创建一个 Response 对象的克隆。
+- `error（）` - 返回与网络错误关联的新 Response 对象。
+- `redirect（）` - 使用不同的 URL 创建一个新的响应。
+- `arrayBuffer（）` - 返回一个用 ArrayBuffer 解析的 promise。
+- `blob（）` - 返回一个用 Blob 解析的 promise。
+- `formData（）` - 返回一个用 FormData 对象解析的 promise。
+- `json（）` - 返回一个用 JSON 对象解析的 promise。
+- `text（）` - 返回一个用 USVString（text）解析的 promise。
 
-### Handling HTTP error statuses:处理 HTTP 错误状态
+## Handling HTTP error statuses | 处理 HTTP 错误状态
 
 ```js
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   } else {
-    var error = new Error(response.statusText);
+    const error = new Error(response.statusText);
     error.response = response;
     throw error;
   }
@@ -238,45 +248,54 @@ fetch('/users')
   });
 ```
 
-### Handling JSON:处理 JSON 响应
+## Handling JSON | 处理 JSON 响应
 
-```
-fetch('https://davidwalsh.name/demo/arsenal.json').then(function(response) {
-// Convert to JSON
-return response.json();
-}).then(function(j) {
-// Yay, `j` is a JavaScript object
-console.log(j);
-});
-```
-
-### Handling Basic Text/HTML Response:处理文本响应
-
-```
-fetch('/next/page')
+```js
+fetch('https://davidwalsh.name/demo/arsenal.json')
   .then(function(response) {
-    return response.text();
-  }).then(function(text) {
-  // <!DOCTYPE ....
-  console.log(text);
+    // Convert to JSON
+    return response.json();
+  })
+  .then(function(j) {
+    // Yay, `j` is a JavaScript object
+    console.log(j);
   });
 ```
 
-### Blob Responses
+## Handling Basic Text/HTML Response | 处理文本响应
+
+```js
+fetch('/next/page')
+  .then(function(response) {
+    return response.text();
+  })
+  .then(function(text) {
+    // <!DOCTYPE ....
+    console.log(text);
+  });
+```
+
+## Blob Responses | 二进制数据处理
 
 如果你希望通过 fetch 方法来载入一些类似于图片等资源：
 
-```
+```js
 fetch('flowers.jpg')
-    .then(function(response) {
-       return response.blob();
-    })
-    .then(function(imageBlob) {
-       document.querySelector('img').src = URL.createObjectURL(imageBlob);
-});
+  .then(function(response) {
+    return response.blob();
+  })
+  .then(function(imageBlob) {
+    document.querySelector('img').src = URL.createObjectURL(imageBlob);
+  });
 ```
 
-`blob()`方法会接入一个响应流并且一直读入到结束。
+`blob()` 方法会接入一个响应流并且一直读入到结束。
+
+# 自定义封装
+
+## 可控的 Promise
+
+## 代理
 
 在上面的介绍中会发现，fetch 并没有在客户端实现 Cancelable Request 的功能，或者超时自动放弃功能，因此这一步骤往往是需要在代理层完成。笔者在自己的工作中还遇到另一个请求，就是需要在客户端抓取其他没有设置 CORS 响应或者 JSONP 响应的站点，而必须要进行中间代理层抓取。笔者为了尽可能小地影响逻辑层代码，因此在自己的封装中封装了如下方法:
 
