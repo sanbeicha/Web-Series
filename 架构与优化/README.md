@@ -6,8 +6,6 @@
 
 ![](https://i.postimg.cc/Hxsn6grJ/Web-Tuning-Web.png)
 
-In 2019, the dominant costs of processing scripts are now download and CPU execution time. User interaction can be delayed if the browser’s main thread is busy executing JavaScript, so optimizing bottlenecks with script execution time and network can be impactful.
-
 随着应用复杂度的不断增加，我们发现脚本解析与处理的瓶颈在于脚本的下载与 CPU 执行这两个阶段：而当 CPU 忙于执行 JavaScript 的时候，自然会难以及时响应用户的操作，从而造成卡顿的感觉。因此，这个阶段我们优化的重点就是网络下载以及脚本执行。
 
 - 对于降低下载时间，保持JavaScript包的小巧，特别是对于移动设备。 小型捆绑包可提高下载速度，降低内存使用率并降低CPU成本。避免只有一个大捆; 如果捆绑超过~50-100 kB，则将其拆分为单独的较小捆。通过 HTTP/2 多路复用，可以同时传输多个请求和响应消息，从而减少额外请求的开销。在移动设备上，你会希望运输更少，特别是因为网络速度，但也保持低内存使用率。
