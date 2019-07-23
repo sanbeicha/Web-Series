@@ -63,3 +63,7 @@
 毫无疑问 Sketch 已经正为了 UI 设计与 UX 设计的潮流，我们也是在 Sketch 中定义了很多的文本样式、符号等等，这样会大大有利于整个基于组件的设计工作流，使我们更为方便地启动新项目。
 
 ![](https://coding.net/u/hoteam/p/Cache/git/raw/master/2017/1/3/1-77SqMm7XmH8gvLswYeOgBQ.png)
+
+# 链接
+
+- https://www.jianshu.com/p/13e87bf4f857
