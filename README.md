@@ -46,7 +46,7 @@ Web 开发，入门易，深度难，分为初窥门径、登堂入室、融会�
 
 有趣的是，当我们站在不同的时间点，这三个阶段的划分也是不一致的，以目前笔者的认知而言，划分为了：模板渲染、前后端分离与单页应用，工程化与微前端，大前端与 Serverless 这三个不同的阶段。
 
-![mindmap](https://i.postimg.cc/MK0jWxhL/image.png)
+![mindmap](https://i.postimg.cc/Y93m3Kym/Web.png)
 
 ## 模板渲染、前后端分离与单页应用
 
