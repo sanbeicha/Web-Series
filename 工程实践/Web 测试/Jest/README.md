@@ -2,7 +2,7 @@
 
 # 基于 Jest 的单元测试
 
-React 官方文档中提及，Jest 是 Facebook 官方使用的组件测试库。不过 React 也并不排斥其他测试框架，你也可以根据自己的喜好或者团队的统一选择譬如 Mocha、AVA 等测试框架。本部分我们就介绍如何从零开始为项目添加基于 Jest 的测试用例。
+Jest 是由 Facebook 开源出来的一个测试框架，它集成了断言库、mock、快照测试、覆盖率报告等功能。React 官方文档中提及，Jest 是 Facebook 官方使用的组件测试库。不过 React 也并不排斥其他测试框架，你也可以根据自己的喜好或者团队的统一选择譬如 Mocha、AVA 等测试框架。本部分我们就介绍如何从零开始为项目添加基于 Jest 的测试用例。
 
 # 环境搭建
 
@@ -14,7 +14,7 @@ npm install --save-dev jest
 
 为了方便在 npm 中使用 jest 命令行工具来运行所有的测试用例，我们需要在 package.json 文件中添加如下脚本配置：
 
-```
+```json
 "scripts": {
   "test": "jest"
 },
@@ -23,14 +23,14 @@ npm install --save-dev jest
 此外，为了方便对我们使用 ES2015 与 JSX 语法的组件或者类进行测试，我们需要添加部分 Babel 相关的包体来方便 Jest 对测试代码进行转化与编译：
 
 ```
-npm install --save-dev babel-jest babel-preset-es2015 babel-preset-react
+$ npm install --save-dev babel-jest babel-preset-es2015 babel-preset-react
 ```
 
 依赖安装完毕之后，我们就像配置其他的基于 Babel 的项目一样，需要添加 .babelrc 配置文件：
 
-```
+```json
 {
-  "presets": ["es2015", "react"]
+  "presets": ["es2015", "react"]
 }
 ```
 
@@ -73,15 +73,15 @@ Ran all test suites matching "test/util/sum.test.js".
 
 到这里我们已经搭建了能够支撑 JavaScript 代码测试的环境，不过往往组件开发中，特别是基于 Webpack 等打包工具开发时，我们会在组件中导入 CSS、图片等静态资源。我们需要配置额外的 Mock 文件来处理这些静态资源，在 package.json 文件中添加以 jest 为键名的配置：
 
-```
+```json
 // package.json
 {
-  "jest": {
-  "moduleNameMapper": {
-  "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-  "\\.(scss|css|less)$": "<rootDir>/__mocks__/styleMock.js"
-  }
-  }
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(scss|css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  }
 }
 ```
 
@@ -178,42 +178,4 @@ module.exports = {
     "testMatch": ["**/__tests__/*.(ts|tsx|js)"]
   }
 }
-```
-
-# 匹配器
-
-# 模拟对象
-
-# 异步代码测试
-
-# 定时器测试
-
-# 界面对象
-
-对于 `React` 的 `scroll` 事件而言，必须要绑定在某个元素里才能进行模拟，不巧，对于安卓手机来说，大部份 `scroll` 事件都是绑定在 `window` 对象下的。这就非常尴尬了，需要借助到 `jsdom` 的功能。通过 `jest-environment-jsdom`，它能够将 `jsdom` 注入到 `node` 运行环境中，因此你可以在测试文件中直接使用 `window`对象进行模拟。例如下面代码，模拟滚动到最底部：
-
-```js
-test('scroll to bottom', done => {
-  const wrapper = mount(<Wrapper />);
-
-  window.addEventListener('scroll', function(e) {
-    setTimeout(() => {
-      try {
-        // expect 逻辑
-        done();
-      } catch (err) {
-        done.fail(err);
-      }
-    }, 100);
-    jest.runAllTimers();
-  });
-
-  let scrollTop = 768;
-  window.document.body.scrollTop = scrollTop; // 指明当前 scrollTop到了哪个位置
-  window.dispatchEvent(
-    new window.Event('scroll', {
-      scrollTop: scrollTop
-    })
-  );
-});
 ```

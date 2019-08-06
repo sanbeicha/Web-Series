@@ -1,0 +1,60 @@
+# Mock
+
+在测试中，mock 可以让你更方便的去测试依赖于数据库、网络请求、文件等外部系统的函数。 Jest 内置了 mock 机制，提供了多种 mock 方式已应对各种需求。
+
+# Mock 函数
+
+函数的 mock 非常简单，调用 jest.fn() 即可获得一个 mock 函数。 Mock 函数有一个特殊的 .mock 属性，保存着函数的调用信息。.mock 属性还会追踪每次调用时的 this。
+
+```js
+// mocks/forEach.js
+export default (items, callback) => {
+  for (let index = 0; index < items.length; index++) {
+    callback(items[index]);
+  }
+};
+
+import forEach from './forEach';
+
+it('test forEach function', () => {
+  const mockCallback = jest.fn(x => 42 + x);
+  forEach([0, 1], mockCallback);
+
+  // The mock function is called twice
+  expect(mockCallback.mock.calls.length).toBe(2);
+
+  // The first argument of the first call to the function was 0
+  expect(mockCallback.mock.calls[0][0]).toBe(0);
+
+  // The first argument of the second call to the function was 1
+  expect(mockCallback.mock.calls[1][0]).toBe(1);
+
+  // The return value of the first call to the function was 42
+  expect(mockCallback.mock.results[0].value).toBe(42);
+});
+```
+
+除了 .mock 之外，Jest 还未我们提供了一些匹配器用来断言函数的执行，它们本身只是检查 .mock 属性的语法糖：
+
+```js
+// The mock function was called at least once
+expect(mockFunc).toBeCalled();
+```
+
+使用 mockReturnValue 和 mockReturnValueOnce 可以 mock 函数的返回值。 当我们需要为 mock 函数增加一些逻辑时，可以使用 jest.fn()、mockImplementation 或者 mockImplementationOnce mock 函数的实现。 还可以使用 mockName 还给 mock 函数命名，如果没有命名，输出的日志默认就会打印 jest.fn()。
+
+# Mock 定时器
+
+Jest 可以 Mock 定时器以使我们在测试代码中控制“时间”。调用 jest.useFakeTimers() 函数可以伪造定时器函数，定时器中的回调函数不会被执行，使用 setTimeout.mock 等可以断言定时器执行情况。当在测试中有多个定时器时，执行 jest.useFakeTimers() 可以重置内部的计数器。
+
+执行 jest.runAllTimers(); 可以“快进”直到所有的定时器被执行；执行 jest.runOnlyPendingTimers() 可以使当前正在等待的定时器被执行，用来处理定时器中设置定时器的场景，如果使用 runAllTimers 会导致死循环；执行 jest.advanceTimersByTime(msToRun:number)，可以“快进”执行的毫秒数。
+
+# Mock 模块
+
+模块的 mock 主要有两种方式：
+
+- 使用 jest.mock(moduleName, factory, options) 自动 mock 模块，jest 会自动帮我们 mock 指定模块中的函数。其中，factory 和 options 参数是可选的。factory 是一个模块工厂函数，可以代替 Jest 的自动 mock 功能；options 用来创建一个不存在的需要模块。
+
+- 如果希望自己 mock 模块内部函数，可以在模块平级的目录下创建 **mocks** 目录，然后创建相应模块的 mock 文件。对于用户模块和 Node 核心模块（如：fs、path），我们仍需要在测试文件中显示的调用 jest.mock()，而其他的 Node 模块则不需要。
+
+此外，在 mock 模块时，jest.mock() 会被自动提升到模块导入前调用。对于类的 mock 基本和模块 mock 相同，支持自动 mock、手动 mock 以及调用带模块工厂参数的 jest.mock()，还可以调用 jest.mockImplementation() mock 构造函数。
