@@ -193,7 +193,7 @@
   - [PerformanceObserver](../开发基础/Observer/PerformanceObserver.md) 
   - [ResizeObserver](../开发基础/Observer/ResizeObserver.md) 
 - [WebAssembly](../开发基础/WebAssembly/README.md) 
-  - [WebAssembly 101: a developer's first steps](../开发基础/WebAssembly/WebAssembly 101: a developer's first steps.md) 
+  - [WebAssembly 101](../开发基础/WebAssembly/WebAssembly 101.md) 
   - [概念与使用](../开发基础/WebAssembly/概念与使用.md) 
 - [WebWorker](../开发基础/WebWorker/README.md) 
   - [SharedWorker](../开发基础/WebWorker/SharedWorker.md) 
