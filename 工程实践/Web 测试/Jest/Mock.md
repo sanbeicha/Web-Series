@@ -14,6 +14,7 @@ export default (items, callback) => {
   }
 };
 
+// test.js
 import forEach from './forEach';
 
 it('test forEach function', () => {
@@ -58,3 +59,71 @@ Jest 可以 Mock 定时器以使我们在测试代码中控制“时间”。调
 - 如果希望自己 mock 模块内部函数，可以在模块平级的目录下创建 **mocks** 目录，然后创建相应模块的 mock 文件。对于用户模块和 Node 核心模块（如：fs、path），我们仍需要在测试文件中显示的调用 jest.mock()，而其他的 Node 模块则不需要。
 
 此外，在 mock 模块时，jest.mock() 会被自动提升到模块导入前调用。对于类的 mock 基本和模块 mock 相同，支持自动 mock、手动 mock 以及调用带模块工厂参数的 jest.mock()，还可以调用 jest.mockImplementation() mock 构造函数。
+
+# ES6 类 Mock
+
+```js
+// sound-player.js
+export default class SoundPlayer {
+  constructor() {
+    this.foo = 'bar';
+  }
+
+  playSoundFile(fileName) {
+    console.log('Playing sound file ' + fileName);
+  }
+}
+
+// sound-player-consumer.js
+import SoundPlayer from './sound-player';
+
+export default class SoundPlayerConsumer {
+  constructor() {
+    this.soundPlayer = new SoundPlayer();
+  }
+
+  playSomethingCool() {
+    const coolSoundFileName = 'song.mp3';
+    this.soundPlayer.playSoundFile(coolSoundFileName);
+  }
+}
+```
+
+## Automatic mock
+
+```js
+import SoundPlayer from './sound-player';
+import SoundPlayerConsumer from './sound-player-consumer';
+
+jest.mock('./sound-player'); // SoundPlayer is now a mock constructor
+
+beforeEach(() => {
+  // Clear all instances and calls to constructor and all methods:
+  SoundPlayer.mockClear();
+});
+
+it('We can check if the consumer called the class constructor', () => {
+  const soundPlayerConsumer = new SoundPlayerConsumer();
+  expect(SoundPlayer).toHaveBeenCalledTimes(1);
+});
+
+it('We can check if the consumer called a method on the class instance', () => {
+  // Show that mockClear() is working:
+  expect(SoundPlayer).not.toHaveBeenCalled();
+
+  const soundPlayerConsumer = new SoundPlayerConsumer();
+  // Constructor should have been called again:
+  expect(SoundPlayer).toHaveBeenCalledTimes(1);
+
+  const coolSoundFileName = 'song.mp3';
+  soundPlayerConsumer.playSomethingCool();
+
+  // mock.instances is available with automatic mocks:
+  const mockSoundPlayerInstance = SoundPlayer.mock.instances[0];
+  const mockPlaySoundFile = mockSoundPlayerInstance.playSoundFile;
+  expect(mockPlaySoundFile.mock.calls[0][0]).toEqual(coolSoundFileName);
+  // Equivalent to above check:
+  expect(mockPlaySoundFile).toHaveBeenCalledWith(coolSoundFileName);
+  expect(mockPlaySoundFile).toHaveBeenCalledTimes(1);
+});
+```

@@ -1,3 +1,63 @@
+# DOM 测试
+
+# DOM 操作
+
+```js
+// displayUser.js
+'use strict';
+
+const $ = require('jquery');
+const fetchCurrentUser = require('./fetchCurrentUser.js');
+
+$('#button').click(() => {
+  fetchCurrentUser(user => {
+    const loggedText = 'Logged ' + (user.loggedIn ? 'In' : 'Out');
+    $('#username').text(user.fullName + ' - ' + loggedText);
+  });
+});
+```
+
+接着，我们在 `__tests__/` 文件夹下创建一个测试文件：
+
+```js
+// __tests__/displayUser-test.js
+'use strict';
+
+jest.mock('../fetchCurrentUser');
+
+test('displays a user after a click', () => {
+  // Set up our document body
+  document.body.innerHTML =
+    '<div>' +
+    '  <span id="username" />' +
+    '  <button id="button" />' +
+    '</div>';
+
+  // This module has a side-effect
+  require('../displayUser');
+
+  const $ = require('jquery');
+  const fetchCurrentUser = require('../fetchCurrentUser');
+
+  // Tell the fetchCurrentUser mock function to automatically invoke
+  // its callback with some data
+  fetchCurrentUser.mockImplementation(cb => {
+    cb({
+      fullName: 'Johnny Cash',
+      loggedIn: true
+    });
+  });
+
+  // Use jquery to emulate a click on our button
+  $('#button').click();
+
+  // Assert that the fetchCurrentUser function was called, and that the
+  // #username span's inner text was updated as we'd expect it to.
+  expect(fetchCurrentUser).toBeCalled();
+  expect($('#username').text()).toEqual('Johnny Cash - Logged In');
+});
+```
+
 # 快照测试
 
 快照测试是 Jest 提供的一个相当棒的 UI 测试功能，它会记录 React 结构树快照或其他可序列化的值，并与当前测试的值进行比较，如果不匹配则给出错误提示。快照应该被当做代码来对待，它需要被提交到版本库并进行 Review。如果组件渲染结果发生变化，测试将会失败。当组件正常调整时，我们可以调用 `jest -u` 更新快照。在监控模式下，我们可以通过交互式的命令更新快照。
