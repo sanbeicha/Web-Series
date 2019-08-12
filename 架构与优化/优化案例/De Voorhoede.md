@@ -1,6 +1,7 @@
 > 本文翻译自 [case-study-boosting-front-end-performance](https://css-tricks.com/case-study-boosting-front-end-performance/)。
 
-在 [De Voorhoede](https://www.voorhoede.nl/en/)工作的日子里，我们一直在追寻为用户构建高性能的前端解决方案。不过并不是每个客户会乐于遵循我们的性能指南，以至于我们必须一遍又一遍地跟他们解释那些保证他们能够战胜竞争对手的性能策略的重要性。最近我们也重构了自己的官方主页，使其能够拥有更快地响应速度与更好地性能表现。
+在 [De Voorhoede](https://www.voorhoede.nl/en/)工作的日子里，我们一直在追寻为用户构建高性能的前端解决方案。不过并不是每个客户会乐于遵循我们的性能指南，以至于我们必须一遍又一遍地跟他们解释那些保证他们能够战胜竞争对手的性能策略的重要性。最近我们也重构了自己的官方主页，使其能够拥有更快地响应速度与更好地性能表
+现。
 ![img](https://cdn.css-tricks.com/wp-content/uploads/2016/08/screenshot-of-site.png)
 
 # 性能调优始于设计
