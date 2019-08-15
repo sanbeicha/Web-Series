@@ -135,6 +135,8 @@
   - [响应式开发](../工程实践/响应式界面/响应式开发.md) 
   - [响应式设计](../工程实践/响应式界面/响应式设计.md) 
 - [国际化](../工程实践/国际化/README.md) 
+  - [FormatJS](../工程实践/国际化/FormatJS.md) 
+  - [Internationalization API](../工程实践/国际化/Internationalization API.md) 
 - [异常处理](../工程实践/异常处理/README.md) 
   - [异常上报](../工程实践/异常处理/异常上报.md) 
 - [录屏与重放](../工程实践/录屏与重放/README.md) 
