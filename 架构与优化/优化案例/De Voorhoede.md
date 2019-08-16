@@ -2,6 +2,7 @@
 
 在 [De Voorhoede](https://www.voorhoede.nl/en/)工作的日子里，我们一直在追寻为用户构建高性能的前端解决方案。不过并不是每个客户会乐于遵循我们的性能指南，以至于我们必须一遍又一遍地跟他们解释那些保证他们能够战胜竞争对手的性能策略的重要性。最近我们也重构了自己的官方主页，使其能够拥有更快地响应速度与更好地性能表
 现。
+
 ![img](https://cdn.css-tricks.com/wp-content/uploads/2016/08/screenshot-of-site.png)
 
 # 性能调优始于设计
@@ -12,7 +13,7 @@
 
 为了演示与测试方便，我们基于 NodeJS 搭建了一个混合使用 MarkDown 与 JSON 作为配置的静态网站生成器，其中一个简单的博客类型的网站的配置信息如下:
 
-```
+```json
 {
   "keywords": ["performance", "critical rendering path", "static site", "..."],
   "publishDate": "2016-08-12",
@@ -22,10 +23,13 @@
 
 而其内容为:
 
-```
+```md
 # A case study on boosting front-end performance
+
 At [De Voorhoede](https://www.voorhoede.nl/en/) we try to boost front-end performance...
+
 ## Design for performance
+
 In our projects we have daily discussions...
 ```
 
@@ -34,29 +38,30 @@ In our projects we have daily discussions...
 ## Image Delivery
 
 图片是网站的不可或缺的部分，其能够大大提升网站的表现力与视觉效果，而目前[平均大小为 2406KB 的网页中就有 1535KB 是图片资源](http://httparchive.org/interesting.php?a=All&l=Jul%2015%202016)，可见图片占据了静态资源多么大的一个比重，这也是我们需要重点优化的部分。
+
 ![img](https://cdn.css-tricks.com/wp-content/uploads/2016/08/average-bytes-per-page-chart.jpg)
 
 ### WebP
 
 [WebP](https://developers.google.com/speed/webp/) 是面向现代网页的高压缩低损失的图片格式，通常会比 JPEG 小 25%左右。然后 WebP 目前被很多人忽视，也不常使用。截止到本文撰写的时候，WebP 目前只能够在[Chrome, Opera and Android](http://caniuse.com/#feat=webp) (大概占用户数的 50%)这些浏览器中使用，不过我们还是有办法以 JPG/PNG 来弥补部分浏览器中不支持 WebP 的缺憾。
 
-### `picture`标签
+### `picture` 标签
 
 使用 picture 标签可以方便的对于 WebP 格式不支持的情况下完成替换:
 
-```
+```html
 <picture>
-  <source type="image/webp" srcset="image-l.webp" media="(min-width: 640px)">
-  <source type="image/webp" srcset="image-m.webp" media="(min-width: 320px)">
-  <source type="image/webp" srcset="image-s.webp">
-  <source srcset="image-l.jpg" media="(min-width: 640px)">
-  <source srcset="image-m.jpg" media="(min-width: 320px)">
-  <source srcset="image-s.jpg">
-  <img alt="Description of the image" src="image-l.jpg">
+  <source type="image/webp" srcset="image-l.webp" media="(min-width: 640px)" />
+  <source type="image/webp" srcset="image-m.webp" media="(min-width: 320px)" />
+  <source type="image/webp" srcset="image-s.webp" />
+  <source srcset="image-l.jpg" media="(min-width: 640px)" />
+  <source srcset="image-m.jpg" media="(min-width: 320px)" />
+  <source srcset="image-s.jpg" />
+  <img alt="Description of the image" src="image-l.jpg" />
 </picture>
 ```
 
-这里我们使用了 [picturefill by Scott Jehl](https://github.com/scottjehl/picturefill)作为 Polyfill 库来保证低版本的浏览器中能够支持 picture 标签，并且保证跨浏览器的功能一致性。并且我们还使用了 img 标签来保证那些不支持 picture 的浏览器能够正常工作。
+这里我们使用了 [picturefill by Scott Jehl](https://github.com/scottjehl/picturefill) 作为 Polyfill 库来保证低版本的浏览器中能够支持 picture 标签，并且保证跨浏览器的功能一致性。并且我们还使用了 img 标签来保证那些不支持 picture 的浏览器能够正常工作。
 
 ### 图片多格式生成
 
@@ -72,9 +77,12 @@ In our projects we have daily discussions...
 我们的网站中也存在着很多的 Icon 以及动画性质图片，这里我们是选择 SVG 作为 Icon 与 Animation 的格式，主要考虑有下:
 
 - SVG 是矢量表示，往往比位图文件更小
+
 - SVG 自带响应式功效，能够根据容器大小进行自动缩放，因此我们不需要再为了 picture 元素生成不同尺寸的图片
+
 - 最重要的一点是我们可以使用 CSS 去改变其样式或者添加动画效果，关于这一点可以参考[CodePen 上的这个演示](https://codepen.io/voorhoede/pen/qNgWod/)。
-  ![](https://coding.net/u/hoteam/p/Cache/git/raw/master/2016/8/2/autolayout.gif)
+
+![](https://coding.net/u/hoteam/p/Cache/git/raw/master/2016/8/2/autolayout.gif)
 
 ## Custom Web Fonts
 
@@ -83,9 +91,13 @@ In our projects we have daily discussions...
 
 首先，我们会为需要使用到的 Web Fonts 创建最小子集，即只将那些需要使用的字体提取出来，而并不需要让用户下载整个字体集，这里推荐使用[Font squirrel webfont generator](https://www.fontsquirrel.com/tools/webfont-generator)。另外，我们还需要为字体的下载设置监视器，即保证能够在字体下载完毕之后自动回调，这里我们使用的是[fontfaceobserver](https://github.com/bramstein/fontfaceobserver)，它会为页面自动创建一个监视器，在侦测到所有的自定义 Web Fonts 下载完毕后，会为整个页面添加默认的类名:
 
-```
-html {font-family: Georgia, serif;}
-html.fonts-loaded {font-family: Noto, Georgia, serif;}
+```css
+html {
+  font-family: Georgia, serif;
+}
+html.fonts-loaded {
+  font-family: Noto, Georgia, serif;
+}
 ```
 
 不过现在 CSS 的`font-display`属性也原生提供了我们这种替换功能，更多详情可见[font-display](https://developers.google.com/web/updates/2016/02/font-display)属性。
@@ -98,12 +110,12 @@ html.fonts-loaded {font-family: Noto, Georgia, serif;}
 
 目前来说，我们的网站都是偏向于静态，并不需要太多的 JavaScript 介入，不过考虑到日后的扩展空间，我们还是构建了一套完整的 JS 的工作流。众所周知，如果将 JS 直接放置到 head 标签中，其会阻塞整个页面的渲染。对于该点，最简单的方式就是将会阻塞渲染的 JS 脚本移动到页面的尾部，在整个首屏渲染完毕之后再进行加载。另一个常用的手段就是依然保持 JS 文件位于 head 标签中，不过为其添加一个`defer`的属性，这保证了浏览器只会先将该脚本下载下来，然后等到整个页面加载完毕再执行该脚本。另一个需要注意的是，因为我们并不使用类似于 jQuery 这样的第三方依赖库，而更多的依赖于浏览器原生的特性，因此我们希望在合适的浏览器内加载合适版本的 JS 代码，其效果大概如下:
 
-```
+```html
 <script>
-// Mustard Cutting
-if ('querySelector' in document && 'addEventListener' in window) {
-  document.write('<script src="index.js" defer><\/script>');
-}
+  // Mustard Cutting
+  if ('querySelector' in document && 'addEventListener' in window) {
+    document.write('<script src="index.js" defer><\/script>');
+  }
 </script>
 ```
 
@@ -128,61 +140,75 @@ if ('querySelector' in document && 'addEventListener' in window) {
 使用 HTTPS 可以保证站点的安全性，但是也会影响到你网站的性能表现，性能损耗主要发生在建立 SSL 握手协议的时候，这会导致很多的延迟，不过我们同样可以通过某些设置来进行优化。
 
 - 设置 HTTP Strict Transport Security 请求头可以让服务端告诉浏览器其只允许通过 HTTPS 进行交互，这就避免了浏览器从 HTTP 再重定向到 HTTPS 的时间消耗。
+
 - 设置 TLS false start 允许客户端在第一轮 TLS 中就能够立刻传递加密数据。握手协议余下的操作，譬如确认没有人进行中间人监听可以同步进行，这一点也能节约部分时间。
+
 - 设置 TLS Session Resumption，当浏览器与服务端曾经通过 TLS 进行过通信，那么浏览器会自动记录下 Session Identifier，当下次需要重新建立连接的时候，其可以复用该 Identifier，从而解决了一轮的时间。
 
-这里推荐扩展阅读下[Mythbusting HTTPS: Squashing security’s urban legends by Emily Stark](https://www.youtube.com/watch?v=YMfW1bfyGSY)。
+这里推荐扩展阅读下 [Mythbusting HTTPS: Squashing security’s urban legends by Emily Stark](https://www.youtube.com/watch?v=YMfW1bfyGSY)。
 
 ## Cookies
 
 我们并没有使用某个服务端框架，而是直接使用了静态的 Apache Web Server，不过 Apache Web Server 也是能够读取 Cookie 并且进行些简单的操作。譬如在下面这个例子中我们将 CSS 缓存信息存放在了 Cookie 中，然后交付 Apache 进行判断是否需要重复加载 CSS 文件:
 
-```
+```html
 <!-- #if expr="($HTTP_COOKIE!=/css-loaded/) || ($HTTP_COOKIE=/.*css-loaded=([^;]+);?.*/ && ${1} != '0d82f.css' )"-->
 
-<noscript><link rel="stylesheet" href="0d82f.css"></noscript>
+<noscript><link rel="stylesheet" href="0d82f.css"/></noscript>
 <script>
-(function() {
-  function loadCSS(url) {...}
-  function onloadCSS(stylesheet, callback) {...}
-  function setCookie(name, value, expInDays) {...}
+  (function() {
+    function loadCSS(url) {...}
+    function onloadCSS(stylesheet, callback) {...}
+    function setCookie(name, value, expInDays) {...}
 
-  var stylesheet = loadCSS('0d82f.css');
-  onloadCSS(stylesheet, function() {
-    setCookie('css-loaded', '0d82f', 100);
-  });
-}());
+    var stylesheet = loadCSS('0d82f.css');
+    onloadCSS(stylesheet, function() {
+      setCookie('css-loaded', '0d82f', 100);
+    });
+  }());
 </script>
 
-<style>/* Critical CSS here */</style>
+<style>
+  /* Critical CSS here */
+</style>
 
 <!-- #else -->
-<link rel="stylesheet" href="0d82f.css">
+<link rel="stylesheet" href="0d82f.css" />
 <!-- #endif -->
 ```
 
-这里 Apache Server 中的逻辑控制代码就是有点类似于注释形式的`<!-- #`，其主要包含以下步骤:
+这里 Apache Server 中的逻辑控制代码就是有点类似于注释形式的 `<!-- #`，其主要包含以下步骤:
 
 - `$HTTP_COOKIE!=/css-loaded/` 检测是否有设置过 CSS 缓存相关的 Cookie
-- `$HTTP_COOKIE=/.*css-loaded=([^;]+);?.*/ && ${1} != '0d82f.css'`检测缓存的 CSS 版本是否为当前版本
-- If `<!-- #if expr="..." -->` 值为`true` 我们便能假设该用户是第一次访问该站点
-- 如果用户是首次浏览，我们添加了一个`<noscript>`标签，里面还包含了一个阻塞型的`<link rel="stylesheet">`标签。添加该标签的意义在于我们在下面是使用 JavaScript 来异步加载 CSS 文件，而在用户禁止 JavaScript 的情况下也能保证可以通过该标签来正常加载 CSS 文件。
+
+- `$HTTP_COOKIE=/.*css-loaded=([^;]+);?.*/ && ${1} != '0d82f.css'` 检测缓存的 CSS 版本是否为当前版本
+
+- If `<!-- #if expr="..." -->` 值为 `true` 我们便能假设该用户是第一次访问该站点
+
+- 如果用户是首次浏览，我们添加了一个 `<noscript>` 标签，里面还包含了一个阻塞型的 `<link rel="stylesheet">` 标签。添加该标签的意义在于我们在下面是使用 JavaScript 来异步加载 CSS 文件，而在用户禁止 JavaScript 的情况下也能保证可以通过该标签来正常加载 CSS 文件。
+
 - `<!-- #else -->` 表达式在用户二次访问该页面时，我们可以认为 CSS 文件已经被加载过了，因此可以直接从本地缓存中加载而不需要重复请求。
 
 上述策略同样可以应用于 Web Fonts 的加载，最终的 Cookie 如下所示:
+
 ![](https://cdn.css-tricks.com/wp-content/uploads/2016/08/voorhoede-cookies.jpg)
 
 ## File Level Caching
 
-在上文可以发现，我们严重依赖于浏览器缓存来处理用户重复访问时资源加载的问题，理想情况下我们肯定希望能够永久地缓存 CSS、JS、Fonts 以及图片文件，然后在某个文件发生变化的时候将缓存设置为失效。这里我们设置了以`https://www.voorhoede.nl/assets/css/main.css?v=1.0.4`形式，即在请求路径上加上版本号的方式进行缓存。不过这种方式的缺陷在于如果我们更换了资源文件的存放地址，那么所有的缓存也就自然失效了。这里我们使用了[gulp-rev](https://github.com/sindresorhus/gulp-rev)以及[gulp-rev-replace](https://github.com/jamesknelson/gulp-rev-replace)来为文件添加 Hash 值，从而保证了仅当文件内容发生变化的时候文件请求路径才会发生改变，即将每个文件的缓存验证独立开来。
+在上文可以发现，我们严重依赖于浏览器缓存来处理用户重复访问时资源加载的问题，理想情况下我们肯定希望能够永久地缓存 CSS、JS、Fonts 以及图片文件，然后在某个文件发生变化的时候将缓存设置为失效。这里我们设置了以 `https://www.voorhoede.nl/assets/css/main.css?v=1.0.4` 形式，即在请求路径上加上版本号的方式进行缓存。不过这种方式的缺陷在于如果我们更换了资源文件的存放地址，那么所有的缓存也就自然失效了。这里我们使用了 [gulp-rev](https://github.com/sindresorhus/gulp-rev) 以及 [gulp-rev-replace](https://github.com/jamesknelson/gulp-rev-replace) 来为文件添加 Hash 值，从而保证了仅当文件内容发生变化的时候文件请求路径才会发生改变，即将每个文件的缓存验证独立开来。
 
 # Result
 
-上面我们介绍了很多的优化手段，这里我们以实验的形式来对优化的结果与效果进行分析。我们可以用类似于[PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/)或者[WebPagetest](http://www.webpagetest.org/)来进行性能测试或者网络分析。我觉得最好的测试你站点渲染性能的方式就是在限流的情况下观察页面的呈现效果，Google Chrome 内置了限流的功能：
+上面我们介绍了很多的优化手段，这里我们以实验的形式来对优化的结果与效果进行分析。我们可以用类似于 [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) 或者 [WebPagetest](http://www.webpagetest.org/) 来进行性能测试或者网络分析。我觉得最好的测试你站点渲染性能的方式就是在限流的情况下观察页面的呈现效果，Google Chrome 内置了限流的功能：
+
 ![](https://cdn.css-tricks.com/wp-content/uploads/2016/08/voorhoede-network-analysis.jpg)
+
 这里我们将我们的网络环境设置为了 50KB/S 的 GPRS 网络环境，我们总共花费了 2.27 秒完成了首屏渲染。上图中黄线左侧的时间即指明了从 HTML 文件开始下载到下载完成所耗费的时间，该 HTML 文件中已经包含了关键的 CSS 代码，因此整个页面已经保证了基本的可用性与可交互型。而剩下的比较大的资源都会进行延时加载，这正是我们想要达到的目标。我们也可以使用 PageSpeed 来测试下网站的性能，可以看出我们得分很不错:
+
 ![](https://cdn.css-tricks.com/wp-content/uploads/2016/08/pagespeed-insights-voorhoede.jpg)
+
 而在 WebPagetest 中，我们看出了如下的结果:
+
 ![](https://cdn.css-tricks.com/wp-content/uploads/2016/08/webpagetest-voorhoede.jpg)
 
 ## Roadmap
@@ -190,5 +216,7 @@ if ('querySelector' in document && 'addEventListener' in window) {
 优化之路漫漫，永无止境，我们在未来也会关注以下几个方面：
 
 - HTTP/2:我们目前已经开始尝试使用 HTTP/2，而本篇文章中提到的很多的优化的要点都是面向 HTTP/1.1 的。简言之，HTTP/1.1 诞生之初还是处于 Table 布局与行内样式流行的时代，它并没有考虑到现在所面对的 2.6MB 大小，包含 200 多个网络请求的页面。为了弥合这老的协议的缺陷，我们不得不连接 JS 与 CSS 文件、使用行内样式、对于小图片使用 Data URL 等等。这些操作都是为了节约请求次数，而 HTTP/2 中允许在同一个 TCP 请求中进行多个并发的请求，这样就会允许我们不需要再去进行大量的文件合并操作。
+
 - Service Workers:这是现代浏览器提供的后台工作线程，可以允许我们为网站添加譬如离线支持、推送消息、后台同步等等很多复杂的操作。
+
 - CDN:目前我们是自己维护网站，而在真实的应用场景下可以考虑使用 CDN 服务来减少服务端与客户端之间的物理距离，从而减少传输时延。
