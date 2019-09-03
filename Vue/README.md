@@ -1,3 +1,5 @@
+![](https://s2.ax1x.com/2019/09/03/nAtlp6.png)
+
 # 现代 Web 开发--Vue.js 篇
 
 本系列文章从属于 [Vue.js 与前端工程化实践](https://parg.co/bWg)一书，本书的首要目标即是以 Vue.js 为核心的技术体系为主线，为读者构建完整的前端技术知识体系，探讨前端工程化的思想，并且能使不同技术水准的读者都有所得。
@@ -10,3 +12,5 @@ This means that Vue’s “buy in” is reasonable and manageable. You don’t n
 
 Vue is also fast. Very fast. Though React pioneered the virtual DOM pattern, Vue has gone the furthest in optimising that process. It is now (and in many cases by a significant margin) the single fastest of the frameworks listed here.
 The success of Vue is in part due to the support of the Laravel framework, which has wisely made Vue a first-class citizen, providing some simple optimisations to make it even easier to get Vue running on a Laravel app. With so much support and an enthusiastic community, Vue is a solid bet for any project, from the simple to the highly advanced. It’s already gone from being a small edge framework to being highly visible and discussed in communities like Reddit.
+
+本篇文章配套示例代码参考 [vue-snippets](https://github.com/wx-chevalier/vue-snippets)。
