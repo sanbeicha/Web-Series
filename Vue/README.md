@@ -10,3 +10,5 @@ This means that Vue’s “buy in” is reasonable and manageable. You don’t n
 
 Vue is also fast. Very fast. Though React pioneered the virtual DOM pattern, Vue has gone the furthest in optimising that process. It is now (and in many cases by a significant margin) the single fastest of the frameworks listed here.
 The success of Vue is in part due to the support of the Laravel framework, which has wisely made Vue a first-class citizen, providing some simple optimisations to make it even easier to get Vue running on a Laravel app. With so much support and an enthusiastic community, Vue is a solid bet for any project, from the simple to the highly advanced. It’s already gone from being a small edge framework to being highly visible and discussed in communities like Reddit.
+
+本篇文章配套示例代码参考 [vue-snippets](https://github.com/wx-chevalier/vue-snippets)。
