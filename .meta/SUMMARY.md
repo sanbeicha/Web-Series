@@ -6,6 +6,7 @@
 
 - [Antd](../React/Antd/README.md) 
   - [应用配置](../React/Antd/应用配置.md) 
+  - [文件上传](../React/Antd/文件上传.md) 
 - [Fiber 与调和算法](../React/Fiber 与调和算法/README.md) 
 - [GraphQL](../React/GraphQL/README.md) 
 - [Hooks](../React/Hooks/README.md) 
