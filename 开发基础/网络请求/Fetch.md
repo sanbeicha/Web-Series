@@ -118,9 +118,7 @@ const requestDataString = encodeURIComponent(
 );
 
 //将字符串链接
-const packagedRequestURL = `${
-  Model.BASE_URL
-}${path}?requestData=${requestDataString}&action=${action}`;
+const packagedRequestURL = `${Model.BASE_URL}${path}?requestData=${requestDataString}&action=${action}`;
 ```
 
 ## Headers | 自定义请求头
@@ -315,10 +313,8 @@ getWithQueryParamsByProxy({BASE_URL=Model.BASE_URL, path="/", queryParams={}, co
 
     //根据queryParams构造查询字符串
     for (let key in queryParams) {
-
         //拼接查询字符串
         queryString += `${key}=${encodeURIComponent(queryParams[key])}&`;
-
     }
 
     //将查询字符串进行编码
@@ -329,6 +325,5 @@ getWithQueryParamsByProxy({BASE_URL=Model.BASE_URL, path="/", queryParams={}, co
 
     //以CORS方式发起请求
     return this._fetchWithCORS(packagedRequestURL, contentType);
-
 }
 ```
