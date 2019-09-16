@@ -327,3 +327,105 @@ getWithQueryParamsByProxy({BASE_URL=Model.BASE_URL, path="/", queryParams={}, co
     return this._fetchWithCORS(packagedRequestURL, contentType);
 }
 ```
+
+# 文件上传
+
+文件上传在 Web 开发中应用很广泛，我们经常发微博、发微信朋友圈都用到了图片上传功能。文件上传是指将本地图片、视频、音频等文件上传到服务器上，可以供其他用户浏览或下载的过程。上传文件时必须做好文件的安全性，除了前端必要的验证，如文件类型、后缀、大小等验证，重要的还是要在后台做安全策略。
+
+这里我列举几个注意点：
+
+- 后台需要进行文件类型、大小、来源等验证
+- 定义一个.htaccess 文件，只允许访问指定扩展名的文件。
+- 将上传后的文件生成一个随机的文件名，并且加上此前生成的文件扩展名。
+- 设置上传目录执行权限，避免不怀好意的人绕过如图片扩展名进行恶意攻击，拒绝脚本执行的可能性。
+
+```js
+const input = document.querySelector('input[type="file"]');
+
+const data = new FormData();
+data.append('file', input.files[0]);
+data.append('user', 'hubot');
+
+fetch('/avatars', {
+  method: 'post',
+  body: data
+});
+```
+
+# 文件下载
+
+可以直接在 fetch 中抓取文件，然后创建伪 a 元素，进行下载操作：
+
+```js
+fetch('http://somehost/check-permission', options).then(res => {
+  if (res.code === 0) {
+    const a = document.createElement('a');
+    const url = res.data.url;
+    const filename = 'myfile.zip';
+    a.href = url;
+    a.download = filename;
+    a.click();
+  } else {
+    alert('You have no permission to download the file!');
+  }
+});
+```
+
+我们也可以对文件的内容进行自定义处理：
+
+```js
+fetch('/big-data.csv')
+  .then(function(response) {
+    const reader = response.body.getReader();
+    const partialCell = '';
+    const returnNextCell = false;
+    const returnCellAfter = 'Jake';
+    const decoder = new TextDecoder();
+
+    return search(reader);
+  })
+  .then(function(result) {
+    console.log("Got the result! It's '" + result + "'");
+  })
+  .catch(function(err) {
+    console.log(err.message);
+  });
+
+function search(reader) {
+  return reader.read().then(function(result) {
+    partialCell += decoder.decode(result.value || new Uint8Array(), {
+      stream: !result.done
+    });
+
+    // Split what we have into CSV 'cells'
+    const cellBoundry = /(?:,|\r\n)/;
+    const completeCells = partialCell.split(cellBoundry);
+
+    if (!result.done) {
+      // Last cell is likely incomplete
+      // Keep hold of it for next time
+      partialCell = completeCells[completeCells.length - 1];
+      // Remove it from our complete cells
+      completeCells = completeCells.slice(0, -1);
+    }
+
+    for (const cell of completeCells) {
+      cell = cell.trim();
+
+      if (returnNextCell) {
+        reader.cancel('No more reading needed.');
+        return cell;
+      }
+      if (cell === returnCellAfter) {
+        returnNextCell = true;
+      }
+    }
+
+    if (result.done) {
+      throw Error('Could not find value after ' + returnCellAfter);
+    }
+
+    return search();
+  });
+}
+```
