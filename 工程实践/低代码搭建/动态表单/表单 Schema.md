@@ -10,6 +10,10 @@
 
 - bizData 中是对表单字段的业务属性，注意的是，bizData 不会影响 Form 的渲染
 
+# react-json-schema
+
+react-jsonschema-form 是最初由 Firefox 开源的能够从 JSON Schema 中渲染出实际表单的 React 组件。
+
 ## JSONSchema
 
 ```json
