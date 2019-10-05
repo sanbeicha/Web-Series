@@ -168,13 +168,13 @@ AppRegistry.registerComponent('HelloWorld', function() {
 });
 ```
 
-RN 需要一个 JS 的运行环境， 在 IOS 上直接使用内置的 javascriptcore， 在 Android 则使用 webkit.org 官方开源的 jsc.so。 此外还集成了其他开源组件，如 fresco 图片组件，okhttp 网络组件等。
+RN 需要一个 JS 的运行环境， 在 IOS 上直接使用内置的 javascriptcore， 在 Android 则使用 webkit.org 官方开源的 jsc.so。此外还集成了其他开源组件，如 fresco 图片组件，okhttp 网络组件等。
 
-RN 会把应用的 JS 代码(包括依赖的 framework)编译成一个 js 文件(一般命名为 index.android.bundle), , RN 的整体框架目标就是为了解释运行这个 js 脚本文件，如果是 js 扩展的 API， 则直接通过 bridge 调用 native 方法; 如果是 UI 界面， 则映射到 virtual DOM 这个虚拟的 JS 数据结构中，通过 bridge 传递到 native ， 然后根据数据属性设置各个对应的真实 native 的 View。 bridge 是一种 JS 和 JAVA 代码通信的机制， 用 bridge 函数传入对方 module 和 method 即可得到异步回调的结果。
+RN 会把应用的 JS 代码(包括依赖的 framework)编译成一个 js 文件(一般命名为 index.android.bundle), , RN 的整体框架目标就是为了解释运行这个 js 脚本文件，如果是 js 扩展的 API， 则直接通过 bridge 调用 native 方法; 如果是 UI 界面， 则映射到 virtual DOM 这个虚拟的 JS 数据结构中，通过 bridge 传递到 native ， 然后根据数据属性设置各个对应的真实 native 的 View。bridge 是一种 JS 和 JAVA 代码通信的机制， 用 bridge 函数传入对方 module 和 method 即可得到异步回调的结果。
 
-对于 JS 开发者来说， 画 UI 只需要画到 virtual DOM 中，不需要特别关心具体的平台, 还是原来的单线程开发，还是原来 HTML 组装 UI(JSX)，还是原来的样式模型(部分兼容 )。RN 的界面处理除了实现 View 增删改查的接口之外，还自定义一套样式表达 CSSLayout，这套 CSSLayout 也是跨平台实现。 RN 拥有画 UI 的跨平台能力，主要是加入 Virtual DOM 编程模型，该方法一方面可以照顾到 JS 开发者在 html DOM 的部分传承， 让 JS 开发者可以用类似 DOM 编程模型就可以开发原生 APP ， 另一方面则可以让 Virtual DOM 适配实现到各个平台，实现跨平台的能力，并且为未来增加更多的想象空间， 比如 react-cavas, react-openGL。而实际上 react-native 也是从 react-js 演变而来。
+对于 JS 开发者来说， 画 UI 只需要画到 virtual DOM 中，不需要特别关心具体的平台, 还是原来的单线程开发，还是原来 HTML 组装 UI(JSX)，还是原来的样式模型(部分兼容 )。RN 的界面处理除了实现 View 增删改查的接口之外，还自定义一套样式表达 CSSLayout，这套 CSSLayout 也是跨平台实现。RN 拥有画 UI 的跨平台能力，主要是加入 Virtual DOM 编程模型，该方法一方面可以照顾到 JS 开发者在 html DOM 的部分传承， 让 JS 开发者可以用类似 DOM 编程模型就可以开发原生 APP ， 另一方面则可以让 Virtual DOM 适配实现到各个平台，实现跨平台的能力，并且为未来增加更多的想象空间， 比如 react-cavas, react-openGL。而实际上 react-native 也是从 react-js 演变而来。
 
-对于 Android 开发者来说， RN 是一个普通的安卓程序加上一堆事件响应， 事件来源主要是 JS 的命令。主要有二个线程，UI main thread, JS thread。 UI thread 创建一个 APP 的事件循环后，就挂在 looper 等待事件 , 事件驱动各自的对象执行命令。 JS thread 运行的脚本相当于底层数据采集器， 不断上传数据，转化成 UI 事件， 通过 bridge 转发到 UI thread, 从而改变真实的 View。 后面再深一层发现， UI main thread 跟 JS thread 更像是 CS 模型，JS thread 更像服务端， UI main thread 是客户端， UI main thread 不断询问 JS thread 并且请求数据，如果数据有变，则更新 UI 界面。
+对于 Android 开发者来说， RN 是一个普通的安卓程序加上一堆事件响应， 事件来源主要是 JS 的命令。主要有二个线程，UI main thread, JS thread。UI thread 创建一个 APP 的事件循环后，就挂在 looper 等待事件 , 事件驱动各自的对象执行命令。JS thread 运行的脚本相当于底层数据采集器， 不断上传数据，转化成 UI 事件， 通过 bridge 转发到 UI thread, 从而改变真实的 View。后面再深一层发现， UI main thread 跟 JS thread 更像是 CS 模型，JS thread 更像服务端， UI main thread 是客户端， UI main thread 不断询问 JS thread 并且请求数据，如果数据有变，则更新 UI 界面。
 
 ![](https://unbug.gitbooks.io/react-native-training/content/21.jpg)
 
@@ -182,7 +182,7 @@ RN 会把应用的 JS 代码(包括依赖的 framework)编译成一个 js 文件
 
 # 利用 Create React Native App 快速创建 React Native 应用
 
-[Create React Native App](https://github.com/react-community/create-react-native-app) 是由 Facebook 与 [Expo](https://expo.io/) 联合开发的用于快速创建 React Native 应用的工具，其深受我们在前文介绍的 [Create React App](https://github.com/facebookincubator/create-react-app) 的影响。 很多没有移动端开发经验的 Web 开发者在初次尝试 React Native 应用开发时可能会困扰于大量的原生依赖与开发环境，特别对于 Android 开发者而言。而 Create React Native App 则能够让用户在未安装 Xcode 或者 Android Studio 时，即使是在 Linux 或者 Windows 环境下也能开始 React Native 的开发与调试。这一点主要基于我们可以选择将应用运行在 Expo 的客户端应用内，该应用能够加载远端的纯粹的 JavaScript 代码而不用进行任何的原生代码编译操作。我们可以使用 NPM 快速安装命令行工具：
+[Create React Native App](https://github.com/react-community/create-react-native-app) 是由 Facebook 与 [Expo](https://expo.io/) 联合开发的用于快速创建 React Native 应用的工具，其深受我们在前文介绍的 [Create React App](https://github.com/facebookincubator/create-react-app) 的影响。很多没有移动端开发经验的 Web 开发者在初次尝试 React Native 应用开发时可能会困扰于大量的原生依赖与开发环境，特别对于 Android 开发者而言。而 Create React Native App 则能够让用户在未安装 Xcode 或者 Android Studio 时，即使是在 Linux 或者 Windows 环境下也能开始 React Native 的开发与调试。这一点主要基于我们可以选择将应用运行在 Expo 的客户端应用内，该应用能够加载远端的纯粹的 JavaScript 代码而不用进行任何的原生代码编译操作。我们可以使用 NPM 快速安装命令行工具：
 
 ```
 $ npm i -g create-react-native-app

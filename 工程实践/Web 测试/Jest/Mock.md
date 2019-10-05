@@ -1,10 +1,10 @@
 # Mock
 
-在测试中，mock 可以让你更方便的去测试依赖于数据库、网络请求、文件等外部系统的函数。 Jest 内置了 mock 机制，提供了多种 mock 方式已应对各种需求。
+在测试中，mock 可以让你更方便的去测试依赖于数据库、网络请求、文件等外部系统的函数。Jest 内置了 mock 机制，提供了多种 mock 方式已应对各种需求。
 
 # Mock 函数
 
-函数的 mock 非常简单，调用 jest.fn() 即可获得一个 mock 函数。 Mock 函数有一个特殊的 .mock 属性，保存着函数的调用信息。.mock 属性还会追踪每次调用时的 this。
+函数的 mock 非常简单，调用 jest.fn() 即可获得一个 mock 函数。Mock 函数有一个特殊的 .mock 属性，保存着函数的调用信息。.mock 属性还会追踪每次调用时的 this。
 
 ```js
 // mocks/forEach.js
@@ -42,7 +42,7 @@ it('test forEach function', () => {
 expect(mockFunc).toBeCalled();
 ```
 
-使用 mockReturnValue 和 mockReturnValueOnce 可以 mock 函数的返回值。 当我们需要为 mock 函数增加一些逻辑时，可以使用 jest.fn()、mockImplementation 或者 mockImplementationOnce mock 函数的实现。 还可以使用 mockName 还给 mock 函数命名，如果没有命名，输出的日志默认就会打印 jest.fn()。
+使用 mockReturnValue 和 mockReturnValueOnce 可以 mock 函数的返回值。当我们需要为 mock 函数增加一些逻辑时，可以使用 jest.fn()、mockImplementation 或者 mockImplementationOnce mock 函数的实现。还可以使用 mockName 还给 mock 函数命名，如果没有命名，输出的日志默认就会打印 jest.fn()。
 
 # Mock 定时器
 

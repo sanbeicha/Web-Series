@@ -173,7 +173,7 @@ transform: rotate | scale | skew | translate |matrix;
 
 - translate 偏移
 
-  偏移同样包括水平偏移和垂直偏移。 `translate(x,y)`
+  偏移同样包括水平偏移和垂直偏移。`translate(x,y)`
 
   水平方向和垂直方向同时移动(也就是 X 轴和 Y 轴同时移动)； `translateX(x)`
 

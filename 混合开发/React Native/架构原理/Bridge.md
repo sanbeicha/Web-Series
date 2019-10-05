@@ -2,7 +2,7 @@
 
 # RCTRootView
 
-RCTRootView 是 React Native 加载的地方,是万物之源。从这里开始，我们有了 JS Engine, JS 代码被加载进来，对应的原生模块也被加载进来，然后 js loop 开始运行。 js loop 的驱动来源是 Timer 和 Event Loop(用户事件). js loop 跑起来以后应用就可以持续不停地跑下去了。
+RCTRootView 是 React Native 加载的地方,是万物之源。从这里开始，我们有了 JS Engine, JS 代码被加载进来，对应的原生模块也被加载进来，然后 js loop 开始运行。js loop 的驱动来源是 Timer 和 Event Loop(用户事件). js loop 跑起来以后应用就可以持续不停地跑下去了。
 
 如果你要通过调试来理解 RN 底层原理，你也应该是从 RCTRootView 着手，顺藤摸瓜。
 
@@ -23,7 +23,7 @@ JS 运行环境准备好以后把加载视图用 RCTRootContentView 替换加载
 
 RCTRootContentView reactTag 在默认情况下为 1. 在 Xcode view Hierarchy debugger 下可以看到，最顶层为 RCTRootView, 里面嵌套的是 RCTRootContentView, 从 RCTRootContentView 开始，每个 View 都有一个 reactTag.
 
-RCTRootView 继承自 UIView, RCTRootView 主要负责初始化 JS Environment 和 React 代码，然后管理整个运行环境的生命周期。 RCTRootContentView 继承自 RCTView, RCTView 继承自 UIView, RCTView 封装了 React Component Node 更新和渲染的逻辑， RCTRootContentView 会管理所有 react ui components. RCTRootContentView 同时负责处理所有 touch 事件.
+RCTRootView 继承自 UIView, RCTRootView 主要负责初始化 JS Environment 和 React 代码，然后管理整个运行环境的生命周期。RCTRootContentView 继承自 RCTView, RCTView 继承自 UIView, RCTView 封装了 React Component Node 更新和渲染的逻辑， RCTRootContentView 会管理所有 react ui components. RCTRootContentView 同时负责处理所有 touch 事件.
 
 # RCTBridge
 
