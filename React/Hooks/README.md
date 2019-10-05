@@ -10,3 +10,4 @@
 - https://blog.csdn.net/qq_41384351/article/details/90048454
 - https://mp.weixin.qq.com/s/YEs5nH4aOAxOPYuW8oVlBA
 - https://segmentfault.com/a/1190000020120456
+- https://itnext.io/optimizing-react-code-with-hooks-3eaaf5978351
