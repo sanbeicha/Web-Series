@@ -55,7 +55,7 @@ pod 'Cordova', '~> 4.0.1' # 支持Cordova WebView容器
 
 ### Network Configuration
 
-> * [cordova-5-ios-9-security-policy-changes](http://moduscreate.com/cordova-5-ios-9-security-policy-changes/)
+> - [cordova-5-ios-9-security-policy-changes](http://moduscreate.com/cordova-5-ios-9-security-policy-changes/)
 
 有时候在 iOS 中进行配置的时候会发现部分网络请求被 Ban，可以根据以下几个步骤进行排查。(1)判断 config.xml 中是否设置了网络请求的白名单，老实说现在 cordova-plugin-whitelist 这个插件都没有了 iOS 端，不确定这个是不是需要的。
 
