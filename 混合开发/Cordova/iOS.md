@@ -51,7 +51,7 @@ pod 'Cordova', '~> 4.0.1' # 支持Cordova WebView容器
 </widget>
 ```
 
-(3)添加 www 文件夹一般来说会把静态资源文件放置到 www 目录下，这边有一个小点需要注意下(不知道是不是笔者搞错了)，就是将 www 文件夹引入到 XCode 中的时候，注意不要选择 Copy 而是 File Reference，即最终的文件夹应该是如下图所示的蓝色而不是黄色。 ![](http://7xkt0f.com1.z0.glb.clouddn.com/861EEF1C-ADAE-40D3-AB56-EBD0AB4A13DB.png)
+(3)添加 www 文件夹一般来说会把静态资源文件放置到 www 目录下，这边有一个小点需要注意下(不知道是不是笔者搞错了)，就是将 www 文件夹引入到 XCode 中的时候，注意不要选择 Copy 而是 File Reference，即最终的文件夹应该是如下图所示的蓝色而不是黄色。![](http://7xkt0f.com1.z0.glb.clouddn.com/861EEF1C-ADAE-40D3-AB56-EBD0AB4A13DB.png)
 
 ### Network Configuration
 
@@ -63,7 +63,7 @@ pod 'Cordova', '~> 4.0.1' # 支持Cordova WebView容器
 <!-- Allow images, xhrs, etc. to google.com --> <access origin="http://google.com" /> <access origin="https://google.com" /> <!-- Access to the subdomain maps.google.com --> <access origin="http://maps.google.com" /> <!-- Access to all the subdomains on google.com --> <access origin="http://*.google.com" /> <!-- Enable requests to content: URLs --> <access origin="content:///*" /> <!-- Don't block any requests --> <access origin="*" />
 ```
 
-(2)在 iOS 9 之后默认是不允许非 HTTPs 的请求发出，所以要修改下配置允许发起 HTTP 请求。 ![](http://i.stack.imgur.com/nGw3j.png)
+(2)在 iOS 9 之后默认是不允许非 HTTPs 的请求发出，所以要修改下配置允许发起 HTTP 请求。![](http://i.stack.imgur.com/nGw3j.png)
 
 ```
 <key>NSAppTransportSecurity</key> <dict>    <key>NSAllowsArbitraryLoads</key>    <true/> </dict>
@@ -85,7 +85,7 @@ pod 'Cordova', '~> 4.0.1' # 支持Cordova WebView容器
    <feature name="CordovaPluginsBridge">        <param name="ios-package" value="Echo" />        <param name="onload" value="true" />    </feature>
 ```
 
-有沒有指定插件的初始值設定項。相反，應使用插件 pluginInitialize 為其啟動邏輯方法。插件需要長時間運行的請求，如媒體重播、 聽眾，保持內部狀態應執行的背景活動 onReset 方法來清理這些活動。 在方法運行時 UIWebView 定位到新的一頁或刷新，重新載入 JavaScript。
+有沒有指定插件的初始值設定項。相反，應使用插件 pluginInitialize 為其啟動邏輯方法。插件需要長時間運行的請求，如媒體重播、 聽眾，保持內部狀態應執行的背景活動 onReset 方法來清理這些活動。在方法運行時 UIWebView 定位到新的一頁或刷新，重新載入 JavaScript。
 
 ### JS Modules
 
@@ -117,7 +117,7 @@ window.echo("echome", function(echoValue) {
 
 ### iOS 本地方法
 
-JavaScript 調用觸發插件請求到本機的一邊，和相應的 iOS 目標 C 插件映射正確地在 config.xml 檔中，但最後 iOS 目標 C 插件類看起來像什麼？ 無論派往與 JavaScript 的插件 exec 函數傳遞到相應的插件類的 action 方法。 插件的方法有此簽名：
+JavaScript 調用觸發插件請求到本機的一邊，和相應的 iOS 目標 C 插件映射正確地在 config.xml 檔中，但最後 iOS 目標 C 插件類看起來像什麼？ 無論派往與 JavaScript 的插件 exec 函數傳遞到相應的插件類的 action 方法。插件的方法有此簽名：
 
 ```
    - (void)myMethod:(CDVInvokedUrlCommand*)command    {        CDVPluginResult* pluginResult = nil;        NSString* myarg = [command.arguments objectAtIndex:0];        if (myarg != nil) {            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];        } else {            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Arg was null"];        }        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];    }
@@ -131,12 +131,12 @@ JavaScript 調用觸發插件請求到本機的一邊，和相應的 iOS 目標 
     + (CDVPluginResult*)resultWithStatus:(CDVCommandStatus)statusOrdinal messageAs...
 ```
 
-您可以創建 `String` ， `Int` ， `Double` ， `Bool` ， `Array` ， `Dictionary` ， `ArrayBuffer` ，和 `Multipart` 類型。 你可以也離開了任何參數來發送狀態，或返回錯誤，或甚至選擇不發送任何外掛程式的結果，在這種情況下既不回撥火。
+您可以創建 `String` ， `Int` ， `Double` ， `Bool` ， `Array` ， `Dictionary` ， `ArrayBuffer` ，和 `Multipart` 類型。你可以也離開了任何參數來發送狀態，或返回錯誤，或甚至選擇不發送任何外掛程式的結果，在這種情況下既不回撥火。
 
 請注意以下複雜的傳回值為：
 
-* `messageAsArrayBuffer`預計 `NSData*` 並將轉換為 `ArrayBuffer` 在 JavaScript 回檔。 同樣，任何 `ArrayBuffer` JavaScript 發送到一個外掛程式都將轉換為`NSData*`.
-* `messageAsMultipart`預計， `NSArray*` 包含任何其他支援類型，並將發送整個陣列作為 `arguments` 給您的 JavaScript 回檔。 這種方式，所有參數在序列化或反序列化作為必要的所以它是能夠安全返回 `NSData*` 作為多部分，但不是 `Array` /`Dictionary`.
+* `messageAsArrayBuffer`預計 `NSData*` 並將轉換為 `ArrayBuffer` 在 JavaScript 回檔。同樣，任何 `ArrayBuffer` JavaScript 發送到一個外掛程式都將轉換為`NSData*`.
+* `messageAsMultipart`預計， `NSArray*` 包含任何其他支援類型，並將發送整個陣列作為 `arguments` 給您的 JavaScript 回檔。這種方式，所有參數在序列化或反序列化作為必要的所以它是能夠安全返回 `NSData*` 作為多部分，但不是 `Array` /`Dictionary`.
   #### 异步执行
   如果对于部分执行时间较长的代码，可以放在后台进程中执行。
 
