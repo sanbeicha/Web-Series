@@ -114,7 +114,7 @@
   - [服务端渲染性能浅析](../React/服务端渲染/服务端渲染性能浅析.md) 
 - [测试](../React/测试/README.md) 
   - [Enzyme](../React/测试/Enzyme.md) 
-  - [Jest 组件测试](../React/测试/Jest 组件测试.md) 
+  - [Jest](../React/测试/Jest.md) 
 - [状态管理](../React/状态管理/README.md) 
   - [Bistate](../React/状态管理/Bistate.md) 
   - [Flux](../React/状态管理/Flux.md) 

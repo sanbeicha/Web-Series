@@ -236,3 +236,55 @@ class MouseTracker extends React.Component {
 ```
 
 ## 通用数据加载
+
+我们可以用 renderProps 封装的组件如下所示：
+
+```js
+class Fetch extends React.Component {
+  state = {
+    data: void 0,
+    error: void 0,
+    loading: false
+  };
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.url && this.props.url !== prevProps.url) {
+      this.fetchData(this.props.url);
+    }
+  }
+
+  async fetchData() {
+    try {
+      this.setState({ loading: true });
+      const response = await fetch(this.props.url);
+      const json = await response.json();
+      this.setState({ data: json });
+      this.setState({ loading: false });
+    } catch (err) {
+      this.setState({ error: err });
+    }
+  }
+
+  render() {
+    const { error, data, loading } = this.state;
+    if (loading) return <div>Loading...</div>;
+    if (error) return this.props.error(error);
+    if (data) return this.props.render(data);
+    else return null;
+  }
+}
+```
+
+该组件的用法如下：
+
+```js
+<Fetch
+  url={`url-to-product`}
+  render={data => <ProductDetail product={data.product} />}
+  error={error => <div>{error.message}</div>}
+/>
+```

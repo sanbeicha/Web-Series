@@ -36,21 +36,16 @@ $ npm install --save-dev babel-jest babel-preset-es2015 babel-preset-react
 
 环境搭建完毕之后，我们就可以进行简单的测试用例编写了，譬如我们的代码库 sum.js 文件中有如下简单的相加函数：
 
-```
-/**
- * @function 计算两个数的相加和
- * @param {*} a
- * @param {*} b
- */
+```js
 export default function sum(a, b) {
-  return a + b;
+  return a + b;
 }
 ```
 
 该函数对应的测试用例放置在 sum.test.js 文件中，我们可以参考 Maven 中的文件目录格式，尽量保持 src 与 test 目录下文件结构的一致性。Jest 也会为我们自动寻找项目目录下的以 .spec、.test 结尾的文件，或者放置在 `__test__` 目录下的文件。我们的测试用例编写如下：
 
-```
-import sum from "../../src/util/sum.js";
+```js
+import sum from '../../src/util/sum.js';
 
 test('adds 1 + 2 to equal 3', () => {
   expect(sum(1, 2)).toBe(3);
@@ -59,7 +54,7 @@ test('adds 1 + 2 to equal 3', () => {
 
 测试代码编写完毕之后，我们使用 `jest test/util/sum.test.js` 命令来运行测试用例，可以在命令行中得到如下的反馈：
 
-```
+```sh
  PASStest/util/sum.test.js
   ✓ adds 1 + 2 to equal 3 (2ms)
 
@@ -135,9 +130,7 @@ module.exports = 'test-file-stub';
 // .babelrc
 {
   "presets": [["es2015", { "modules": false }]],
-
   "plugins": ["syntax-dynamic-import"],
-
   "env": {
     "test": {
       "plugins": ["dynamic-import-node"]
@@ -147,6 +140,27 @@ module.exports = 'test-file-stub';
 ```
 
 ## TypeScript
+
+在 Jest 中支持 TypeScript，我们首先需要添加相关的依赖：
+
+```sh
+$ yarn add -D typescript jest ts-jest @types/jest
+```
+
+我们可以通过自定义 preprocessor 来进行 TypeScript 处理：
+
+```json
+// package.json
+{
+  "jest": {
+    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
+    },
+    "testMatch": ["**/__tests__/*.(ts|tsx|js)"]
+  }
+}
+```
 
 ```ts
 const tsc = require('typescript');
@@ -164,18 +178,14 @@ module.exports = {
 };
 ```
 
-```json
-// package.json
-{
-  ...
-  "jest": {
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+或者直接使用 ts-jest：
 
-    "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
-    },
-
-    "testMatch": ["**/__tests__/*.(ts|tsx|js)"]
-  }
-}
+```ts
+module.exports = {
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest'
+  },
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
+};
 ```

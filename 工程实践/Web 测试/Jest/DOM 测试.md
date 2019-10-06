@@ -66,7 +66,6 @@ test('displays a user after a click', () => {
 
 ```js
 // Text.js
-
 import React from 'react';
 
 export default ({ className, children }) => {
@@ -74,11 +73,10 @@ export default ({ className, children }) => {
 };
 ```
 
-除了 react 我们还需要安装依赖：npm i -D babel-preset-react react-test-renderer，其中 babel-preset-react 预设用来解析 jsx 语法，需要添加到 babel 配置中。
+除了 React 我们还需要安装依赖：`npm i -D babel-preset-react react-test-renderer`，其中 babel-preset-react 预设用来解析 jsx 语法，需要添加到 babel 配置中。
 
 ```js
 // Text.test.js
-
 import React from 'react';
 import renderer from 'react-test-renderer';
 

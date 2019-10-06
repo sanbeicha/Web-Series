@@ -1,33 +1,90 @@
 [![返回目录](https://i.postimg.cc/50XLzC7C/image.png)](https://github.com/wx-chevalier/Web-Series)
 
-# React 组件测试
+# Enzyme
 
-ES6:
+Enzyme 允许我们在 DOM 环境中测试 React 组件，首先需要在项目中安装 Enzyme：
 
-```js
-// setup file
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
-// test file
-import { shallow, mount, render } from 'enzyme';
-
-const wrapper = shallow(<Foo />);
+```
+$ npm i enzyme @types/enzyme enzyme-to-json enzyme-adapter-react-16 -D
 ```
 
-ES5:
+然后在 jest.config.js 文件中添加 snapshotSerializers 与 setupTestFrameworkScriptFile 配置：
 
 ```js
-// setup file
-var enzyme = require('enzyme');
-var Adapter = require('enzyme-adapter-react-16');
+module.exports = {
+  // OTHER PORTIONS AS MENTIONED BEFORE
 
-enzyme.configure({ adapter: new Adapter() });
-// test file
-var enzyme = require('enzyme');
+  // Setup Enzyme
+  snapshotSerializers: ['enzyme-to-json/serializer'],
+  setupTestFrameworkScriptFile: '<rootDir>/src/setupEnzyme.ts'
+};
+```
 
-var wrapper = enzyme.shallow(<Foo />);
+然后创建初始化文件：
+
+```ts
+// src/setupEnzyme.ts
+import { configure } from 'enzyme';
+import * as EnzymeAdapter from 'enzyme-adapter-react-16';
+configure({ adapter: new EnzymeAdapter() });
+```
+
+简单的 React 组件如下：
+
+```ts
+import * as React from 'react';
+
+export class CheckboxWithLabel extends React.Component<
+  {
+    labelOn: string;
+    labelOff: string;
+  },
+  {
+    isChecked: boolean;
+  }
+> {
+  constructor(props) {
+    super(props);
+    this.state = { isChecked: false };
+  }
+
+  onChange = () => {
+    this.setState({ isChecked: !this.state.isChecked });
+  };
+
+  render() {
+    return (
+      <label>
+        <input
+          type="checkbox"
+          checked={this.state.isChecked}
+          onChange={this.onChange}
+        />
+        {this.state.isChecked ? this.props.labelOn : this.props.labelOff}
+      </label>
+    );
+  }
+}
+```
+
+其对应的测试文件如下：
+
+```ts
+import * as React from 'react';
+import { shallow } from 'enzyme';
+import { CheckboxWithLabel } from './checkboxWithLabel';
+
+test('CheckboxWithLabel changes the text after click', () => {
+  const checkbox = shallow(<CheckboxWithLabel labelOn="On" labelOff="Off" />);
+
+  // Interaction demo
+  expect(checkbox.text()).toEqual('Off');
+  checkbox.find('input').simulate('change');
+  expect(checkbox.text()).toEqual('On');
+
+  // Snapshot demo
+  expect(checkbox).toMatchSnapshot();
+});
 ```
 
 # 链接

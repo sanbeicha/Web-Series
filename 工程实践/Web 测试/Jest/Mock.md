@@ -48,7 +48,117 @@ expect(mockFunc).toBeCalled();
 
 Jest 可以 Mock 定时器以使我们在测试代码中控制“时间”。调用 jest.useFakeTimers() 函数可以伪造定时器函数，定时器中的回调函数不会被执行，使用 setTimeout.mock 等可以断言定时器执行情况。当在测试中有多个定时器时，执行 jest.useFakeTimers() 可以重置内部的计数器。
 
-执行 jest.runAllTimers(); 可以“快进”直到所有的定时器被执行；执行 jest.runOnlyPendingTimers() 可以使当前正在等待的定时器被执行，用来处理定时器中设置定时器的场景，如果使用 runAllTimers 会导致死循环；执行 jest.advanceTimersByTime(msToRun:number)，可以“快进”执行的毫秒数。
+- 执行 jest.runAllTimers(); 可以“快进”直到所有的定时器被执行；
+
+- 执行 jest.runOnlyPendingTimers() 可以使当前正在等待的定时器被执行，用来处理定时器中设置定时器的场景，如果使用 runAllTimers 会导致死循环；
+
+- 执行 jest.advanceTimersByTime(msToRun:number)，可以“快进”执行的毫秒数。
+
+## 监控 setTimeout 的调用次数
+
+```js
+// timerGame.js
+'use strict';
+
+function timerGame(callback) {
+  console.log('Ready....go!');
+  setTimeout(() => {
+    console.log("Time's up -- stop!");
+    callback && callback();
+  }, 1000);
+}
+
+module.exports = timerGame;
+
+// __tests__/timerGame-test.js
+('use strict');
+
+jest.useFakeTimers();
+
+test('waits 1 second before ending the game', () => {
+  const timerGame = require('../timerGame');
+  timerGame();
+
+  expect(setTimeout).toHaveBeenCalledTimes(1);
+  expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
+});
+```
+
+## 运行所有的计时器
+
+```js
+test('calls the callback after 1 second', () => {
+  const timerGame = require('../timerGame');
+  const callback = jest.fn();
+
+  timerGame(callback);
+
+  // At this point in time, the callback should not have been called yet
+  expect(callback).not.toBeCalled();
+
+  // Fast-forward until all timers have been executed
+  jest.runAllTimers();
+
+  // Now our callback should have been called!
+  expect(callback).toBeCalled();
+  expect(callback).toHaveBeenCalledTimes(1);
+});
+```
+
+## 递归计时器
+
+在某些情况下，您可能具有递归计时器，这是一个在自己的回调中设置新计时器的计时器。对于这些，运行所有计时器将是一个无休止的循环……因此，不需要诸如 jest.runAllTimers() 之类的东西。 对于这些情况，您可以使用 jest.runOnlyPendingTimers() ：
+
+```js
+// infiniteTimerGame.js
+'use strict';
+
+function infiniteTimerGame(callback) {
+  console.log('Ready....go!');
+
+  setTimeout(() => {
+    console.log("Time's up! 10 seconds before the next game starts...");
+    callback && callback();
+
+    // Schedule the next game in 10 seconds
+    setTimeout(() => {
+      infiniteTimerGame(callback);
+    }, 10000);
+  }, 1000);
+}
+
+module.exports = infiniteTimerGame;
+// __tests__/infiniteTimerGame-test.js
+('use strict');
+
+jest.useFakeTimers();
+
+describe('infiniteTimerGame', () => {
+  test('schedules a 10-second timer after 1 second', () => {
+    const infiniteTimerGame = require('../infiniteTimerGame');
+    const callback = jest.fn();
+
+    infiniteTimerGame(callback);
+
+    // At this point in time, there should have been a single call to
+    // setTimeout to schedule the end of the game in 1 second.
+    expect(setTimeout).toHaveBeenCalledTimes(1);
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
+
+    // Fast forward and exhaust only currently pending timers
+    // (but not any new timers that get created during that process)
+    jest.runOnlyPendingTimers();
+
+    // At this point, our 1-second timer should have fired it's callback
+    expect(callback).toBeCalled();
+
+    // And it should have created a new timer to start the game over in
+    // 10 seconds
+    expect(setTimeout).toHaveBeenCalledTimes(2);
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 10000);
+  });
+});
+```
 
 # Mock 模块
 
