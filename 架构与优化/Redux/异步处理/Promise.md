@@ -2,4 +2,4 @@
 
 # redux-promise-middleware
 
-# redux-pack
+# redux-pack-fsa

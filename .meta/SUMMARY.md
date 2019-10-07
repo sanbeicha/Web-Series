@@ -194,7 +194,6 @@
   - [Jest](../工程实践/Web 测试/Jest/README.md) 
     - [DOM 测试](../工程实践/Web 测试/Jest/DOM 测试.md) 
     - [Mock](../工程实践/Web 测试/Jest/Mock.md) 
-    - [匹配器](../工程实践/Web 测试/Jest/匹配器.md) 
     - [基础语法](../工程实践/Web 测试/Jest/基础语法.md) 
     - [异步测试](../工程实践/Web 测试/Jest/异步测试.md) 
   - [Karma](../工程实践/Web 测试/Karma/README.md) 
