@@ -8,6 +8,8 @@
 
 Web 开发，入门易，深度难，分为初窥门径、登堂入室、融会贯通等阶段，如果您是首次阅读笔者的系列文章，建议前往[某熊的技术之路指北 ☯](https://github.com/wx-chevalier/Developer-Zero-To-Mastery)以做整体了解。如果您对于 JavaScript 基础语法尚不完全了解，那么建议您首先浏览[《现代 JavaScript 语法基础与工程实践》](https://ngte-pl.gitbook.io/i/javascript) 以了解基础的 JavaScript 语法及实践应用。在了解了理论知识之后，建议前往 [wx-fe](https://github.com/topics/wx-fe) 查阅笔者所有的前端相关的开源项目。
 
+> Gitbook 悦享版：https://ngte-web.gitbook.io/i/
+
 # Preface | 前言
 
 回顾数十年间 Web 技术与生态的灿烂变迁，我们亲身经历着激动人心的变革，也往往会陷入选择的迷茫。随着浏览器版本的革新与硬件性能的提升，Web 前端开发进入了高歌猛进，日新月异的时代，无数的前端开发框架、技术体系争妍斗艳，让开发者们陷入困惑，乃至于无所适从。特别是随着现代 Web 前端框架（Angular、React、Vue.js）的出现，JavaScript、CSS、HTML 等语言特性的提升，工程化、跨平台、微前端、大前端、BFF 等理论概念的提出，Web 前端开发的技术栈、社区也是不断丰富完善。

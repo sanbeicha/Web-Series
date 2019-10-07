@@ -1,8 +1,8 @@
 [![返回目录](https://i.postimg.cc/50XLzC7C/image.png)](https://github.com/wx-chevalier/Web-Series)
 
-# Introduction
+# 在 React 中使用 Redux
 
-React Redux 是官方提供的 Redux 与 React 的绑定库，用于将 Redux 中的 State 与 Action Creators 映射到 React 组件的 Props。本组件的设计思想可以查看[Presentational and Container Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.6bnhmpqtg)，即将展示组件与容器组件分离，将展示组件尽可能地作为 Stateless 对待。在应用中，只有最顶层组件是对 Redux 可知(例如路由处理)这是很好的。所有它们的子组件都应该是“笨拙”的，并且是通过 props 获取数据。
+在 [Redux 系列文章](https://ngte-web.gitbook.io/?q=redux)中我们详细介绍了 Redux 的设计与使用，React Redux 是官方提供的 Redux 与 React 的绑定库，用于将 Redux 中的 State 与 Action Creators 映射到 React 组件的 Props。本组件的设计思想可以查看[Presentational and Container Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.6bnhmpqtg)，即将展示组件与容器组件分离，将展示组件尽可能地作为 Stateless 对待。在应用中，只有最顶层组件是对 Redux 可知(例如路由处理)这是很好的。所有它们的子组件都应该是“笨拙”的，并且是通过 props 获取数据。
 
 |            | 容器组件              | 展示组件              |
 | ---------- | --------------------- | --------------------- |
@@ -442,17 +442,20 @@ store.dispatch(push('/foo'))
 
 ## Initial Form Values
 
-```
-import { React, Component } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+```js
+import { React, Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-import { reduxForm } from 'redux-form'
-import { registerPerson } from 'actions/coolStuff'
+import { reduxForm } from 'redux-form';
+import { registerPerson } from 'actions/coolStuff';
 
-@connect(null, dispatch => ({
-  registerPerson: bindActionCreators(registerPerson, dispatch)
-}))
+@connect(
+  null,
+  dispatch => ({
+    registerPerson: bindActionCreators(registerPerson, dispatch)
+  })
+)
 export default class ExampleComponent extends Component {
   render() {
     const myInitialValues = {
@@ -461,13 +464,18 @@ export default class ExampleComponent extends Component {
         age: 42,
         fruitPreference: 'apples'
       }
-    }
+    };
     return (
       <div>
         <h1>Check out my cool form!</h1>
-        <CoolForm  {...myInitialValues} onSubmit={(fields) => {this.props.registerPerson(fields)}} />
+        <CoolForm
+          {...myInitialValues}
+          onSubmit={fields => {
+            this.props.registerPerson(fields);
+          }}
+        />
       </div>
-    )
+    );
   }
 }
 
@@ -477,21 +485,26 @@ export default class ExampleComponent extends Component {
 })
 class CoolForm extends Component {
   render() {
-    const { fields: {name, age, fruitPreference}, handleSubmit } = this.props
+    const {
+      fields: { name, age, fruitPreference },
+      handleSubmit
+    } = this.props;
     return (
       <form onSubmit={handleSubmit}>
         <label>Name</label>
-        <input type='text' {...name} />
+        <input type="text" {...name} />
         <label>Age</label>
-        <input type='text' {...age} />
+        <input type="text" {...age} />
         <label>Do you prefer apples or oranges?</label>
         <select {...fruitPreference}>
           <option value="apples">Apples</option>
           <option value="oranges">Oranges</option>
         </select>
-        <button type='submit' onClick={handleSubmit}>Submit</button>
+        <button type="submit" onClick={handleSubmit}>
+          Submit
+        </button>
       </form>
-    )
+    );
   }
 }
 ```

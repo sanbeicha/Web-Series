@@ -313,7 +313,7 @@ module.exports = {
 
 # ES6
 
-> [refactoring-react-components-to-es6-classes](http://www.newmediacampaigns.com/blog/refactoring-react-components-to-es6-classes)
+- [refactoring-react-components-to-es6-classes](http://www.newmediacampaigns.com/blog/refactoring-react-components-to-es6-classes)
 
 ES6 是一门非常让人兴奋的语法规范，而 React 自身的譬如 JSX 这样的语法也是别具特色，笔者一贯坚持从现在开始就广泛使用 ES6。而在 React 的实践编程中，如果需要完全使用 ES6 语法进行开发，需要注意以下几点。
 

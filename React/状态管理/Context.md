@@ -61,12 +61,12 @@ export { BookContainer };
 参考 Container 的源代码，可以发现其主要是对 setState 进行了复写：
 
 ```js
-...
+// ...
 setState(state: $Shape<State>) {
   this.state = Object.assign({}, this.state, state);
   this._listeners.forEach(fn => fn());
 }
-...
+// ...
 ```
 
 Subscribe 组件则提供了将 Container 实例传递给自定义组件的媒介，当状态变化时，组件会进行自动渲染：
