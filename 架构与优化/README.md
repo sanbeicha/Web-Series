@@ -17,3 +17,4 @@
 # 链接
 
 - https://zhuanlan.zhihu.com/p/66398148
+- https://mp.weixin.qq.com/s/vEO4r3-pSROgBzOQjzjV3A 深度解读当代前端架构进化史，下一个趋势在哪？
