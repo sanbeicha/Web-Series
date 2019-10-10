@@ -66,7 +66,55 @@ storage.a = 2;
 storage.f();
 ```
 
-参考 Hooks 的实现原理，我们可以
+参考 Hooks 的实现原理，我们可以模拟写出如下的代码：
+
+```js
+// React has some component-local storage that it tracks behind the scenes.
+// useState and useCallback both hook into this.
+//
+// Imagine there's a 'storage' variable for every instance of your
+// component.
+const storage = {};
+
+function useState(init) {
+  if (storage.data === undefined) {
+    storage.data = init;
+  }
+
+  return [storage.data, value => (storage.data = value)];
+}
+
+function useCallback(fn) {
+  // The real version would check dependencies here, but since our callback
+  // should only update on the first render, this will suffice.
+  if (storage.callback === undefined) {
+    storage.callback = fn;
+  }
+
+  return storage.callback;
+}
+
+function MyComponent() {
+  const [data, setData] = useState(0);
+  const callback = useCallback(() => data);
+
+  // Rather than outputting DOM, we'll just log.
+  console.log('data:', data);
+  console.log('callback:', callback());
+
+  return {
+    increase: () => setData(data + 1)
+  };
+}
+
+let instance = MyComponent(); // Let's 'render' our component...
+
+instance.increase(); // This would trigger a re-render, so we call our component again...
+instance = MyComponent();
+
+instance.increase(); // and again...
+instance = MyComponent();
+```
 
 ## 解决方案
 

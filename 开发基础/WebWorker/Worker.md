@@ -13,6 +13,8 @@ new Worker('workers.js');
 new Worker('data:text/javascript;charset=US-ASCII,...');
 ```
 
+## worker-loader
+
 [worker-loader](https://github.com/webpack-contrib/worker-loader) 是一个 webpack 插件，可以将一个普通 JS 文件的全部依赖提取后打包并替换调用处，以 Blob 形式内联在源码中。
 
 ```js
@@ -24,6 +26,8 @@ const worker = new Worker();
 const blob = new Blob([codeFromFileWorker], { type: 'application/javascript' });
 const worker = new Worker(URL.createObjectURL(blob));
 ```
+
+## Blob
 
 我们也可以自己通过 Blob 的方式创建：
 
@@ -37,7 +41,25 @@ const blob = new Blob([code], { type: 'application/javascript' });
 const worker = new Worker(URL.createObjectURL(blob));
 ```
 
-[workerize-loader]()
+## workerize/workerize-loader
+
+```js
+let worker = workerize(`
+	export function add(a, b) {
+		// block for half a second to demonstrate asynchronicity
+		let start = Date.now();
+		while (Date.now()-start < 500);
+		return a + b;
+	}
+`);
+
+(async () => {
+  console.log('3 + 9 = ', await worker.add(3, 9));
+  console.log('1 + 2 = ', await worker.add(1, 2));
+})();
+```
+
+我们也可以使用 [workerize-loader](https://github.com/developit/workerize-loader) 作为 Webpack 插件来加载 Web Worker:
 
 ```js
 // worker.js
