@@ -16,9 +16,9 @@ $ yarn add --dev @typescript-eslint/parser
 
 ```js
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
-  extends: ['plugin:@typescript-eslint/recommended']
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
+  extends: ["plugin:@typescript-eslint/recommended"]
 };
 ```
 
@@ -31,6 +31,26 @@ module.exports = {
   "typescript",
   "typescriptreact"
 ]
+```
+
+## 技巧
+
+在大型项目中，ESLint 往往运行缓慢，我们可以使用 `TIMING` 变量来查看单个规则的耗时：
+
+```sh
+$ TIMING=1 eslint lib
+Rule                         | Time (ms) | Relative
+:----------------------------|----------:|--------:
+valid-jsdoc                  |   203.798 |     6.7%
+camelcase                    |   142.146 |     4.6%
+no-unmodified-loop-condition |   136.811 |     4.5%
+indent                       |   127.138 |     4.2%
+no-undefined                 |   124.525 |     4.1%
+keyword-spacing              |    85.397 |     2.8%
+space-in-parens              |    76.179 |     2.5%
+no-this-before-super         |    72.317 |     2.4%
+no-implied-eval              |    69.945 |     2.3%
+space-infix-ops              |    57.128 |     1.9%
 ```
 
 # 链接
