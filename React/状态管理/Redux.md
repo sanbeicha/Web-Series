@@ -508,3 +508,7 @@ class CoolForm extends Component {
   }
 }
 ```
+
+# 链接
+
+- https://mp.weixin.qq.com/s/axauH4xpq-ZV3FFHI9XWLg 动手实现一个 react-redux
