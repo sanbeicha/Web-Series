@@ -11,24 +11,7 @@
 | 读取数据   | 从 Redux 获取 state   | 从 props 获取数据     |
 | 修改数据   | 向 Redux 发起 actions | 从 props 调用回调函数 |
 
-![](http://p9.qhimg.com/d/inn/a8ab3ea4/react-redux.png)
-
-- 展示组件中不接入 Redux
-  让我们看下，我们拥有一个 <Counter /> 的展示组件，它有一个通过 props 传过来的值，和一个函数 onIncrement，当你点击 “Increment” 按钮时就会调用这个函数：
-
-```js
-export default class Counter extends Component {
-  render() {
-    return <button onClick={this.props.onIncrement}>{this.props.value}</button>;
-  }
-}
-```
-
-安装的话只需要：
-
-```
-npm install --save react-redux
-```
+![React Redux 数据流](http://p9.qhimg.com/d/inn/a8ab3ea4/react-redux.png)
 
 我们用 react-redux 提供的 connect() 方法将“笨拙”的 Counter 转化成容器组件。connect() 允许你从 Redux store 中指定准确的 state 到你想要获取的组件中。这让你能获取到任何级别颗粒度的数据。首先来看下一个简单的 Counter 的示例：
 
@@ -75,7 +58,7 @@ let App = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Counter);
-const targetEl = document.getElementById('root');
+const targetEl = document.getElementById("root");
 const store = configureStore({ counter: 0 }); //初始化Store
 
 ReactDOM.render(
@@ -94,39 +77,15 @@ ReactDOM.render(
 - store (Redux Store): 应用程序中唯一的 Redux store 对象
 - children (ReactElement) 组件层级的根组件。
 
-## React-Router
-
-一般在项目中，我们经常需要集成 React-Router。
-
-- React Router 0.13
-
-```
-Router.run(routes, Router.HistoryLocation, (Handler, routerState) => { // 注意这里的 "routerState"
-  ReactDOM.render(
-    <Provider store={store}>
-      {/* 注意这里的 "routerState": 该变量应该传递到子组件 */}
-      <Handler routerState={routerState} />
-    </Provider>,
-    document.getElementById('root')
-  );
-});
-```
-
-- React Router 1.0
-
-```
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>...</Router>
-  </Provider>,
-  targetEl
-);
-```
-
 # connect:连接 React 组件与 Redux store。
 
-```
-connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+```js
+connect(
+  [mapStateToProps],
+  [mapDispatchToProps],
+  [mergeProps],
+  [options]
+);
 ```
 
 连接操作不会改变原来的组件类，反而返回一个新的已与 Redux store 连接的组件类。
@@ -152,202 +111,27 @@ connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
 - [pure = true](Boolean): 如果为 true，connector 将执行 shouldComponentUpdate 并且浅对比 mergeProps 的结果，避免不必要的更新，前提是当前组件是一个“纯”组件，它不依赖于任何的输入或 state 而只依赖于 props 和 Redux store 的 state。默认值为 true。
 - [withRef = false](Boolean): 如果为 true，connector 会保存一个对被包装组件实例的引用，该引用通过 getWrappedInstance() 方法获得。默认值为 false
 
-## Examples
-
-- 只注入 `dispatch`，不监听 store
-
-```
-export default connect()(TodoApp);
-
-```
-
-- 注入 `dispatch` 和全局 state
-
-> 不要这样做！这会导致每次 action 都触发整个 `TodoApp` 重新渲染，你做的所有性能优化都将付之东流。
->
-> 最好在多个组件上使用 `connect()`，每个组件只监听它所关联的部分 state。
-
-```
-export default connect(state => state)(TodoApp);
-
-```
-
-- 注入 `dispatch` 和 `todos`
-
-```
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-export default connect(mapStateToProps)(TodoApp);
-
-```
-
-- 注入 `todos` 和所有 action creator (`addTodo`, `completeTodo`, ...)
-
-```
-import * as actionCreators from './actionCreators';
-
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-export default connect(mapStateToProps, actionCreators)(TodoApp);
-
-```
-
-- 注入 `todos` 并把所有 action creator 作为 `actions` 属性也注入组件中
-
-```
-import * as actionCreators from './actionCreators';
-import { bindActionCreators } from 'redux';
-
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
-
-```
-
-- 注入 `todos` 和指定的 action creator (`addTodo`)
-
-```
-import { addTodo } from './actionCreators';
-import { bindActionCreators } from 'redux';
-
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addTodo }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
-
-```
-
-- 注入 `todos` 并把 todoActionCreators 作为 `todoActions` 属性、counterActionCreators 作为 `counterActions` 属性注入到组件中
-
-```
-import * as todoActionCreators from './todoActionCreators';
-import * as counterActionCreators from './counterActionCreators';
-import { bindActionCreators } from 'redux';
-
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    todoActions: bindActionCreators(todoActionCreators, dispatch),
-    counterActions: bindActionCreators(counterActionCreators, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
-
-```
-
-- 注入 `todos` 并把 todoActionCreators 与 counterActionCreators 一同作为 `actions` 属性注入到组件中
-
-```
-import * as todoActionCreators from './todoActionCreators';
-import * as counterActionCreators from './counterActionCreators';
-import { bindActionCreators } from 'redux';
-
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Object.assign({}, todoActionCreators, counterActionCreators), dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
-
-```
-
-- 注入 `todos` 并把所有的 todoActionCreators 和 counterActionCreators 作为 props 注入到组件中
-
-```
-import * as todoActionCreators from './todoActionCreators';
-import * as counterActionCreators from './counterActionCreators';
-import { bindActionCreators } from 'redux';
-
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, todoActionCreators, counterActionCreators), dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
-
-```
-
-- 根据组件的 props 注入特定用户的 `todos`
-
-```
-import * as actionCreators from './actionCreators';
-
-function mapStateToProps(state, ownProps) {
-  return { todos: state.todos[ownProps.userId] };
-}
-
-export default connect(mapStateToProps)(TodoApp);
-
-```
-
-- 根据组件的 props 注入特定用户的 `todos` 并把 `props.userId` 传入到 action 中
-
-```
-import * as actionCreators from './actionCreators';
-
-function mapStateToProps(state) {
-  return { todos: state.todos };
-}
-
-function mergeProps(stateProps, dispatchProps, ownProps) {
-  return Object.assign({}, ownProps, {
-    todos: stateProps.todos[ownProps.userId],
-    addTodo: (text) => dispatchProps.addTodo(ownProps.userId, text)
-  });
-}
-
-export default connect(mapStateToProps, actionCreators, mergeProps)(TodoApp);
-
-```
-
-# [React Router](https://github.com/reactjs/react-router-redux):保证 Redux 与 React-Router 同步
+# React Router
 
 ## Basic Usage
 
 - 安装方式：
 
-```
+```jsx
 npm install --save react-router-redux
 ```
 
 - 简单示例
 
-```
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import { Router, Route, browserHistory } from 'react-router'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+```jsx
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import { Router, Route, browserHistory } from "react-router";
+import { syncHistoryWithStore, routerReducer } from "react-router-redux";
 
-import reducers from '<project-path>/reducers'
+import reducers from "<project-path>/reducers";
 
 // Add the reducer to your store on the `routing` key
 const store = createStore(
@@ -355,32 +139,32 @@ const store = createStore(
     ...reducers,
     routing: routerReducer
   })
-)
+);
 
 // Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <Provider store={store}>
-    { /* Tell the Router to use our enhanced history */ }
+    {/* Tell the Router to use our enhanced history */}
     <Router history={history}>
       <Route path="/" component={App}>
-        <Route path="foo" component={Foo}/>
-        <Route path="bar" component={Bar}/>
+        <Route path="foo" component={Foo} />
+        <Route path="bar" component={Bar} />
       </Route>
     </Router>
   </Provider>,
-  document.getElementById('mount')
-)
+  document.getElementById("mount")
+);
 ```
 
 ## Router State
 
-### Params:Router 的参数
+### Params | Router 的参数
 
 在 React Router 中可以通过本身组件的 Props 来传递路由参数，而在 React-Redux 中因为是采用了`connect()`方法将 State 映射到了 Props 中，因此需要采用`mapStateToProps`中的第二个参数进行路由映射：
 
-```
+```js
 function mapStateToProps(state, ownProps) {
   return {
     id: ownProps.params.id,
@@ -393,48 +177,46 @@ function mapStateToProps(state, ownProps) {
 
 如果有时候需要对于你的路由的历史进行监控的话，可以采用如下的方案：
 
-```
-const history = syncHistoryWithStore(browserHistory, store)
+```js
+const history = syncHistoryWithStore(browserHistory, store);
 
-history.listen(location => analyticsService.track(location.pathname))
+history.listen(location => analyticsService.track(location.pathname));
 ```
 
 ## Navigation Control
 
 ### issue navigation events via Redux actions
 
-```
-import { routerMiddleware, push } from 'react-router-redux'
+```js
+import { routerMiddleware, push } from "react-router-redux";
 
 // Apply the middleware to the store
-const middleware = routerMiddleware(browserHistory)
-const store = createStore(
-  reducers,
-  applyMiddleware(middleware)
-)
+const middleware = routerMiddleware(browserHistory);
+const store = createStore(reducers, applyMiddleware(middleware));
 
 // Dispatch from anywhere like normal.
-store.dispatch(push('/foo'))
+store.dispatch(push("/foo"));
 ```
 
-# form:[redux-form](http://redux-form.com/5.2.3/#/getting-started?_k=3clhs7)
+# redux-form
 
 ## Simple Form
 
 如果在 Redux Form 中需要手动地设置值，应该在 Field 的`onChange`方法中进行修改，譬如：
 
-```
+```jsx
 <Select
-    className="result_columns"
-    placeholder="请选择关联列"
-    multiple
-    defaultValue={result_columns.value || []}
-    onChange={(value)=>{
-            result_columns.onChange(value);
-        }}>
-    <Option value="1">列1</Option>
-    <Option value="2">列2</Option>
-    <Option value="3">列3</Option>
+  className="result_columns"
+  placeholder="请选择关联列"
+  multiple
+  defaultValue={result_columns.value || []}
+  onChange={value => {
+    result_columns.onChange(value);
+  }}
+>
+  <Option value="1">列1</Option>
+  <Option value="2">列2</Option>
+  <Option value="3">列3</Option>
 </Select>
 ```
 
@@ -442,13 +224,13 @@ store.dispatch(push('/foo'))
 
 ## Initial Form Values
 
-```js
-import { React, Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+```jsx
+import { React, Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-import { reduxForm } from 'redux-form';
-import { registerPerson } from 'actions/coolStuff';
+import { reduxForm } from "redux-form";
+import { registerPerson } from "actions/coolStuff";
 
 @connect(
   null,
@@ -460,9 +242,9 @@ export default class ExampleComponent extends Component {
   render() {
     const myInitialValues = {
       initialValues: {
-        name: 'John Doe',
+        name: "John Doe",
         age: 42,
-        fruitPreference: 'apples'
+        fruitPreference: "apples"
       }
     };
     return (
@@ -480,8 +262,8 @@ export default class ExampleComponent extends Component {
 }
 
 @reduxForm({
-  form: 'exampleForm',
-  fields: ['name', 'age', 'fruitPreference']
+  form: "exampleForm",
+  fields: ["name", "age", "fruitPreference"]
 })
 class CoolForm extends Component {
   render() {
