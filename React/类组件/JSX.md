@@ -12,86 +12,83 @@
 
 JSX 语言的名字最早出现在游戏厂商 DeNA，不过其偏重于加入增强语法使得 JavaScript 变得更快、更安全、更简单。而 React 则是依赖于 ECMAScript 语法本身，并没有添加扩充语义。React 引入 JSX 主要是为了方便 View 层组件化，承载了构建 HTML 结构化页面的职责。这一点与其他很多的 JavaScript 模板语言异曲同工，不过 React 将 JSX 映射为虚拟元素，并且通过创建与更新虚拟元素来管理整个 Virtual DOM 系统。譬如我们 JSX 语法声明某个虚拟组件时，会被转化为`React.createElement(component,props,...children)`函数调用，譬如我们定义了某个`MyButton`：
 
-```
+```js
 // 必须要在 JSX 声明文件中引入 React
-import React from 'react';
+import React from "react";
 
-<MyButton color="blue" shadowSize={2}>
-  Click Me
-</MyButton>
+<MyButton color="blue" shadowSize={2}>
+    Click Me
+</MyButton>;
 ```
 
 会被编译为：
 
-```
-React.createElement(
-  MyButton,
-  {color: 'blue', shadowSize: 2},
-  'Click Me'
-)
+```js
+React.createElement(MyButton, { color: "blue", shadowSize: 2 }, "Click Me");
 ```
 
 而如果我们直接声明某个 DOM 元素，同样会转化为 createElement 函数调用:
 
-```
-React.createElement(
-  'div',
-  {className: 'sidebar'},
-  null
-)
+```js
+React.createElement("div", { className: "sidebar" }, null);
 ```
 
 实际上除了最著名的 Babel JSX 转换器之外，我们还可以使用 `JSXDOM` 与 `Mercury JSX` 这两个同样的可以将 JSX 语法转化为 DOM 或者 Virtual DOM。在 JSXDOM 中，只支持使用 DOM 元素，允许在 DOM 标签中直接使用 JavaScript 变量，譬如当我们需要声明某个列表时，可以使用如下语法:
 
-```
+```js
 /** @jsx JSXDOM */
 
-var defaultValue = "Fill me ...";
+var defaultValue = "Fill me ...";
 
 document.body.appendChild(
-  <div>
-    <input type="text" value={defaultValue} />
-    <button onclick="alert('clicked!');">Click Me!</button>
-    <ul>
-      {['un', 'deux', 'trois'].map(function(number) {
-        return <li>{number}</li>;
-      })}
-    </ul>
-  </div>
+  <div>
+        
+    <input type="text" value={defaultValue} />
+        <button onclick="alert('clicked!');">Click Me!</button>
+        <ul>
+            
+      {["un", "deux", "trois"].map(function(number) {
+        return <li>{number}</li>;
+      })}
+          
+    </ul>
+      
+  </div>
 );
 ```
 
 这里我们还想讨论另一个问题，为什么需要引入 JSX。在 ECAMScript 6 的 ECMA-262 标准中引入了所谓的模板字符串(Template Literals)，即可以在 ECMAScript 中使用内嵌的 DSL 来引入 JavaScript 变量，不过虽然模板字符串对于较长的嵌入式 DSL 作用极佳，但是对于需要引入大量作用域中的 ECMAScript 表达式会造成大量的噪音副作用，譬如如果我们要声明某个评论框布局，使用 JSX 的方式如下:
 
-```
+```js
 // JSX
-var box =
-  <Box>
-    {
-      shouldShowAnswer(user) ?
-      <Answer value={false}>no</Answer> :
-      <Box.Comment>
-         Text Content
-      </Box.Comment>
-    }
-  </Box>;
+var box = (
+  <Box>
+        
+    {shouldShowAnswer(user) ? (
+      <Answer value={false}>no</Answer>
+    ) : (
+      <Box.Comment>Text Content</Box.Comment>
+    )}
+      
+  </Box>
+);
 ```
 
 而使用模板字符串的方式如下:
 
-```
+```jsx
 // Template Literals
-var box = jsx`
+var box = jsx`
   <${Box}>
     ${
-      shouldShowAnswer(user) ?
-      jsx`<${Answer} value=${false}>no</${Answer}>` :
-      jsx`
+  shouldShowAnswer(user)
+    ? jsx`<${Answer} value=${false}>no</${Answer}>`
+    : jsx`
         <${Box.Comment}>
          Text Content
         </${Box.Comment}>
       `
-    }
+}
   </${Box}>
 `;
 ```
@@ -108,7 +105,7 @@ JSX 的官方定义是类 XML 语法的 ECMAscript 扩展，完美地利用了 J
 
 在 HTML 中，我们会使用 `<!-- -->` 进行注释，不过 JSX 中并不支持：
 
-```
+```js
 render() {
   return (
   <div>
@@ -120,34 +117,34 @@ render() {
 
 我们需要以 JavaScript 中块注释的方式进行注释：
 
-```
-{/* A JSX comment */}
+```js
+{
+  /* A JSX comment */
+}
 
-
-
-
-{/*
+{
+  /*
   Multi
   line
   comment
-*/}
+*/
+}
 ```
 
 - 数组
 
 JSX 允许使用任意的变量，因此如果我们需要使用数组进行循环元素渲染时，直接使用 map、reduce、filter 等方法即可：
 
-```
+```js
 function NumberList(props) {
-  const numbers = props.numbers;
-  return (
-  <ul>
-  {numbers.map((number) =>
-  <ListItem key={number.toString()}
-  value={number} />
-  )}
-  </ul>
-  );
+  const numbers = props.numbers;
+  return (
+    <ul>
+      {numbers.map(number => (
+        <ListItem key={number.toString()} value={number} />
+      ))}
+    </ul>
+  );
 }
 ```
 
@@ -189,27 +186,27 @@ function NumberList(props) {
 
 JSX 中的 style 并没有跟 HTML 一样接收某个 CSS 字符串，而是接收某个使用 camelCase 风格属性的 JavaScript 对象，这一点倒是和 DOM 对象的 style 属性一致。譬如:
 
-```
-const divStyle = {
-  color: 'blue',
-  backgroundImage: 'url(' + imgUrl + ')',
+```js
+const divStyle = {
+  color: "blue",
+  backgroundImage: "url(" + imgUrl + ")"
 };
 
-function HelloWorldComponent() {
-  return <div style={divStyle}>Hello World!</div>;
+function HelloWorldComponent() {
+  return <div style={divStyle}>Hello World!</div>;
 }
 ```
 
 注意，内联样式并不能自动添加前缀，这也是笔者不太喜欢使用 CSS-in-JS 这种形式设置样式的的原因。为了支持旧版本浏览器，需要提供相关的前缀：
 
-```
-const divStyle = {
-  WebkitTransition: 'all', // note the capital 'W' here
-  msTransition: 'all' // 'ms' is the only lowercase vendor prefix
+```js
+const divStyle = {
+  WebkitTransition: "all", // note the capital 'W' here
+  msTransition: "all" // 'ms' is the only lowercase vendor prefix
 };
 
-function ComponentWithTransition() {
-  return <div style={divStyle}>This should work cross-browser</div>;
+function ComponentWithTransition() {
+  return <div style={divStyle}>This should work cross-browser</div>;
 }
 ```
 
@@ -253,46 +250,37 @@ JSX 表达式中允许在一对开放标签或者闭合标签之间包含内容�
 
 就是合法的 JSX 声明，此时 `MyComponent` 中的 `props.children` 值就是字符串 `Hello World!`；另外需要注意的是，JSX 会自动移除行首与行末的空格，并且移除空行，因此下面的三种声明方式渲染的结果是一致的：
 
-```
+```js
 <div>Hello World</div>
-
-
 <div>
   Hello World
 </div>
-
-
 <div>
   Hello
   World
 </div>
-
-
 <div>
-
-
   Hello World
 </div>
 ```
 
 - JSX 嵌套我们可以嵌套地使用 JSX，即将某些 JSX 元素作为子元素，从而允许我们方便地展示嵌套组件：
 
-```
+```js
 <MyContainer>
-  <MyFirstComponent />
-  <MySecondComponent />
+    <MyFirstComponent />
+    <MySecondComponent />
 </MyContainer>
 ```
 
 我们可以混合使用字符串与 JSX，这也是 JSX 很类似于 HTML 的地方：
 
-```
+```js
 <div>
-  Here is a list:
-  <ul>
-  <li>Item 1</li>
-  <li>Item 2</li>
-  </ul>
+    Here is a list:
+  <ul>
+      <li>Item 1</li>  <li>Item 2</li> 
+  </ul>
 </div>
 ```
 
@@ -300,57 +288,56 @@ JSX 表达式中允许在一对开放标签或者闭合标签之间包含内容�
 
 - JavaScript 表达式我们可以传入包裹在 `{}` 内的任意 JavaScript 表达式作为子元素，譬如下述声明方式渲染的结果是相同的：
 
-```
+```js
 <MyComponent>foo</MyComponent>
-
-
 <MyComponent>{'foo'}</MyComponent>
 ```
 
 这种模式常用于渲染 HTML 列表：
 
-```
+```js
 function Item(props) {
-  return <li>{props.message}</li>;
+  return <li>{props.message}</li>;
 }
 
-
 function TodoList() {
-  const todos = ['finish doc', 'submit pr', 'nag dan to review'];
-  return (
-  <ul>
-  {todos.map((message) => <Item key={message} message={message} />)}
-  </ul>
-  );
+  const todos = ["finish doc", "submit pr", "nag dan to review"];
+
+  return (
+    <ul>
+      {todos.map(message => (
+        <Item key={message} message={message} />
+      ))}
+    </ul>
+  );
 }
 ```
 
 - JavaScript 函数正常情况下 JSX 中包含的 JavaScript 表达式会被解析为字符串、React 元素或者列表；不过 `props.children` 是允许我们传入任意值的，譬如我们可以传入某个函数并且在自定义组件中调用：
 
-```
+```js
 // Calls the children callback numTimes to produce a repeated component
 function Repeat(props) {
-  let items = [];
-  for (let i = 0; i < props.numTimes; i++) {
-  items.push(props.children(i));
-  }
-  return <div>{items}</div>;
+  let items = [];
+  for (let i = 0; i < props.numTimes; i++) {
+    items.push(props.children(i));
+  }
+  return <div>{items}</div>;
 }
 
-
 function ListOfTenThings() {
-  return (
-  <Repeat numTimes={10}>
-  {(index) => <div key={index}>This is item {index} in the list</div>}
-  </Repeat>
-  );
+  return (
+    <Repeat numTimes={10}>
+        {index => <div key={index}>This is item {index} in the list</div>} 
+    </Repeat>
+  );
 }
 ```
 
 - 布尔值与空值
   `false`，`null`，`undefined` 与 `true` 是有效的子元素，不过它们并不会被渲染，而是直接被忽略，如下的 JSX 表达式会被渲染为相同结果：
 
-```
+```js
 <div />
 
 
@@ -369,14 +356,14 @@ function ListOfTenThings() {
 <div>{true}</div>
 ```
 
-##  避免 XSS 注入攻击
+## 避免 XSS 注入攻击
 
 最后需要提及的是，React 中 JSX 能够帮我们自动防护部分 XSS 攻击，譬如我们常见的需要将用户输入的内容再呈现出来:
 
-```
-const title = response.potentiallyMaliciousInput;
+```js
+const title = response.potentiallyMaliciousInput;
 // This is safe:
-const element = <h1>{title}</h1>;
+const element = <h1>{title}</h1>;
 ```
 
 在标准的 HTML 中，如果我们不对用户输入作任何的过滤，那么当用户输入 `<script>alert(1)<script/>` 这样的可执行代码之后，就存在被 XSS 攻击的危险。而 React 在实际渲染之前会帮我们自动过滤掉嵌入在 JSX 中的危险代码，将所有的输入进行编码，保证其为纯字符串之后再进行渲染。不过这种安全过滤有时候也会对我们造成不便，譬如如果我们需要使用 `&copy;` 这样的实体字符时，React 会自动将其转移最后导致无法正确渲染，我们可以寻找如下几种解决方法：
@@ -384,12 +371,12 @@ const element = <h1>{title}</h1>;
 -  使用数组封装
 -  直接插入原始的 HTML，React 为我们提供了 dangerouslySetInnerHTML 属性，其类似于 DOM 的 innerHTML 属性，允许我们声明强制直接插入 HTML 代码:
 
-```
-function createMarkup() {
-  return {__html: 'First &middot; Second'};
+```js
+function createMarkup() {
+  return { __html: "First &middot; Second" };
 }
 
-function MyComponent() {
-  return <div dangerouslySetInnerHTML={createMarkup()} />;
+function MyComponent() {
+  return <div dangerouslySetInnerHTML={createMarkup()} />;
 }
 ```

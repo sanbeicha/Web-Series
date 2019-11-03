@@ -23,7 +23,7 @@ var MyComponent = React.createClass({
   }
 });
 
-React.render(<MyComponent />, document.getElementById('example'));
+React.render(<MyComponent />, document.getElementById("example"));
 ```
 
 需要注意的是，由于 React.findDOMNode  方法获取的是真实 DOM ，所以必须等到虚拟 DOM  插入文档以后，才能使用这个方法，否则会返回 null 。上面代码中，通过为组件指定 Click  事件的回调函数，确保了只有等到真实 DOM  发生 Click  事件之后，才会调用 React.findDOMNode  方法。
@@ -48,3 +48,34 @@ ReactDOM.render(RootElement, document.getElementById('app'))
 # Refs
 
 # 整合非 React 类库
+
+## jQuery Integration
+
+目前，我们项目中不可避免的还会存在大量的基于 jQuery 的插件，这些插件也确实非常的好用呦，通常我们会采取将 jQuery 插件封装成一个 React 组件的方式来进行调用，譬如我们需要调用一个用于播放的 jQuery 插件 JPlayer，那么可以以如下方式使用：
+
+```js
+// JPlayer component
+class JPlayer extends React.Component {
+  static propTypes = {
+    sources: React.PropTypes.array.isRequired
+  };
+  componentDidMount() {
+    $(this.refs.jplayer).jPlayer({
+      ready: () => {
+        $(this.refs.jplayer).jPlayer("setMedia", this.props.sources);
+      },
+      swfPath: "/js",
+      supplied: _.keys(this.props.sources)
+    });
+  }
+  componentWillUmount() {
+    // I don't know jPlayer API but if you need to destroy it do it here.
+  }
+  render() {
+    return <div ref="jplayer" className="jplayer" />;
+  }
+}
+
+// Use it in another component...
+<JPlayer sources={{ m4a: "/media/mysound.mp4", oga: "/media/mysound.ogg" }} />;
+```
