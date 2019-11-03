@@ -1,5 +1,7 @@
 # Thunk
 
+![redux-thunk 示意图](https://s2.ax1x.com/2019/11/02/KOFQZd.md.png)
+
 Thunk 这个单词有点拗口，其代指那些包含了可以延时求值的表达式的函数，譬如下面的代码对比：
 
 ```js
@@ -24,9 +26,9 @@ npm install --save redux-thunk
 然后使用 `applyMiddleware` 函数来引用 Thunk 中间件:
 
 ```js
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers/index';
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import rootReducer from "./reducers/index";
 
 // Note: this API requires redux@>=3.1.0
 const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -35,7 +37,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 配置完毕之后，我们即可以编写返回值为函数的 ActionCreator 函数了，这里我们还是以计数器为例，普通的计数器是瞬时进行加一操作，而这里我们希望延时 1s 进行加一操作：
 
 ```js
-const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
+const INCREMENT_COUNTER = "INCREMENT_COUNTER";
 
 function increment() {
   return {
@@ -104,7 +106,7 @@ const notificationActions = {
 ```js
 function NotifyButton(props) {
   return (
-    <button onClick={() => props.showTimedNotification('Awesome notification')}>
+    <button onClick={() => props.showTimedNotification("Awesome notification")}>
       Notify Me!
     </button>
   );
@@ -126,20 +128,20 @@ export default connect(
 // thunk1
 export function fetchPublishedPosts() {
   return async function(dispatch, getState) {
-    dispatch({ type: 'LOADING', loading: true });
-    const posts = await postService.fetch('published');
-    dispatch({ type: 'PUBLISHED_POSTS', newPosts: posts });
-    dispatch({ type: 'LOADING', loading: false });
+    dispatch({ type: "LOADING", loading: true });
+    const posts = await postService.fetch("published");
+    dispatch({ type: "PUBLISHED_POSTS", newPosts: posts });
+    dispatch({ type: "LOADING", loading: false });
   };
 }
 
 // thunk2
 export function fetchUnpublishedPosts() {
   return async function(dispatch, getState) {
-    dispatch({ type: 'LOADING', loading: true });
-    const posts = await postService.fetch('unpublished');
-    dispatch({ type: 'UNPUBLISHED_POSTS', newPosts: posts });
-    dispatch({ type: 'LOADING', loading: false });
+    dispatch({ type: "LOADING", loading: true });
+    const posts = await postService.fetch("unpublished");
+    dispatch({ type: "UNPUBLISHED_POSTS", newPosts: posts });
+    dispatch({ type: "LOADING", loading: false });
   };
 }
 
@@ -156,14 +158,14 @@ export function fetchAllPosts() {
 在上述代码中，清晰地能够看到存在大量的代码重复，我们可以基于 Thunk 对常见的数据请求流程进行封装：
 
 ```js
-import { createAction, handleActions } from 'redux-actions';
-import update from 'react-addons-update';
+import { createAction, handleActions } from "redux-actions";
+import update from "react-addons-update";
 
 const REQ_STATE = {
-  INIT: '@INIT',
-  REQUESTING: '@REQUESTING',
-  SUCCESS: '@SUCCESS',
-  FAILED: '@FAILED'
+  INIT: "@INIT",
+  REQUESTING: "@REQUESTING",
+  SUCCESS: "@SUCCESS",
+  FAILED: "@FAILED"
 };
 
 let reqActionAndReducerCreator = (reqName, fetch, initData) => {
