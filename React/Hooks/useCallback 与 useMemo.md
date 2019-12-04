@@ -11,10 +11,10 @@ let Test = () => {
 
   /** Search info action */
   const onSearchInfos = useCallback(() => {
-    let fetchUrl = '/api/getSearchInfos';
+    let fetchUrl = "/api/getSearchInfos";
     let fetchParams = { searchID };
     fetch(fetchUrl, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(fetchParams)
     })
       .then(res => res.json())
@@ -99,8 +99,8 @@ function MyComponent() {
   const callback = useCallback(() => data);
 
   // Rather than outputting DOM, we'll just log.
-  console.log('data:', data);
-  console.log('callback:', callback());
+  console.log("data:", data);
+  console.log("callback:", callback());
 
   return {
     increase: () => setData(data + 1)
@@ -146,10 +146,10 @@ let Test = () => {
 
   /** Search info action */
   const onSearchInfos = useCallback(() => {
-    let fetchUrl = '/api/getSearchInfos';
+    let fetchUrl = "/api/getSearchInfos";
     let fetchParams = { ...fetchRef.current }; // 解构参数，这里拿到的是外层fetchRef的引用
     fetch(fetchUrl, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(fetchParams)
     })
       .then(res => res.json())

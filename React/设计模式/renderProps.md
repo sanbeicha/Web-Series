@@ -17,7 +17,7 @@ class WindowWidth extends React.Component {
 
   componentDidMount() {
     this.setState({ width: window.innerWidth }, () =>
-      window.addEventListener('resize', ({ target }) =>
+      window.addEventListener("resize", ({ target }) =>
         this.setState({ width: target.innerWidth })
       )
     );
@@ -128,7 +128,7 @@ class MouseTracker extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%' }} onMouseMove={this.handleMouseMove}>
+      <div style={{ height: "100%" }} onMouseMove={this.handleMouseMove}>
         <h1>Move the mouse around!</h1>
         <p>
           The current mouse position is ({this.state.x}, {this.state.y})
@@ -159,7 +159,7 @@ class Mouse extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%' }} onMouseMove={this.handleMouseMove}>
+      <div style={{ height: "100%" }} onMouseMove={this.handleMouseMove}>
         {/* ...but how do we render something other than a <p>? */}
         <p>
           The current mouse position is ({this.state.x}, {this.state.y})
@@ -184,26 +184,33 @@ class MouseTracker extends React.Component {
 现在 `<Mouse>` 组件封装了所有关于监听 mousemove 事件和存储鼠标 (x, y) 位置的行为，但其仍不是真正的可重用。例如，假设我们现在有一个在屏幕上跟随鼠标渲染一张猫的图片的 <Cat> 组件。我们可能使用 `<Cat mouse={{ x, y }}` prop 来告诉组件鼠标的坐标以让它知道图片应该在屏幕哪个位置。
 
 ```js
-class Cat extends React.Component {
+import React from "react";
+
+class Cat extends React.Component<{ mouse: { x: number, y: number } }> {
   render() {
     const mouse = this.props.mouse;
     return (
       <img
-        src="/cat.jpg"
-        style={{ position: 'absolute', left: mouse.x, top: mouse.y }}
+        src="https://s2.ax1x.com/2019/12/02/QucJwn.png"
+        style={{ position: "absolute", left: mouse.x, top: mouse.y }}
       />
     );
   }
 }
 
-class Mouse extends React.Component {
-  constructor(props) {
+class Mouse extends React.Component<
+  {
+    render: (mouse: { x: number, y: number }) => JSX.Element
+  },
+  { x: number, y: number }
+> {
+  constructor(props: any) {
     super(props);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.state = { x: 0, y: 0 };
   }
 
-  handleMouseMove(event) {
+  handleMouseMove(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     this.setState({
       x: event.clientX,
       y: event.clientY
@@ -212,7 +219,7 @@ class Mouse extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%' }} onMouseMove={this.handleMouseMove}>
+      <div style={{ height: "100%" }} onMouseMove={this.handleMouseMove}>
         {/*
           Instead of providing a static representation of what <Mouse> renders,
           use the `render` prop to dynamically determine what to render.
@@ -228,7 +235,9 @@ class MouseTracker extends React.Component {
     return (
       <div>
         <h1>Move the mouse around!</h1>
-        <Mouse render={mouse => <Cat mouse={mouse} />} />
+        <Mouse
+          render={(mouse: { x: number, y: number }) => <Cat mouse={mouse} />}
+        />
       </div>
     );
   }
