@@ -117,22 +117,28 @@ PostCSS 编译之后就是我们所需要的带 vw 代码：
 
 编译出来就是：
 
-```
+```css
 #example {
-    background: white url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='%2300b1ff' width='100%25' height='100%25'/%3E%3C/svg%3E");
+  background: white
+    url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='%2300b1ff' width='100%25' height='100%25'/%3E%3C/svg%3E");
 }
 ```
 
 这个方案简单易用，是我所需要的。目前测试下来，基本能达到我所需要的需求。但有一点千万别忘了，记得在``中添加：
 
-```
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+```html
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"
+/>
 ```
 
 上面阐述的是这个适配方案中所用到的技术点，简单的总结一下：
 
 - 使用`vw`来实现页面的适配，并且通过 PostCSS 的插件[postcss-px-to-viewport](https://github.com/evrone/postcss-px-to-viewport)把`px`转换成`vw`。这样的好处是，我们在撸码的时候，不需要进行任何的计算，你只需要根据设计图写`px`单位
+
 - 为了更好的实现长宽比，特别是针对于`img`、`vedio`和`iframe`元素，通过 PostCSS 插件[postcss-aspect-ratio-mini](https://github.com/yisibl/postcss-aspect-ratio-mini)来实现，在实际使用中，只需要把对应的宽和高写进去即可
+
 - 为了解决`1px`的问题，使用 PostCSS 插件[postcss-write-svg](https://github.com/jonathantneal/postcss-write-svg),自动生成`border-image`或者`background-image`的图片
 
 # Viewport 不足之处
